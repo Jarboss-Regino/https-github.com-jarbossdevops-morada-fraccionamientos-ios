@@ -14,6 +14,16 @@
 		8D21E7F02C99DDC6007E17FF /* MoradaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E7EF2C99DDC6007E17FF /* MoradaTests.swift */; };
 		8D21E7FA2C99DDC6007E17FF /* MoradaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E7F92C99DDC6007E17FF /* MoradaUITests.swift */; };
 		8D21E7FC2C99DDC6007E17FF /* MoradaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E7FB2C99DDC6007E17FF /* MoradaUITestsLaunchTests.swift */; };
+		8D21E80E2C9A2E29007E17FF /* LoginDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E80D2C9A2E29007E17FF /* LoginDto.swift */; };
+		8D21E8102C9A30B8007E17FF /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E80F2C9A30B8007E17FF /* ApiService.swift */; };
+		8D21E8122C9A3697007E17FF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E8112C9A3697007E17FF /* LoginViewModel.swift */; };
+		8D21E8142C9A388D007E17FF /* ApiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E8132C9A388D007E17FF /* ApiEndpoints.swift */; };
+		8D21E8162C9DEC07007E17FF /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E8152C9DEC07007E17FF /* PasswordView.swift */; };
+		8D21E8182C9E08B7007E17FF /* EmailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E8172C9E08B7007E17FF /* EmailResponse.swift */; };
+		8D21E81A2C9E2BB3007E17FF /* NewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E8192C9E2BB3007E17FF /* NewUserView.swift */; };
+		8D21E81C2C9E2C9A007E17FF /* NewUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E81B2C9E2C9A007E17FF /* NewUserViewModel.swift */; };
+		8D21E81E2CA1C4FC007E17FF /* NewUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E81D2CA1C4FC007E17FF /* NewUserResponse.swift */; };
+		8D21E8212CA1EB09007E17FF /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E8202CA1EB09007E17FF /* UserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +55,16 @@
 		8D21E7F52C99DDC6007E17FF /* MoradaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoradaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D21E7F92C99DDC6007E17FF /* MoradaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoradaUITests.swift; sourceTree = "<group>"; };
 		8D21E7FB2C99DDC6007E17FF /* MoradaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoradaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8D21E80D2C9A2E29007E17FF /* LoginDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDto.swift; sourceTree = "<group>"; };
+		8D21E80F2C9A30B8007E17FF /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		8D21E8112C9A3697007E17FF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8D21E8132C9A388D007E17FF /* ApiEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiEndpoints.swift; sourceTree = "<group>"; };
+		8D21E8152C9DEC07007E17FF /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
+		8D21E8172C9E08B7007E17FF /* EmailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailResponse.swift; sourceTree = "<group>"; };
+		8D21E8192C9E2BB3007E17FF /* NewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserView.swift; sourceTree = "<group>"; };
+		8D21E81B2C9E2C9A007E17FF /* NewUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewModel.swift; sourceTree = "<group>"; };
+		8D21E81D2CA1C4FC007E17FF /* NewUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserResponse.swift; sourceTree = "<group>"; };
+		8D21E8202CA1EB09007E17FF /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +115,12 @@
 		8D21E7DC2C99DDC1007E17FF /* Morada */ = {
 			isa = PBXGroup;
 			children = (
+				8D21E81F2CA1EAED007E17FF /* database */,
+				8D21E80C2C9A2BDD007E17FF /* Helpers */,
+				8D21E80B2C9A2B95007E17FF /* Services */,
+				8D21E80A2C9A2B7A007E17FF /* Views */,
+				8D21E8092C9A2B34007E17FF /* ViewModels */,
+				8D21E8082C9A2B1E007E17FF /* Models */,
 				8D21E7DD2C99DDC1007E17FF /* MoradaApp.swift */,
 				8D21E7DF2C99DDC1007E17FF /* ContentView.swift */,
 				8D21E7E12C99DDC6007E17FF /* Assets.xcassets */,
@@ -127,6 +153,58 @@
 				8D21E7FB2C99DDC6007E17FF /* MoradaUITestsLaunchTests.swift */,
 			);
 			path = MoradaUITests;
+			sourceTree = "<group>";
+		};
+		8D21E8082C9A2B1E007E17FF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8D21E80D2C9A2E29007E17FF /* LoginDto.swift */,
+				8D21E8172C9E08B7007E17FF /* EmailResponse.swift */,
+				8D21E81D2CA1C4FC007E17FF /* NewUserResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8D21E8092C9A2B34007E17FF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8D21E8112C9A3697007E17FF /* LoginViewModel.swift */,
+				8D21E81B2C9E2C9A007E17FF /* NewUserViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		8D21E80A2C9A2B7A007E17FF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8D21E8152C9DEC07007E17FF /* PasswordView.swift */,
+				8D21E8192C9E2BB3007E17FF /* NewUserView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8D21E80B2C9A2B95007E17FF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8D21E80F2C9A30B8007E17FF /* ApiService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8D21E80C2C9A2BDD007E17FF /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8D21E8132C9A388D007E17FF /* ApiEndpoints.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		8D21E81F2CA1EAED007E17FF /* database */ = {
+			isa = PBXGroup;
+			children = (
+				8D21E8202CA1EB09007E17FF /* UserModel.swift */,
+			);
+			path = database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,7 +338,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D21E7E02C99DDC1007E17FF /* ContentView.swift in Sources */,
+				8D21E8162C9DEC07007E17FF /* PasswordView.swift in Sources */,
+				8D21E8142C9A388D007E17FF /* ApiEndpoints.swift in Sources */,
 				8D21E7DE2C99DDC1007E17FF /* MoradaApp.swift in Sources */,
+				8D21E81E2CA1C4FC007E17FF /* NewUserResponse.swift in Sources */,
+				8D21E81C2C9E2C9A007E17FF /* NewUserViewModel.swift in Sources */,
+				8D21E80E2C9A2E29007E17FF /* LoginDto.swift in Sources */,
+				8D21E8182C9E08B7007E17FF /* EmailResponse.swift in Sources */,
+				8D21E8122C9A3697007E17FF /* LoginViewModel.swift in Sources */,
+				8D21E81A2C9E2BB3007E17FF /* NewUserView.swift in Sources */,
+				8D21E8212CA1EB09007E17FF /* UserModel.swift in Sources */,
+				8D21E8102C9A30B8007E17FF /* ApiService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
