@@ -90,6 +90,9 @@ class MoreViewModel: ObservableObject{
     
     private let apiService = ApiService()
     @Published var showButtonBack = true
+    
+    @Published var tipoUsuario: String?
+    
     init(){
         self.tipo = UserSession.shared.userResponse?.tipo
         if let ttipo = tipo {
@@ -103,6 +106,13 @@ class MoreViewModel: ObservableObject{
         } else {
             print("El tipo es nil")
         }
+        
+        self.tipoUsuario = UserSession.shared.userData?.access
+        if let tipoUsuario = tipoUsuario {
+            print("Usuario: " + tipoUsuario )
+        }else{
+            print("error al obtener el tipo de usuario")
+        }
     }
     
     func getDateFormatter() -> DateFormatter {
@@ -114,7 +124,7 @@ class MoreViewModel: ObservableObject{
   
     func logout() {
         
-        UserSession.shared.logout()
+        UserSession.shared.logoutApp()
         
         
     }

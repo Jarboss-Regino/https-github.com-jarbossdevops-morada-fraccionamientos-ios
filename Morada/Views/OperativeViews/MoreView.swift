@@ -15,10 +15,10 @@ struct MoreView: View {
     var body: some View {
         
         //NavigationStack{
-            if let tipo = viewModel.tipo {
+            if let tipo = viewModel.tipoUsuario {
                 //NavigationStack{
                 VStack{
-                    if tipo == 0 {
+                    if tipo == "residente" {
                         
                         NavigationLink(destination: Events().navigationBarBackButtonHidden(true)) {
                             defaultButton(icon: "camera.fill", title: "Eventos")
@@ -29,7 +29,7 @@ struct MoreView: View {
                         
 
                     }
-                    else if tipo == 2 || tipo ==  1{
+                    else if tipo == "administrativo"{
                         NavigationLink(destination: EventsView(moreViewModel: viewModel).navigationBarBackButtonHidden(true)) {
                             defaultButton(icon: "camera.fill", title: "Eventos")
                         }
@@ -46,7 +46,7 @@ struct MoreView: View {
                         
                         
                         
-                    }else {
+                    }else if tipo == "operativo"{
                         
                         NavigationLink(destination: EventsView(moreViewModel: viewModel).navigationBarBackButtonHidden(true)) {
                             defaultButton(icon: "camera.fill", title: "Eventos")

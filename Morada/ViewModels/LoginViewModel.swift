@@ -43,32 +43,40 @@ final class LoginViewModel: ObservableObject{
         } else {
             
             self.isLoading = true
+            let tempEmail = self.username.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            let body = LoginRequest(source1: username, source2: password)
+            let body = LoginRequest(user: username.trimmingCharacters(in: .whitespacesAndNewlines), password: password.trimmingCharacters(in: .whitespacesAndNewlines))
+            
             do {
                 
                 // Llamada asíncrona a la función post
-                let response: LoginDto = try await apiService.post(urlString: ApiEndpoints.loginUrl, body: body)
-                
+                let response: LoginResponse = try await apiService.postJson(urlString: ApiEndpoints.loginUrl, body: body)
+                print("URL"+ApiEndpoints.loginUrl)
                 // Manejar la respuesta en el hilo principal
                 
-                    self.isLoading = false
-                if response.idCliente != nil {
-                    UserSession.shared.saveLoginData(userResponse: response)
+                    
+                if response.status == 200 {
+                    //UserSession.shared.saveLoginData(userResponse: response)
                     self.errorMessage = ""
                     self.showError = false
-                    self.loginSuccess = true
+                    //self.loginSuccess = true
                     self.isLoggedIn = true
                     self.username = ""
                     self.password = ""
-                    //Task{
-                         
-                        
-                    //}
+                    print("Loggin exitoso")
                     
-                   
-                    
-                    
+                    do {
+                        let userDetails: UserResponse = try await apiService.get(urlString: ApiEndpoints.getDataUse(email: tempEmail))
+                        print(userDetails)
+                        // Guardar datos del usuario o manejar la respuesta
+                        UserSession.shared.saveUserInfo(userResponse: userDetails.data.first!)
+                        print("Datos del usuario obtenidos exitosamente")
+                        self.loginSuccess = true
+                    } catch {
+                        self.loginSuccess = false
+                        self.errorMessage = "Error al obtener los datos del usuario"
+                        self.showError = true
+                    }
                 } else {
                     
                     self.loginSuccess = false
@@ -77,7 +85,7 @@ final class LoginViewModel: ObservableObject{
                     
                     
                 }
-                
+                self.isLoading = false
             } catch let error as ApiError {
                 // Manejar errores específicos de la API
                 
@@ -97,6 +105,8 @@ final class LoginViewModel: ObservableObject{
         
         
     }
+    
+    
     
     func saveData(response: LoginDto){
         // Guardar el nombre y el estado de sesión en UserDefaults

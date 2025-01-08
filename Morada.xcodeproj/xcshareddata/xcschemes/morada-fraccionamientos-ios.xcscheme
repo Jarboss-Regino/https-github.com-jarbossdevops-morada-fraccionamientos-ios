@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D21E7D92C99DDC1007E17FF"
-               BuildableName = "morada-fraccionamientos-ios.app"
-               BlueprintName = "morada-fraccionamientos-ios"
-               ReferencedContainer = "container:morada-fraccionamientos-ios.xcodeproj">
+               BuildableName = "Morada.app"
+               BlueprintName = "Morada"
+               ReferencedContainer = "container:Morada.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,9 +36,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D21E7EA2C99DDC6007E17FF"
-               BuildableName = "morada-fraccionamientos-iosTests.xctest"
-               BlueprintName = "morada-fraccionamientos-iosTests"
-               ReferencedContainer = "container:morada-fraccionamientos-ios.xcodeproj">
+               BuildableName = "MoradaTests.xctest"
+               BlueprintName = "MoradaTests"
+               ReferencedContainer = "container:Morada.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D21E7F42C99DDC6007E17FF"
-               BuildableName = "morada-fraccionamientos-iosUITests.xctest"
-               BlueprintName = "morada-fraccionamientos-iosUITests"
-               ReferencedContainer = "container:morada-fraccionamientos-ios.xcodeproj">
+               BuildableName = "MoradaUITests.xctest"
+               BlueprintName = "MoradaUITests"
+               ReferencedContainer = "container:Morada.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -69,9 +69,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D21E7D92C99DDC1007E17FF"
-            BuildableName = "morada-fraccionamientos-ios.app"
-            BlueprintName = "morada-fraccionamientos-ios"
-            ReferencedContainer = "container:morada-fraccionamientos-ios.xcodeproj">
+            BuildableName = "Morada.app"
+            BlueprintName = "Morada"
+            ReferencedContainer = "container:Morada.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -86,9 +86,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D21E7D92C99DDC1007E17FF"
-            BuildableName = "morada-fraccionamientos-ios.app"
-            BlueprintName = "morada-fraccionamientos-ios"
-            ReferencedContainer = "container:morada-fraccionamientos-ios.xcodeproj">
+            BuildableName = "Morada.app"
+            BlueprintName = "Morada"
+            ReferencedContainer = "container:Morada.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

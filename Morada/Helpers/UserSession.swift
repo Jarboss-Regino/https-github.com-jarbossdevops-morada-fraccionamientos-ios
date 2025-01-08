@@ -23,6 +23,32 @@ class UserSession: ObservableObject {
                 UserDefaults.standard.set(newValue, forKey: isLoggedInKey)
             }
         }
+    
+    var userData: UserDetails?{
+        get {
+            if let data = UserDefaults.standard.data(forKey: userResponseKey) {
+                do {
+                    return try JSONDecoder().decode(UserDetails.self, from: data)
+                } catch {
+                    print("Error al decodificar el UserDetails: \(error)")
+                    return nil
+                }
+            }
+            return nil
+            }
+            set {
+                if let userResponse = newValue {
+                    do {
+                        let data = try JSONEncoder().encode(userResponse)
+                        UserDefaults.standard.set(data, forKey: userResponseKey)
+                    } catch {
+                        print("Error al codificar el UserDetails: \(error)")
+                    }
+                } else {
+                    UserDefaults.standard.removeObject(forKey: userResponseKey)
+                }
+            }
+    }
         
         var userResponse: LoginDto? {
             get {
@@ -49,6 +75,18 @@ class UserSession: ObservableObject {
                         }
                     }
         }
+    
+    func saveUserInfo(userResponse: UserDetails){
+        self.userData = userResponse
+        self.isLoggedIn = true
+        print("Datos guardados correctamente...")
+    }
+    
+    func logoutApp(){
+        self.userData = nil
+        self.isLoggedIn = false
+        print("Datos borrados correctamente...")
+    }
         
         func saveLoginData(userResponse: LoginDto)  {
             

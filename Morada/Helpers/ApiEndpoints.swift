@@ -11,9 +11,15 @@ class ApiEndpoints{
     
     static let baseUrl = "https://www.jarbossdev.com"
     static let proUrl = "https://www.jarboss.com"
+    static let authUrl = "https://tpmmhy4d2s.us-east-1.awsapprunner.com/management"
+    static let generalUrl = "https://qzv5egqxrn.us-east-1.awsapprunner.com/management"
     
     static var loginUrl: String{
-        return baseUrl+"/Fraccionamientos/GET/?source1=index&source2=getlogin"
+        return authUrl+"/auth"
+    }
+    
+    static func getDataUse(email: String) -> String{
+        return generalUrl+"/getUserFire?email="+email
     }
     
     static var emailUrl: String{

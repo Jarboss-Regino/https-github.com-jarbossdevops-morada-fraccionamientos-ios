@@ -15,10 +15,10 @@ struct HomeView: View {
     @State private var selectedTab = 0
     var body: some View {
         //NavigationStack{
-            if let tipo = viewModel.tipo {
+            if let tipo = viewModel.tipoUsuario {
                 TabView(selection: $selectedTab) {
                     // Definimos las opciones para el tipo 1
-                    if tipo == 0 {
+                    if tipo == "residente" {
                         
                         Avisos(viewModel: reViewModel)
                             .tabItem {
@@ -61,7 +61,7 @@ struct HomeView: View {
                     }
                     
                     // Definimos las opciones para el tipo 2
-                    else if tipo == 2 || tipo ==  1 {
+                    else if tipo == "administrativo" {
                         CheckinView()
                             .tabItem {
                                 VStack {
@@ -93,7 +93,7 @@ struct HomeView: View {
                     }
                     
                     // Definimos opciones genéricas para otros tipos o por defecto
-                    else {
+                    else if tipo == "operativo"{
                         
                         CheckinView()
                             .tabItem {

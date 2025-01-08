@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct LoginResponse: Codable{
+    let status: Int
+    let message: String
+}

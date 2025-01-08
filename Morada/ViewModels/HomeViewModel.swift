@@ -9,7 +9,7 @@ import Foundation
 
 class HomeViewModel: ObservableObject{
     @Published var tipo: Int?
-      
+    @Published var tipoUsuario: String?
     
     init(){
         self.tipo = UserSession.shared.userResponse?.tipo
@@ -18,6 +18,13 @@ class HomeViewModel: ObservableObject{
             print(message)
         } else {
             print("El tipo es nil")
+        }
+        
+        self.tipoUsuario = UserSession.shared.userData?.access
+        if let tipoUsuario = tipoUsuario {
+            print("Usuario: " + tipoUsuario )
+        }else{
+            print("error al obtener el tipo de usuario")
         }
     }
     

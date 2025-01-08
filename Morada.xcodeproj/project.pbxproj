@@ -91,6 +91,8 @@
 		8D98DC1F2CC8213100F91733 /* PopupDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D98DC1E2CC8213100F91733 /* PopupDatePicker.swift */; };
 		8D98DC212CC862E900F91733 /* SetReservationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D98DC202CC862E900F91733 /* SetReservationRequest.swift */; };
 		8D98DC232CC969A000F91733 /* NewReservationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D98DC222CC969A000F91733 /* NewReservationResponse.swift */; };
+		8DBDAE082D2D9BB600564A75 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBDAE072D2D9BB600564A75 /* LoginResponse.swift */; };
+		8DBDAE0C2D2DD42D00564A75 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBDAE0B2D2DD42D00564A75 /* UserResponse.swift */; };
 		8DBFFE612CA49C2800088F0F /* CheckinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBFFE602CA49C2700088F0F /* CheckinView.swift */; };
 		8DBFFE632CA49D8E00088F0F /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBFFE622CA49D8E00088F0F /* MoreView.swift */; };
 		8DDEBB862CA3232600EC6BB8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDEBB852CA3232600EC6BB8 /* HomeView.swift */; };
@@ -121,15 +123,15 @@
 		8D1BF8452CA34DB3006DDF8A /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		8D1BF8472CA373BB006DDF8A /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
 		8D1BF84B2CA46519006DDF8A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		8D21E7DA2C99DDC1007E17FF /* morada-fraccionamientos-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "morada-fraccionamientos-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D21E7DA2C99DDC1007E17FF /* Morada.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morada.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D21E7DD2C99DDC1007E17FF /* MoradaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoradaApp.swift; sourceTree = "<group>"; };
 		8D21E7DF2C99DDC1007E17FF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8D21E7E12C99DDC6007E17FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D21E7E32C99DDC6007E17FF /* Morada.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Morada.entitlements; sourceTree = "<group>"; };
 		8D21E7E52C99DDC6007E17FF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		8D21E7EB2C99DDC6007E17FF /* morada-fraccionamientos-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "morada-fraccionamientos-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D21E7EB2C99DDC6007E17FF /* MoradaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoradaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D21E7EF2C99DDC6007E17FF /* MoradaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoradaTests.swift; sourceTree = "<group>"; };
-		8D21E7F52C99DDC6007E17FF /* morada-fraccionamientos-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "morada-fraccionamientos-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D21E7F52C99DDC6007E17FF /* MoradaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoradaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D21E7F92C99DDC6007E17FF /* MoradaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoradaUITests.swift; sourceTree = "<group>"; };
 		8D21E7FB2C99DDC6007E17FF /* MoradaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoradaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8D21E80D2C9A2E29007E17FF /* LoginDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDto.swift; sourceTree = "<group>"; };
@@ -206,6 +208,8 @@
 		8D98DC1E2CC8213100F91733 /* PopupDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDatePicker.swift; sourceTree = "<group>"; };
 		8D98DC202CC862E900F91733 /* SetReservationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReservationRequest.swift; sourceTree = "<group>"; };
 		8D98DC222CC969A000F91733 /* NewReservationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReservationResponse.swift; sourceTree = "<group>"; };
+		8DBDAE072D2D9BB600564A75 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		8DBDAE0B2D2DD42D00564A75 /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		8DBFFE602CA49C2700088F0F /* CheckinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinView.swift; sourceTree = "<group>"; };
 		8DBFFE622CA49D8E00088F0F /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		8DDEBB852CA3232600EC6BB8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -243,7 +247,7 @@
 		8D21E7D12C99DDC1007E17FF = {
 			isa = PBXGroup;
 			children = (
-				8D21E7DC2C99DDC1007E17FF /* morada-fraccionamientos-ios */,
+				8D21E7DC2C99DDC1007E17FF /* Morada */,
 				8D21E7EE2C99DDC6007E17FF /* MoradaTests */,
 				8D21E7F82C99DDC6007E17FF /* MoradaUITests */,
 				8D21E7DB2C99DDC1007E17FF /* Products */,
@@ -253,14 +257,14 @@
 		8D21E7DB2C99DDC1007E17FF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D21E7DA2C99DDC1007E17FF /* morada-fraccionamientos-ios.app */,
-				8D21E7EB2C99DDC6007E17FF /* morada-fraccionamientos-iosTests.xctest */,
-				8D21E7F52C99DDC6007E17FF /* morada-fraccionamientos-iosUITests.xctest */,
+				8D21E7DA2C99DDC1007E17FF /* Morada.app */,
+				8D21E7EB2C99DDC6007E17FF /* MoradaTests.xctest */,
+				8D21E7F52C99DDC6007E17FF /* MoradaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8D21E7DC2C99DDC1007E17FF /* morada-fraccionamientos-ios */ = {
+		8D21E7DC2C99DDC1007E17FF /* Morada */ = {
 			isa = PBXGroup;
 			children = (
 				8D21E81F2CA1EAED007E17FF /* database */,
@@ -275,7 +279,7 @@
 				8D21E7E32C99DDC6007E17FF /* Morada.entitlements */,
 				8D21E7E42C99DDC6007E17FF /* Preview Content */,
 			);
-			path = "morada-fraccionamientos-ios";
+			path = Morada;
 			sourceTree = "<group>";
 		};
 		8D21E7E42C99DDC6007E17FF /* Preview Content */ = {
@@ -324,6 +328,8 @@
 				8D5525452CE29A63009EE8F4 /* QrResponse.swift */,
 				8D55254D2CE3BDC6009EE8F4 /* GetVistasResponse.swift */,
 				8D5525512CE3DBDE009EE8F4 /* AgendaResponse.swift */,
+				8DBDAE072D2D9BB600564A75 /* LoginResponse.swift */,
+				8DBDAE0B2D2DD42D00564A75 /* UserResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -480,9 +486,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D21E7D92C99DDC1007E17FF /* morada-fraccionamientos-ios */ = {
+		8D21E7D92C99DDC1007E17FF /* Morada */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8D21E7FF2C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "morada-fraccionamientos-ios" */;
+			buildConfigurationList = 8D21E7FF2C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "Morada" */;
 			buildPhases = (
 				8D21E7D62C99DDC1007E17FF /* Sources */,
 				8D21E7D72C99DDC1007E17FF /* Frameworks */,
@@ -492,14 +498,14 @@
 			);
 			dependencies = (
 			);
-			name = "morada-fraccionamientos-ios";
+			name = Morada;
 			productName = Morada;
-			productReference = 8D21E7DA2C99DDC1007E17FF /* morada-fraccionamientos-ios.app */;
+			productReference = 8D21E7DA2C99DDC1007E17FF /* Morada.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8D21E7EA2C99DDC6007E17FF /* morada-fraccionamientos-iosTests */ = {
+		8D21E7EA2C99DDC6007E17FF /* MoradaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8D21E8022C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "morada-fraccionamientos-iosTests" */;
+			buildConfigurationList = 8D21E8022C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "MoradaTests" */;
 			buildPhases = (
 				8D21E7E72C99DDC6007E17FF /* Sources */,
 				8D21E7E82C99DDC6007E17FF /* Frameworks */,
@@ -510,14 +516,14 @@
 			dependencies = (
 				8D21E7ED2C99DDC6007E17FF /* PBXTargetDependency */,
 			);
-			name = "morada-fraccionamientos-iosTests";
+			name = MoradaTests;
 			productName = MoradaTests;
-			productReference = 8D21E7EB2C99DDC6007E17FF /* morada-fraccionamientos-iosTests.xctest */;
+			productReference = 8D21E7EB2C99DDC6007E17FF /* MoradaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		8D21E7F42C99DDC6007E17FF /* morada-fraccionamientos-iosUITests */ = {
+		8D21E7F42C99DDC6007E17FF /* MoradaUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8D21E8052C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "morada-fraccionamientos-iosUITests" */;
+			buildConfigurationList = 8D21E8052C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "MoradaUITests" */;
 			buildPhases = (
 				8D21E7F12C99DDC6007E17FF /* Sources */,
 				8D21E7F22C99DDC6007E17FF /* Frameworks */,
@@ -528,9 +534,9 @@
 			dependencies = (
 				8D21E7F72C99DDC6007E17FF /* PBXTargetDependency */,
 			);
-			name = "morada-fraccionamientos-iosUITests";
+			name = MoradaUITests;
 			productName = MoradaUITests;
-			productReference = 8D21E7F52C99DDC6007E17FF /* morada-fraccionamientos-iosUITests.xctest */;
+			productReference = 8D21E7F52C99DDC6007E17FF /* MoradaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -556,7 +562,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8D21E7D52C99DDC1007E17FF /* Build configuration list for PBXProject "morada-fraccionamientos-ios" */;
+			buildConfigurationList = 8D21E7D52C99DDC1007E17FF /* Build configuration list for PBXProject "Morada" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -569,9 +575,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D21E7D92C99DDC1007E17FF /* morada-fraccionamientos-ios */,
-				8D21E7EA2C99DDC6007E17FF /* morada-fraccionamientos-iosTests */,
-				8D21E7F42C99DDC6007E17FF /* morada-fraccionamientos-iosUITests */,
+				8D21E7D92C99DDC1007E17FF /* Morada */,
+				8D21E7EA2C99DDC6007E17FF /* MoradaTests */,
+				8D21E7F42C99DDC6007E17FF /* MoradaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -672,6 +678,7 @@
 				8D21E8182C9E08B7007E17FF /* EmailResponse.swift in Sources */,
 				8D76D0A32CB97B70009B0866 /* CalendarView.swift in Sources */,
 				8D76D0862CAB4E43009B0866 /* ResidentResponse.swift in Sources */,
+				8DBDAE082D2D9BB600564A75 /* LoginResponse.swift in Sources */,
 				8DBFFE632CA49D8E00088F0F /* MoreView.swift in Sources */,
 				8D76D0932CB4857A009B0866 /* CheckOutResponse.swift in Sources */,
 				8D5525362CDABE31009EE8F4 /* SimpleToolBar.swift in Sources */,
@@ -684,6 +691,7 @@
 				8D98DC102CC3023900F91733 /* ClassificationItem.swift in Sources */,
 				8D5525382CDAC0E8009EE8F4 /* AccessView.swift in Sources */,
 				8D98DC212CC862E900F91733 /* SetReservationRequest.swift in Sources */,
+				8DBDAE0C2D2DD42D00564A75 /* UserResponse.swift in Sources */,
 				8D76D0842CAB0303009B0866 /* CheckinViewModel.swift in Sources */,
 				8D21E81A2C9E2BB3007E17FF /* NewUserView.swift in Sources */,
 				8D21E8212CA1EB09007E17FF /* UserModel.swift in Sources */,
@@ -718,12 +726,12 @@
 /* Begin PBXTargetDependency section */
 		8D21E7ED2C99DDC6007E17FF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D21E7D92C99DDC1007E17FF /* morada-fraccionamientos-ios */;
+			target = 8D21E7D92C99DDC1007E17FF /* Morada */;
 			targetProxy = 8D21E7EC2C99DDC6007E17FF /* PBXContainerItemProxy */;
 		};
 		8D21E7F72C99DDC6007E17FF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D21E7D92C99DDC1007E17FF /* morada-fraccionamientos-ios */;
+			target = 8D21E7D92C99DDC1007E17FF /* Morada */;
 			targetProxy = 8D21E7F62C99DDC6007E17FF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -850,10 +858,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "morada-fraccionamientos-ios/Morada.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Morada/Morada.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"morada-fraccionamientos-ios/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Morada/Preview Content\"";
 				DEVELOPMENT_TEAM = 8WJFS8ZZ5M;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -890,10 +898,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "morada-fraccionamientos-ios/Morada.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Morada/Morada.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"morada-fraccionamientos-ios/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Morada/Preview Content\"";
 				DEVELOPMENT_TEAM = 8WJFS8ZZ5M;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -944,7 +952,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/morada-fraccionamientos-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/morada-fraccionamientos-ios";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Morada.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Morada";
 			};
 			name = Debug;
 		};
@@ -967,7 +975,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/morada-fraccionamientos-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/morada-fraccionamientos-ios";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Morada.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Morada";
 			};
 			name = Release;
 		};
@@ -1018,7 +1026,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8D21E7D52C99DDC1007E17FF /* Build configuration list for PBXProject "morada-fraccionamientos-ios" */ = {
+		8D21E7D52C99DDC1007E17FF /* Build configuration list for PBXProject "Morada" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8D21E7FD2C99DDC6007E17FF /* Debug */,
@@ -1027,7 +1035,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8D21E7FF2C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "morada-fraccionamientos-ios" */ = {
+		8D21E7FF2C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "Morada" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8D21E8002C99DDC6007E17FF /* Debug */,
@@ -1036,7 +1044,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8D21E8022C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "morada-fraccionamientos-iosTests" */ = {
+		8D21E8022C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "MoradaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8D21E8032C99DDC6007E17FF /* Debug */,
@@ -1045,7 +1053,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8D21E8052C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "morada-fraccionamientos-iosUITests" */ = {
+		8D21E8052C99DDC6007E17FF /* Build configuration list for PBXNativeTarget "MoradaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8D21E8062C99DDC6007E17FF /* Debug */,

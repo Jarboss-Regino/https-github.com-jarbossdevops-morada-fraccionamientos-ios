@@ -7,11 +7,7 @@
 
 import Foundation
 
-// Modelo para representar la respuesta del servidor
-struct LoginResponse: Codable {
-    let token: String
-    let userId: Int
-}
+
 
 // Definir un enum para manejar errores de la API
 enum ApiError: Error {
@@ -62,7 +58,67 @@ class ApiService {
                 throw ApiError.decodingError
             }
         }
+    
+    // Función genérica para realizar solicitudes POST con JSON
+        func postJson<T: Codable, U: Codable>(urlString: String, body: T) async throws -> U {
+            // Asegurarse de que la URL es válida
+            guard let url = URL(string: urlString) else {
+                throw ApiError.invalidUrl
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            do {
+                // Codificar el cuerpo como JSON
+                let jsonData = try JSONEncoder().encode(body)
+                request.httpBody = jsonData
+            } catch {
+                throw ApiError.decodingError
+            }
+
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                throw ApiError.serverError("Error del servidor: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+            }
+        
+            do {
+                let decodedResponse = try JSONDecoder().decode(U.self, from: data)
+                return decodedResponse
+            } catch {
+                throw ApiError.decodingError
+            }
+        }
+    
+    // Función genérica para realizar solicitudes GET
+        func get<T: Codable>(urlString: String) async throws -> T {
+            // Asegurar que la URL es válida
+            guard let url = URL(string: urlString) else {
+                throw ApiError.invalidUrl
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            // Realizar la solicitud
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                throw ApiError.serverError("Error del servidor: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+            }
+            
+            // Decodificar respuesta
+            do {
+                let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                return decodedResponse
+            } catch {
+                throw ApiError.decodingError
+            }
+        }
 }
+
+
 
 // Extensión para convertir Codable a diccionario
 extension Encodable {
