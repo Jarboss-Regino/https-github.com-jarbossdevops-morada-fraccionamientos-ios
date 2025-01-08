@@ -1,0 +1,328 @@
+//
+//  ResidentViewModel.swift
+//  morada-fraccionamientos-ios
+//
+//  Created by MacBook Air on 04/11/24.
+//
+
+import Foundation
+
+class ResidentViewModel: ObservableObject{
+    
+    // AVISOS VARIABLES
+    @Published var avisosEvents: [Aviso] = []
+    @Published var avisosFilteredEvents: [Aviso] = []
+    @Published var avisoSelectedDate = Date()
+    
+    // Reservaciones variables
+    @Published var selectedButton: Int = 1 // 1 = todos, 2 = mis reservaciones
+    @Published var titleList: String = "Todos"
+    @Published var isLoadingReservations: Bool = false
+    @Published var showPopupReservation: Bool = false
+    @Published var selectedReservation: Reservations? = nil
+    @Published var reservationsItems: [Reservations] = []
+    @Published var placeReservation: String = ""
+    @Published var comments: String = ""
+    @Published var residentsList: [ResidentResponse] = []
+    @Published var selectedResident: ResidentResponse? = nil
+    @Published var totalPeople: Int = 1
+    @Published var dateReservation = Date()
+    @Published var startTimeReservation = Date()
+    @Published var endTimeReservation = Date()
+    @Published var isLoadingReservation = false
+    @Published var showErrorReservation = false
+    @Published var errorMessageReservation = ""
+    @Published var disableButtonReservation: Bool = false
+    
+    
+    @Published var showMessageReservaton = false
+    @Published var successMessageReservation = ""
+    
+    
+    
+    
+    private let apiService = ApiService()
+    var mtipo: Int?
+    
+    // AVISOS FUNCS
+    @MainActor
+    func getAvisos() async{
+        do{
+            //  regresar a let la variable id
+            let id: String = "0"
+//            if mtipo != 0{
+//                //id = (UserSession.shared.userResponse?.idCliente)!
+//            }
+            let body = AvisoRequest(source1: "0", source2: id,source3: "")
+            
+            
+            let response: AvisoResponse = try await apiService.post(urlString: ApiEndpoints.getAvisosUrl, body: body)
+            
+            if !response.registros.isEmpty{
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                
+                self.avisosEvents = response.registros.compactMap { registro in
+                    if let mfechaEvento = dateFormatter.date(from: registro.fecha) {
+                        return Aviso(
+                            id: registro.id,
+                            nombre: registro.nombre,
+                            contenido: registro.contenido,
+                            fecha: registro.fecha,
+                            lugar: registro.lugar,
+                            adjunto: registro.adjunto,
+                            hora: registro.hora,
+                            estatus: registro.estatus,
+                            fechaEvent: mfechaEvento
+                        )
+                        
+                    } else {
+                        return nil
+                    }
+                }
+                print("get events ejecutado")
+                
+                AvisoFilterEvents()
+            }else{
+                print("No hay eventos en avisos")
+            }
+            
+            
+        } catch let error as ApiError {
+            
+            print("ERROR: \(error)")
+            
+        } catch {
+            
+            print("ERROR: \(error)")
+            
+        }
+    }
+    
+    @MainActor
+    func AvisoFilterEvents() {
+        
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Ajusta el formato si es necesario
+        
+        self.avisosFilteredEvents = self.avisosEvents.filter {
+            guard let eventDate = dateFormatter.date(from: $0.fecha) else {
+                return false
+            }
+            return Calendar.current.isDate(eventDate, inSameDayAs: self.avisoSelectedDate)
+        }
+    }
+    
+    /// Reservations func
+    
+    
+    @MainActor
+    func getReservations() async {
+        do{
+            self.isLoadingReservations = true
+            
+            var idCliente = "0"
+            if selectedButton == 1 {
+                idCliente = (UserSession.shared.userResponse?.id) ?? ""
+            }
+            
+            var idFraccionamiento: String = "0"
+            if mtipo != 0{
+                idFraccionamiento = (UserSession.shared.userResponse?.idCliente) ?? ""
+            }
+            
+            let body = ReservationRequest(source1: "0", source2: idFraccionamiento, source3: idCliente)
+            
+            let response: ReservationsResponse = try await apiService.post(urlString: ApiEndpoints.getReservationsUrl, body: body)
+            
+                      
+            
+            if !response.registros.isEmpty{
+                
+                let reservacionesProcedados = response.registros.map{reservation in
+                    return Reservations(id: reservation.id, lugar: reservation.lugar, desde: formatTimeOnly(reservation.desde), hasta: formatTimeOnly(reservation.hasta), persona: reservation.persona, comentario: reservation.comentario, fecha: formatDate(reservation.fecha), reservacion: reservation.reservacion, estatus: reservation.estatus)
+                }
+                
+                
+                self.reservationsItems.removeAll()
+                self.reservationsItems = reservacionesProcedados
+                print(reservationsItems)
+                
+            }else{
+                print("No hay Reservaciones")
+            }
+            
+            self.isLoadingReservations = false
+            
+        } catch let error as ApiError {
+            
+            print("ERROR: \(error)")
+            self.isLoadingReservations = false
+        } catch {
+            self.isLoadingReservations = false
+            print("ERROR: \(error)")
+            
+        }
+    }
+    
+    @MainActor
+    func getResidents() async{
+        do{
+            let idSucursal = UserSession.shared.userResponse?.idCliente ?? ""
+            
+            
+            let body = ResidentRequest(source1: idSucursal)
+            
+            let response: [ResidentResponse] = try await apiService.post(urlString: ApiEndpoints.getResidentsUrl, body: body)
+            
+            if !response.isEmpty{
+                let residentesProcesados = response.map { residente in
+                    return ResidentResponse(id: residente.id, nombre: residente.nombre)
+                }
+                self.residentsList.removeAll()
+                self.residentsList = residentesProcesados
+            }else{
+                print("No hay residentes")
+            }
+            
+            
+            
+        }catch let error as ApiError {
+            
+                
+            print("Error: \(error)")
+                
+            
+        } catch {
+            
+            print("Error desconocido")
+            
+        }
+    }
+    
+    @MainActor
+    func createReservation() async {
+        do{
+            self.isLoadingReservation = true
+            if self.placeReservation.isEmpty{
+                self.errorMessageReservation = "Todos los campos son obligatorios"
+                self.showErrorReservation = true
+                return
+            }
+            self.showErrorReservation = false
+            if self.comments.isEmpty {
+                self.errorMessageReservation = "Todos los campos son obligatorios"
+                self.showErrorReservation = true
+                return
+            }
+            self.showErrorReservation = false
+            var id = ""
+            var name = ""
+            if self.selectedResident == nil{
+                name = UserSession.shared.userResponse?.nombre ?? ""
+                id = UserSession.shared.userResponse?.id ?? ""
+            }else{
+                name = self.selectedResident?.nombre ?? "N/A"
+                id = self.selectedResident?.id ?? ""
+            }
+            
+            let idFraccionamiento = UserSession.shared.userResponse?.idCliente ?? "N/A"
+            
+            
+            
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "HH:mm"
+            let start = timeFormatter.string(from: self.startTimeReservation)
+            let end = timeFormatter.string(from: self.endTimeReservation)
+            
+            let people = String(self.totalPeople)
+            
+            let body = SetReservationRequest(source1: self.placeReservation.trimmingCharacters(in: .whitespaces), source2: start, source3: end, source4: people, source5: self.comments, source9: name, source6: id, source7: idFraccionamiento, source8: getDateFormatter(fecha: dateReservation))
+            
+            let response: NewReservationResponse = try await apiService.post(urlString: ApiEndpoints.setReservationUrl, body: body)
+            
+            if response.estatus == "ok"{
+                self.showErrorReservation = false
+                self.errorMessageReservation = ""
+                
+                
+                self.successMessageReservation = "Reservación registrada"
+                self.showMessageReservaton = true
+                self.disableButtonReservation = true
+            }else{
+                self.errorMessageReservation = "Ocurrio un error"
+                self.showErrorReservation = true
+                self.disableButtonReservation = false
+            }
+            self.isLoadingReservation = false
+        }catch let error as ApiError {
+            
+            self.isLoadingReservation = false
+            print("Error: \(error)")
+                
+            
+        } catch {
+            self.isLoadingReservation = false
+            print("Error desconocido")
+            
+        }
+    }
+    
+    @MainActor
+    func resetFieldsReseravation() {
+        self.disableButtonReservation = false
+        self.showErrorReservation = false
+        self.errorMessageReservation = ""
+        self.totalPeople = 1
+        self.showMessageReservaton = false
+        self.successMessageReservation = ""
+        self.dateReservation = Date()
+        self.startTimeReservation = Date()
+        self.endTimeReservation = Date()
+        self.comments = ""
+        self.placeReservation = ""
+        self.selectedResident = nil
+    }
+    
+    @MainActor
+    func changeTitle(title: String) {
+        self.titleList = title
+        
+    }
+    
+    @MainActor
+    func changeColor(active: Int) {
+        
+        self.selectedButton = active
+        
+    }
+    func formatTimeOnly(_ timeString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm" // Formato de entrada solo para la hora (24 horas)
+        if let date = dateFormatter.date(from: timeString) {
+            dateFormatter.dateFormat = "h:mm a" // Formato de salida (12 horas con AM/PM)
+            return dateFormatter.string(from: date)
+        }
+        return ""
+    }
+    func formatDate(_ dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Formato de entrada
+        if let date = dateFormatter.date(from: dateString) {
+            let customFormatter = DateFormatter()
+            customFormatter.dateFormat = "dd-MMM-yyyy" // Formato de salida (día-mes-año)
+            customFormatter.locale = Locale(identifier: "es_ES") // Configurar el idioma a español
+            return customFormatter.string(from: date)
+        }
+        return ""
+    }
+    
+    func getDateFormatter(fecha: Date) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: fecha)
+    }
+    
+    
+}
