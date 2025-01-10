@@ -63,8 +63,8 @@ class MoreViewModel: ObservableObject{
     @Published var titleList: String = "Todos"
     @Published var isLoadingReservations: Bool = false
     @Published var showPopupReservation: Bool = false
-    @Published var selectedReservation: Reservations? = nil
-    @Published var reservationsItems: [Reservations] = []
+    @Published var selectedReservation: ReservationsResponse? = nil
+    @Published var reservationsItems: [ReservationsResponse] = []
     @Published var placeReservation: String = ""
     @Published var comments: String = ""
     @Published var residentsList: [ResidentResponse] = []
@@ -92,6 +92,7 @@ class MoreViewModel: ObservableObject{
     @Published var showButtonBack = true
     
     @Published var tipoUsuario: String?
+    let idUser = UserSession.shared.userData?.uuid
     
     init(){
         self.tipo = UserSession.shared.userResponse?.tipo
@@ -455,26 +456,44 @@ class MoreViewModel: ObservableObject{
         do{
             self.isLoadingReservations = true
             
-            var idCliente = "0"
-            if selectedButton == 1 {
-                idCliente = (UserSession.shared.userResponse?.id)!
-            }
+//            var idCliente = "0"
+//            if selectedButton == 1 {
+//                idCliente = (UserSession.shared.userResponse?.id)!
+//            }
+//            
+//            var idFraccionamiento: String = "0"
+//            if mtipo != 0{
+//                idFraccionamiento = (UserSession.shared.userResponse?.idCliente)!
+//            }
+//            
+//            let body = ReservationRequest(source1: "0", source2: idFraccionamiento, source3: idCliente)
             
-            var idFraccionamiento: String = "0"
-            if mtipo != 0{
-                idFraccionamiento = (UserSession.shared.userResponse?.idCliente)!
-            }
-            
-            let body = ReservationRequest(source1: "0", source2: idFraccionamiento, source3: idCliente)
-            
-            let response: ReservationsResponse = try await apiService.post(urlString: ApiEndpoints.getReservationsUrl, body: body)
+            let response: [ReservationsResponse] = try await apiService.get(urlString: ApiEndpoints.getReservationsUrl(idUser: self.idUser!))
             
                       
             
-            if !response.registros.isEmpty{
+            if !response.isEmpty{
                 
-                let reservacionesProcedados = response.registros.map{reservation in
-                    return Reservations(id: reservation.id, lugar: reservation.lugar, desde: formatTimeOnly(reservation.desde), hasta: formatTimeOnly(reservation.hasta), persona: reservation.persona, comentario: reservation.comentario, fecha: formatDate(reservation.fecha), reservacion: reservation.reservacion, estatus: reservation.estatus)
+                let reservacionesProcedados = response.map{reservation in
+                    return ReservationsResponse(
+                        id: reservation.id,
+                        placeReservation: reservation.placeReservation,
+                        hourI: formatTimeOnly(reservation.hourI),
+                        hourF: formatTimeOnly(reservation.hourF),
+                        persons: reservation.persons,
+                        comments: reservation.comments,
+                        personReservation: reservation.personReservation,
+                        uuid: reservation.uuid,
+                        uuidSuperAdmin: reservation.uuidSuperAdmin,
+                        idAssigned: reservation.idAssigned,
+                        idResident: reservation.idResident,
+                        idAdministrative: reservation.idAdministrative,
+                        idOperative: reservation.idOperative,
+                        v: reservation.v,
+                        assigned: reservation.assigned,
+                        date: formatDate(reservation.date)
+                    )
+                    
                 }
                 
                 
@@ -549,19 +568,21 @@ class MoreViewModel: ObservableObject{
                 return
             }
             
-            var id = ""
-            var name = ""
-            if self.selectedResident == nil{
-                name = UserSession.shared.userResponse?.nombre ?? ""
-                id = UserSession.shared.userResponse?.id ?? ""
-            }else{
-                name = self.selectedResident?.nombre ?? "N/A"
-                id = self.selectedResident?.id ?? ""
-            }
             
-            let idFraccionamiento = UserSession.shared.userResponse?.idCliente ?? "N/A"
+            let personReservation = UserSession.shared.userData?.username
+            let uuidSuperAdmin = UserSession.shared.userData?.uuidSuperAdmin
+            let uuid = UserSession.shared.userData?.uuid
             
-            
+            let idAssignedValue: String = {
+                switch UserSession.shared.userData?.idAssigned{
+                case .string(let value):
+                    return value
+                case .array(let values):
+                    return values.joined(separator: ",") // Une los elementos del array como una cadena separada por comas
+                case .none:
+                    return ""
+                }
+            }()
             
             let timeFormatter = DateFormatter()
             timeFormatter.dateFormat = "HH:mm"
@@ -569,12 +590,23 @@ class MoreViewModel: ObservableObject{
             let end = timeFormatter.string(from: self.endTimeReservation)
             
             let people = String(self.totalPeople)
+
+            let body = SetReservationRequest(
+                placeReservation: self.placeReservation.trimmingCharacters(in: .whitespaces),
+                hourI: start,
+                hourF: end,
+                persons: people,
+                comments: self.comments.trimmingCharacters(in: .whitespaces),
+                personReservation: personReservation!,
+                date: getDateFormatter(fecha: dateReservation),
+                uuidSuperAdmin: uuidSuperAdmin!,
+                uuid: uuid!,
+                idAssigned: idAssignedValue
+            )
             
-            let body = SetReservationRequest(source1: self.placeReservation.trimmingCharacters(in: .whitespaces), source2: start, source3: end, source4: people, source5: self.comments, source9: name, source6: id, source7: idFraccionamiento, source8: getDateFormatter(fecha: dateReservation))
+            let response: NewReservationResponse = try await apiService.postJson(urlString: ApiEndpoints.setReservationUrl, body: body)
             
-            let response: NewReservationResponse = try await apiService.post(urlString: ApiEndpoints.setReservationUrl, body: body)
-            
-            if response.estatus == "ok"{
+            if response.message == "Reservation created successfully"{
                 self.showErrorReservation = false
                 self.errorMessageReservation = ""
                 

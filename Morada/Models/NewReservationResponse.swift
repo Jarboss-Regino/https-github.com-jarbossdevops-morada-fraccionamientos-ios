@@ -8,8 +8,8 @@
 import Foundation
 
 struct NewReservationResponse: Codable{
-    let estatus: String
-    let reservacionesId: String?
-    let reservacionesFecha: String?
+    let message: String
+    let error: String?
+    let statusCode: Int?
 }
 

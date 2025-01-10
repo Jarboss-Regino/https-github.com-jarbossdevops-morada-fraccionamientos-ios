@@ -12,7 +12,7 @@ struct Reservation: View {
     @State private var isSheetPresented = false
     @Environment(\.dismiss) var dismiss
     var body: some View {
-        //NavigationView{
+        NavigationView{
             VStack{
                 HStack{
                     Button(action: {
@@ -97,19 +97,6 @@ struct Reservation: View {
                 
                 
                 
-            }.toolbar(content: {
-                ToolbarItem(placement: .principal) {
-                    ToolBar(
-                        title: "Reservaciones",
-                        trailingAction: {
-                            isSheetPresented = true
-                        }
-                    )
-                }
-            }).sheet(isPresented: $isSheetPresented) {
-                AddReservation(viewModel: viewModel, showSheet: $isSheetPresented)
-                
-                
             }
             .padding(.horizontal,32)
                 .navigationBarBackButtonHidden(true)
@@ -126,14 +113,27 @@ struct Reservation: View {
                 Task{
                     await viewModel.getReservations()
                 }
+            }.toolbar(content: {
+                ToolbarItem(placement: .principal) {
+                    ToolBar(
+                        title: "Reservaciones",
+                        trailingAction: {
+                            isSheetPresented = true
+                        }
+                    )
+                }
+            }).sheet(isPresented: $isSheetPresented) {
+                AddReservation(viewModel: viewModel, showSheet: $isSheetPresented)
+                
+                
             }
-        //}
+        }
     }
 }
 
 /// ITEMS DESIG
 struct itemReservations: View{
-    var data: Reservations
+    var data: ReservationsResponse
     @ObservedObject var mviewModel: ResidentViewModel
     
     var body: some View{
@@ -150,14 +150,14 @@ struct itemReservations: View{
             
             
             VStack(alignment: .leading, spacing: 5.0, content: {
-                Text("\(data.lugar)")
+                Text("\(data.placeReservation)")
                     .font(.body).fontWeight(.semibold)
                     .foregroundColor(.primary)
                 HStack {
                     Text("Por ")
                         .font(.body).fontWeight(.semibold)
                         .foregroundColor(.primary)
-                    Text("\(data.reservacion)")
+                    Text("\(data.personReservation)")
                         .font(.body)
                     .foregroundColor(.secondary)
                 }
@@ -166,7 +166,7 @@ struct itemReservations: View{
                     Text("Fecha: ")
                         .font(.body).fontWeight(.semibold)
                         .foregroundColor(.primary)
-                    Text("\(data.fecha) \(data.hasta)")
+                    Text("\(data.date)")
                         .font(.body)
                     .foregroundColor(.secondary)
                 }

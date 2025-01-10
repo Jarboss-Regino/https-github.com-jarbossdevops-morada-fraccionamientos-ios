@@ -8,13 +8,16 @@
 import Foundation
 
 struct SetReservationRequest: Codable {
-    let source1: String
-    let source2: String
-    let source3: String
-    let source4: String
-    let source5: String
-    let source9: String
-    let source6: String
-    let source7: String
-    let source8: String
+    let placeReservation: String
+    let hourI: String
+    let hourF: String
+    let persons: String
+    let comments: String
+    let personReservation: String
+    let date: String
+    let uuidSuperAdmin: String
+    let uuid: String
+    let idAssigned: String
 }
+
+

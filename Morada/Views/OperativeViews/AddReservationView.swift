@@ -238,7 +238,7 @@ struct AddReservationView: View {
                 //aqui
                 if isStartTimePickerVisible {
                     
-                    PopupDatePicker(selection: $viewModel.startTime, title: "Selecciona una hora", displayedComponents: .hourAndMinute) {
+                    PopupDatePicker(selection: $viewModel.startTimeReservation, title: "Selecciona una hora", displayedComponents: .hourAndMinute) {
                         isStartTimePickerVisible = false
                     }
                     
@@ -246,7 +246,7 @@ struct AddReservationView: View {
                 
                 // DatePicker para la hora de salida
                 if isEndTimePickerVisible {
-                    PopupDatePicker(selection: $viewModel.endTime, title: "Selecciona una hora", displayedComponents: .hourAndMinute) {
+                    PopupDatePicker(selection: $viewModel.endTimeReservation, title: "Selecciona una hora", displayedComponents: .hourAndMinute) {
                         isEndTimePickerVisible = false
                     }
                 }

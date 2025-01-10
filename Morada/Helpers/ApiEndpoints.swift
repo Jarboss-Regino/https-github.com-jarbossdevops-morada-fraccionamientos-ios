@@ -9,17 +9,17 @@ import Foundation
 
 class ApiEndpoints{
     
-    static let baseUrl = "https://www.jarbossdev.com"
+    static let baseUrl = "https://zxnmqcu8mj.us-east-1.awsapprunner.com"
     static let proUrl = "https://www.jarboss.com"
-    static let authUrl = "https://tpmmhy4d2s.us-east-1.awsapprunner.com/management"
-    static let generalUrl = "https://qzv5egqxrn.us-east-1.awsapprunner.com/management"
+    static let authUrl = "https://tpmmhy4d2s.us-east-1.awsapprunner.com"
+    static let generalUrl = "https://qzv5egqxrn.us-east-1.awsapprunner.com"
     
     static var loginUrl: String{
-        return authUrl+"/auth"
+        return authUrl+"/management/auth"
     }
     
     static func getDataUse(email: String) -> String{
-        return generalUrl+"/getUserFire?email="+email
+        return generalUrl+"/management/getUserFire?email="+email
     }
     
     static var emailUrl: String{
@@ -65,11 +65,11 @@ class ApiEndpoints{
     static var getIncidentsByDateUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=incidencia&source2=getincidencia"
     }
-    static var getReservationsUrl: String {
-        return baseUrl+"/Fraccionamientos/GET/?source1=reservaciones&source2=getreservacionesApp"
+    static func getReservationsUrl(idUser: String) -> String {
+        return baseUrl+"/management/getReservation?uuid="+idUser
     }
     static var setReservationUrl: String {
-        return baseUrl+"/Fraccionamientos/POST/?source1=reservaciones&source2=setreservaciones"
+        return baseUrl+"/management/createReservation"
     }
     static var getAvisosUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=aviso&source2=getavisoApp"

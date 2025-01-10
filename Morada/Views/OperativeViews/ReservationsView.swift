@@ -134,7 +134,7 @@ struct ReservationsView: View {
 
 /// ITEMS DESIG
 struct itemReservation: View{
-    var data: Reservations
+    var data: ReservationsResponse
     @ObservedObject var mviewModel: MoreViewModel
     
     var body: some View{
@@ -151,14 +151,14 @@ struct itemReservation: View{
             
             
             VStack(alignment: .leading, spacing: 5.0, content: {
-                Text("\(data.lugar)")
+                Text("\(data.placeReservation)")
                     .font(.body).fontWeight(.semibold)
                     .foregroundColor(.primary)
                 HStack {
                     Text("Por ")
                         .font(.body).fontWeight(.semibold)
                         .foregroundColor(.primary)
-                    Text("\(data.reservacion)")
+                    Text("\(data.personReservation)")
                         .font(.body)
                     .foregroundColor(.secondary)
                 }
@@ -167,7 +167,7 @@ struct itemReservation: View{
                     Text("Fecha: ")
                         .font(.body).fontWeight(.semibold)
                         .foregroundColor(.primary)
-                    Text("\(data.fecha) \(data.hasta)")
+                    Text("\(data.hourI) \(data.hourF)")
                         .font(.body)
                     .foregroundColor(.secondary)
                 }

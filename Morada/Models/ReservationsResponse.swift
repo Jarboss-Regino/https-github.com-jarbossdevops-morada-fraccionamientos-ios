@@ -7,20 +7,43 @@
 
 import Foundation
 
-struct ReservationsResponse: Codable{
-    let registros: [Reservations]
-}
-
-struct Reservations: Codable, Identifiable {
-    var id: String
-    var lugar: String
-    var desde: String
-    var hasta: String
-    var persona: String
-    var comentario: String
-    var fecha: String
-    var reservacion: String
-    var estatus: Int
+struct ReservationsResponse: Codable, Identifiable {
+    let id: String
+    let placeReservation: String
+    let hourI: String
+    let hourF: String
+    let persons: String
+    let comments: String
+    let personReservation: String
+    let uuid: String
+    let uuidSuperAdmin: String
+    let idAssigned: String
+    let idResident: String?
+    let idAdministrative: String?
+    let idOperative: String?
+    let v: Int
+    let assigned: String
+    let date: String
+    
+    // Decodificar el campo `_id` como `id`
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case placeReservation
+        case hourI
+        case hourF
+        case persons
+        case comments
+        case personReservation
+        case uuid
+        case uuidSuperAdmin
+        case idAssigned
+        case idResident
+        case idAdministrative
+        case idOperative
+        case v = "__v"
+        case assigned
+        case date
+    }
 }
 
 

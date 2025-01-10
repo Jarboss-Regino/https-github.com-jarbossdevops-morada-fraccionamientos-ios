@@ -57,20 +57,20 @@ final class LoginViewModel: ObservableObject{
                     
                 if response.status == 200 {
                     //UserSession.shared.saveLoginData(userResponse: response)
-                    self.errorMessage = ""
-                    self.showError = false
-                    //self.loginSuccess = true
-                    self.isLoggedIn = true
-                    self.username = ""
-                    self.password = ""
-                    print("Loggin exitoso")
-                    
+                                       
                     do {
                         let userDetails: UserResponse = try await apiService.get(urlString: ApiEndpoints.getDataUse(email: tempEmail))
                         print(userDetails)
                         // Guardar datos del usuario o manejar la respuesta
                         UserSession.shared.saveUserInfo(userResponse: userDetails.data.first!)
                         print("Datos del usuario obtenidos exitosamente")
+                        self.errorMessage = ""
+                        self.showError = false
+                        //self.loginSuccess = true
+                        self.isLoggedIn = true
+                        self.username = ""
+                        self.password = ""
+                        print("Loggin exitoso")
                         self.loginSuccess = true
                     } catch {
                         self.loginSuccess = false

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomDialogReservation: View {
     @Binding var isActive: Bool
-    var data: Reservations
+    var data: ReservationsResponse
     @State private var offset: CGFloat = 1000
     var body: some View {
         ZStack {
@@ -30,7 +30,7 @@ struct CustomDialogReservation: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.reservacion)")
+                    Text("\(data.personReservation)")
                     Spacer()
                 }
                 
@@ -39,7 +39,7 @@ struct CustomDialogReservation: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.comentario)")
+                    Text("\(data.comments)")
                     Spacer()
                 }
                 
@@ -48,7 +48,7 @@ struct CustomDialogReservation: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.fecha)")
+                    Text("\(data.date)")
                     Spacer()
                 }
                 
@@ -57,7 +57,7 @@ struct CustomDialogReservation: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.desde)")
+                    Text("\(data.hourI)")
                     Spacer()
                 }
                 
@@ -66,7 +66,7 @@ struct CustomDialogReservation: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.hasta)")
+                    Text("\(data.hourF)")
                     Spacer()
                 }
                 
