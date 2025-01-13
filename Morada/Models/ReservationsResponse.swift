@@ -17,7 +17,7 @@ struct ReservationsResponse: Codable, Identifiable {
     let personReservation: String
     let uuid: String
     let uuidSuperAdmin: String
-    let idAssigned: String
+    let idAssigned: AssignedID
     let idResident: String?
     let idAdministrative: String?
     let idOperative: String?

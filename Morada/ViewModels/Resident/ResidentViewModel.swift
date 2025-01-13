@@ -124,18 +124,6 @@ class ResidentViewModel: ObservableObject{
         do{
             self.isLoadingReservations = true
             
-//            var idCliente = "0"
-//            if selectedButton == 1 {
-//                idCliente = (UserSession.shared.userResponse?.id) ?? ""
-//            }
-//            
-//            var idFraccionamiento: String = "0"
-//            if mtipo != 0{
-//                idFraccionamiento = (UserSession.shared.userResponse?.idCliente) ?? ""
-//            }
-//            
-//            let body = ReservationRequest(source1: "0", source2: idFraccionamiento, source3: idCliente)
-            
             let response: [ReservationsResponse] = try await apiService.get(urlString: ApiEndpoints.getReservationsUrl(idUser: self.idUser!))
             
                       
@@ -166,8 +154,18 @@ class ResidentViewModel: ObservableObject{
                 
                 
                 self.reservationsItems.removeAll()
-                self.reservationsItems = reservacionesProcedados
-                print(reservationsItems)
+                if self.selectedButton == 1 {
+                    self.reservationsItems = reservacionesProcedados
+                    //print(reservationsItems)
+                }else{
+                    
+                    self.reservationsItems  = reservacionesProcedados.filter{
+                        $0.uuid == self.idUser  
+                    }
+                    //print("Filtrados: \(self.reservationsItems)")
+                }
+                
+                
                 
             }else{
                 print("No hay Reservaciones")
