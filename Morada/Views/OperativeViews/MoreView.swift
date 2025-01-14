@@ -20,9 +20,9 @@ struct MoreView: View {
                 VStack{
                     if tipo == "residente" {
                         
-                        NavigationLink(destination: Events().navigationBarBackButtonHidden(true)) {
-                            defaultButton(icon: "camera.fill", title: "Eventos")
-                        }
+//                        NavigationLink(destination: Events().navigationBarBackButtonHidden(true)) {
+//                            defaultButton(icon: "camera.fill", title: "Eventos")
+//                        }
                         NavigationLink(destination: IncidentsView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
                             defaultButton(icon: "camera.fill", title: "Incidencias")
                         }
