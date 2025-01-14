@@ -52,6 +52,7 @@ struct IncidentsView: View {
                             itemIncident(data: option, mviewModel: viewModel)
                         }.listStyle(.inset).frame(maxWidth: .infinity).padding(.horizontal,32).padding(.top,10).scrollIndicators(.hidden).refreshable {
                             Task{
+                                viewModel.fetchDate = Date()
                                 await viewModel.getIncidents()
                             }
                         }
@@ -138,11 +139,11 @@ struct IncidentsView: View {
 }
 
 struct itemIncident: View{
-    var data: Incidents
+    var data: IncidentsResponse
     @ObservedObject var mviewModel: MoreViewModel
     
     private var circleColor: Color {
-        switch data.statuss {
+        switch data.status {
             case "0":
                 return .red
             case "2":
@@ -161,10 +162,10 @@ struct itemIncident: View{
             
             
             VStack(alignment: .leading, spacing: 5.0, content: {
-                Text("\(data.clasificacion)")
+                Text("\(data.classification)")
                     .font(.body).fontWeight(.semibold)
                 .foregroundColor(.primary)
-                Text("\(data.descripcion)")
+                Text("\(data.description)")
                     .font(.body)
                 .foregroundColor(.secondary)
             }).padding(.leading,20).padding(.vertical,10)
@@ -193,7 +194,4 @@ struct itemIncident: View{
     }
 }
 
-#Preview {
-    //IncidentsView(viewModel: MoreViewModel())
-    itemIncident(data: Incidents(id: "flskdjflk", id_usuario: "93874kdjf", clasificacion: "Mantenimineto", descripcion: "Tester", evidencia: "fjslkdj", comentarios: "test view", statuss: "1", fecha: "03984j", estatus: 1), mviewModel: MoreViewModel())
-}
+

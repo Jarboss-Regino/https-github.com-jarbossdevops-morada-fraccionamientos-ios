@@ -39,8 +39,8 @@ class MoreViewModel: ObservableObject{
     @Published var fetchDate = Date()
     @Published var textSearchData: String = ""
     @Published var isLoadingIncidents: Bool = false
-    @Published var incidents: [Incidents] = []
-    @Published var selectedIncident: Incidents? = nil
+    @Published var incidents: [IncidentsResponse] = []
+    @Published var selectedIncident: IncidentsResponse? = nil
     @Published var showPopupIncident: Bool = false
     @Published var classification: String = ""
     
@@ -340,20 +340,30 @@ class MoreViewModel: ObservableObject{
     func getIncidents() async{
         do {
             self.isLoadingIncidents = true
-            var id: String = "0"
-            if mtipo != 0{
-                id = (UserSession.shared.userResponse?.idCliente)!
-            }
-            let body = IncidentRequest(source1: "0", source2: id, source3: nil)
-            
-            let response: IncidentsResponse = try await apiService.post(urlString: ApiEndpoints.getIncidentsUrl, body: body)
+            let response: [IncidentsResponse] = try await apiService.get(urlString: ApiEndpoints.getIncidentsUrl(idUuid: self.idUser!))
             
             
             
-            if !response.registros.isEmpty{
+            if !response.isEmpty{
                 
-                let incidentesProcesados = response.registros.map { incident in
-                    return Incidents(id: incident.id, id_usuario: incident.id_usuario, clasificacion: getClassificacion(type: incident.clasificacion), descripcion: incident.descripcion, evidencia: ApiEndpoints.getImageUrl(img: incident.evidencia), comentarios: incident.comentarios, statuss: incident.statuss, fecha: incident.fecha, estatus: incident.estatus)
+                let incidentesProcesados = response.map { incident in
+                    return IncidentsResponse(
+                        id: incident.id,
+                        user: incident.user,
+                        classification: incident.classification,
+                        description: incident.description,
+                        evidence: ApiEndpoints.getImageUrl(img: incident.evidence, uuid: self.idUser!),
+                        comments: incident.comments,
+                        status: incident.status,
+                        uuid: incident.uuid,
+                        uuidSuperAdmin: incident.uuidSuperAdmin,
+                        idAssigned: incident.idAssigned,
+                        v: incident.v,
+                        assigned: incident.assigned,
+                        name: incident.name,
+                        lastName: incident.lastName,
+                        date: formatDate(incident.date)
+                    )
                 }
                 
                 self.incidents.removeAll()
@@ -379,42 +389,28 @@ class MoreViewModel: ObservableObject{
     
     @MainActor
     func fetchIncidentsByDate() async{
-        do {
-            self.isLoadingIncidents = true
-            var idFraccionamiento: String = "0"
+
+        self.isLoadingIncidents = true
             
-            idFraccionamiento = (UserSession.shared.userResponse?.idCliente)!
-            
-            let body = IncidentRequest(source1: "0", source2: idFraccionamiento, source3: getDateFormatter(fecha: self.fetchDate))
-            
-            let response: IncidentsResponse = try await apiService.post(urlString: ApiEndpoints.getIncidentsByDateUrl, body: body)
-            
-            
-            
-            if !response.registros.isEmpty{
-                
-                let incidentesProcesados = response.registros.map { incident in
-                    return Incidents(id: incident.id, id_usuario: incident.id_usuario, clasificacion: getClassificacion(type: incident.clasificacion), descripcion: incident.descripcion, evidencia: ApiEndpoints.getImageUrl(img: incident.evidencia), comentarios: incident.comentarios, statuss: incident.statuss, fecha: incident.fecha, estatus: incident.estatus)
-                }
-                
-                self.incidents.removeAll()
-                self.incidents = incidentesProcesados
-                
-            }else{
-                print("no hay incidentes")
+        
+        if !incidents.isEmpty {
+            let filteredIncidents = incidents.filter { incident in
+                incident.date == formatDateToString(self.fetchDate, format: "dd-MMM-yyyy")
             }
             
-            self.isLoadingIncidents = false
-            
-        } catch let error as ApiError {
-            
-            print("ERROR: \(error)")
-            self.isLoadingIncidents = false
-        } catch {
-            self.isLoadingIncidents = false
-            print("ERROR: \(error)")
-            
+            if filteredIncidents.isEmpty {
+                print("No se encontró ninguna incidencia con la fecha seleccionada.")
+            } else {
+                self.incidents = filteredIncidents
+                print("Incidencias filtradas: \(self.incidents)")
+            }
+        } else {
+            print("No se encontró ninguna incidencia.")
         }
+        
+
+        self.isLoadingIncidents = false
+
     }
     
     
@@ -455,19 +451,7 @@ class MoreViewModel: ObservableObject{
     func getReservations() async {
         do{
             self.isLoadingReservations = true
-            
-//            var idCliente = "0"
-//            if selectedButton == 1 {
-//                idCliente = (UserSession.shared.userResponse?.id)!
-//            }
-//            
-//            var idFraccionamiento: String = "0"
-//            if mtipo != 0{
-//                idFraccionamiento = (UserSession.shared.userResponse?.idCliente)!
-//            }
-//            
-//            let body = ReservationRequest(source1: "0", source2: idFraccionamiento, source3: idCliente)
-            
+                 
             let response: [ReservationsResponse] = try await apiService.get(urlString: ApiEndpoints.getReservationsUrl(idUser: self.idUser!))
             
                       
@@ -749,5 +733,11 @@ class MoreViewModel: ObservableObject{
             return customFormatter.string(from: date)
         }
         return ""
+    }
+    func formatDateToString(_ date: Date, format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "es_MX")
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: date)
     }
 }

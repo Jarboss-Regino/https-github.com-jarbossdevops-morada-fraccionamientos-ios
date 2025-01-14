@@ -7,19 +7,39 @@
 
 import Foundation
 
-struct IncidentsResponse: Codable{
-    var registros: [Incidents]
-}
+struct IncidentsResponse: Codable,Identifiable {
+    let id: String
+    let user: String
+    let classification: String
+    let description: String
+    let evidence: String
+    let comments: String
+    let status: String
+    let uuid: String
+    let uuidSuperAdmin: String
+    let idAssigned: AssignedID
+    let v: Int
+    let assigned: String
+    let name: String
+    let lastName: String
+    let date: String
 
-struct Incidents: Codable, Identifiable {
-    var id: String
-    var id_usuario: String
-    var clasificacion: String
-    var descripcion: String
-    var evidencia: String
-    var comentarios: String
-    var statuss: String
-    var fecha: String
-    var estatus: Int
-              
+    // Decodificar el campo `_id` como `id` y `__v` como `v`
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case user
+        case classification
+        case description
+        case evidence
+        case comments
+        case status
+        case uuid
+        case uuidSuperAdmin
+        case idAssigned
+        case v = "__v"
+        case assigned
+        case name
+        case lastName
+        case date
+    }
 }

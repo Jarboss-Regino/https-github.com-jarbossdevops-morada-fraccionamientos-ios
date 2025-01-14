@@ -56,11 +56,11 @@ class ApiEndpoints{
     static var deleteEventoUrl: String {
         return baseUrl+"/Fraccionamientos/POST/?source1=evento&source2=deleventoid"
     }
-    static var getIncidentsUrl: String {
-        return baseUrl+"/Fraccionamientos/GET/?source1=incidencia&source2=getincidenciaApp"
+    static func getIncidentsUrl(idUuid: String) -> String {
+        return baseUrl+"/management/getIncidence?uuid="+idUuid
     }
-    static func getImageUrl(img: String) -> String {
-        return baseUrl+"/Fraccionamientos/uploads/"+img
+    static func getImageUrl(img: String,uuid: String) -> String {
+        return "https://bucket-control-morada-fraccionamientos-staging.s3.us-east-1.amazonaws.com/Incidences/\(uuid)/\(img)"
     }
     static var getIncidentsByDateUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=incidencia&source2=getincidencia"

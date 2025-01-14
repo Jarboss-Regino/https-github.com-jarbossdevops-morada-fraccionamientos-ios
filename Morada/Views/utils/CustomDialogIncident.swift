@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomDialogIncident: View {
     @Binding var isActive: Bool
-    var data: Incidents
+    var data: IncidentsResponse
     @State private var offset: CGFloat = 1000
     var body: some View {
         ZStack {
@@ -30,7 +30,7 @@ struct CustomDialogIncident: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.clasificacion)")
+                    Text("\(data.classification)")
                     Spacer()
                 }
                 
@@ -39,7 +39,7 @@ struct CustomDialogIncident: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.descripcion)")
+                    Text("\(data.description)")
                     Spacer()
                 }
                 
@@ -48,7 +48,7 @@ struct CustomDialogIncident: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.fecha)")
+                    Text("\(data.date)")
                     Spacer()
                 }
                 
@@ -57,11 +57,11 @@ struct CustomDialogIncident: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.comentarios)")
+                    Text("\(data.comments)")
                     Spacer()
                 }
                 
-                AsyncImage(url: URL(string: data.evidencia)) { phase in
+                AsyncImage(url: URL(string: data.evidence)) { phase in
                     switch phase {
                     case .empty:
                         // Aquí puedes mostrar un indicador de carga
