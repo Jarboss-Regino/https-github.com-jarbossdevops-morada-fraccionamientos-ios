@@ -133,28 +133,43 @@ class MoreViewModel: ObservableObject{
     @MainActor
     func getEvents() async{
         do{
-            var id: String = "0"
-            if mtipo != 0{
-                id = (UserSession.shared.userResponse?.idCliente)!
-            }
-            let body = EventRequest(source1: "0", source2: id)
             
+            let response: [Evento] = try await apiService.get(urlString: ApiEndpoints.getEventosUrl(uuid: self.idUser!))
             
-            let response: EventResponse = try await apiService.post(urlString: ApiEndpoints.getEventosUrl, body: body)
-            
-            if !response.registros.isEmpty{
+            if !response.isEmpty{
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
-                self.events = response.registros.compactMap { registro in
-                    if let mfechaEvento = dateFormatter.date(from: registro.fechaEvento) {
-                        return Evento(id: registro.id, idUsuario: registro.idUsuario, fechaEvento: registro.fechaEvento, horaInicio: registro.horaInicio, horaFin: registro.horaFin, personas: registro.personas, comentarios: registro.comentarios, fecha: registro.fecha, estatus: registro.estatus,fechaEvent: mfechaEvento)
+                self.events = response.compactMap { registro in
+                    if let mfechaEvento = dateFormatter.date(from: registro.dateI) {
+                        
+                        return Evento(
+                            id: registro.id,
+                            user: registro.user,
+                            persons: registro.persons,
+                            tittle: registro.tittle,
+                            description: registro.description,
+                            uuid: registro.uuid,
+                            uuidSuperAdmin: registro.uuidSuperAdmin,
+                            idAssigned: registro.idAssigned,
+                            v: registro.v,
+                            assigned: registro.assigned,
+                            name: registro.name,
+                            lastName: registro.lastName,
+                            dateI: formatTimeOnly(registro.dateI),
+                            dateF: formatTimeOnly(registro.dateF),
+                            fechaEvent: mfechaEvento,
+                            formatDate: formatDate(registro.dateI),
+                            realDate: registro.dateI
+                        )
                         
                     } else {
+                        
                         return nil
                     }
                 }
                 print("get events")
+                print(self.events)
                 self.refreshTrigger.toggle()
                 filterEvents()
             }else{
@@ -185,13 +200,12 @@ class MoreViewModel: ObservableObject{
     
     @MainActor
     func filterEvents() {
-        print("filterEvents")
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Ajusta el formato si es necesario
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Ajusta el formato si es necesario
         
         self.filteredEvents = self.events.filter {
-            guard let eventDate = dateFormatter.date(from: $0.fechaEvento) else {
+            guard let eventDate = dateFormatter.date(from: $0.realDate ?? "") else {
                 return false
             }
             return Calendar.current.isDate(eventDate, inSameDayAs: self.selectedDate)
@@ -716,10 +730,12 @@ class MoreViewModel: ObservableObject{
     }
     func formatTimeOnly(_ timeString: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm" // Formato de entrada solo para la hora (24 horas)
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Formato de entrada solo para la hora (24 horas)
         if let date = dateFormatter.date(from: timeString) {
             dateFormatter.dateFormat = "h:mm a" // Formato de salida (12 horas con AM/PM)
             return dateFormatter.string(from: date)
+        }else {
+            print("Error: El formato de la cadena no coincide con el formato esperado.")
         }
         return ""
     }
@@ -729,7 +745,7 @@ class MoreViewModel: ObservableObject{
         if let date = dateFormatter.date(from: dateString) {
             let customFormatter = DateFormatter()
             customFormatter.dateFormat = "dd-MMM-yyyy" // Formato de salida (día-mes-año)
-            customFormatter.locale = Locale(identifier: "es_ES") // Configurar el idioma a español
+            customFormatter.locale = Locale(identifier: "es_MX") // Configurar el idioma a español
             return customFormatter.string(from: date)
         }
         return ""

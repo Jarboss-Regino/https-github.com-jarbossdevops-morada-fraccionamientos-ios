@@ -18,65 +18,65 @@ struct Events: View {
     var body: some View {
         //NavigationView {
                     ZStack {
-                        CalendarView(selectedDate: $moreViewModel.selectedDate, events: $moreViewModel.events)
-                            .id(calendarID)
-                            .onChange(of: moreViewModel.refreshTrigger,{
-                                calendarID = UUID()
-                            })
-                            .onChange(of: moreViewModel.selectedDate, {
-                                moreViewModel.filterEvents()
-                                print("onChance")
-                            }).onAppear{
-                                Task{
-                                    moreViewModel.filteredEvents = []
-                                    await moreViewModel.getEvents()
-                                    print("onAppear")
-                                }
-                            }
-                        if !moreViewModel.filteredEvents.isEmpty {
-                               VStack {
-                                   HStack {
-                                       Spacer()
-                                       Button {
-                                           moreViewModel.filteredEvents = []
-                                       } label: {
-                                           Image(systemName: "xmark")
-                                               .font(.title2)
-                                               .fontWeight(.medium)
-                                       }
-                                       .tint(.black)
-                                       .padding()
-                                       
-                                   }
-                                   Text("Detalles del Aviso")
-                                       .font(.title)
-                                   
-                                   ForEach(moreViewModel.filteredEvents, id: \.id) { event in
-                                       VStack(alignment: .leading) {
-                                           Text("Usuario: \(event.idUsuario ?? "N/A")")
-                                           Text("Fecha: \(event.fechaEvento)")
-                                           Text("Hora de Inicio: \(event.horaInicio)")
-                                           Text("Hora de Fin: \(event.horaFin)")
-                                       }
-                                       
-                                   }
-                                   
-                                  
-                                   Button(action: {
-                                       isActive = true
-                                   }, label: {
-                                       Text("Eliminar")
-                                           .font(.system(size: 16, weight: .bold))
-                                           .foregroundColor(.black)
-                                           .frame(height: 40)
-                                           .padding()
-                                   }).disabled(moreViewModel.isVisibleButtonDelEvent)
-                                   
-                               }
-                               .frame(width: 300)
-                               .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
-                               .shadow(radius: 5)
-                           }
+//                        CalendarView(selectedDate: $moreViewModel.selectedDate, events: $moreViewModel.events)
+//                            .id(calendarID)
+//                            .onChange(of: moreViewModel.refreshTrigger,{
+//                                calendarID = UUID()
+//                            })
+//                            .onChange(of: moreViewModel.selectedDate, {
+//                                moreViewModel.filterEvents()
+//                                print("onChance")
+//                            }).onAppear{
+//                                Task{
+//                                    moreViewModel.filteredEvents = []
+//                                    await moreViewModel.getEvents()
+//                                    print("onAppear")
+//                                }
+//                            }
+//                        if !moreViewModel.filteredEvents.isEmpty {
+//                               VStack {
+//                                   HStack {
+//                                       Spacer()
+//                                       Button {
+//                                           moreViewModel.filteredEvents = []
+//                                       } label: {
+//                                           Image(systemName: "xmark")
+//                                               .font(.title2)
+//                                               .fontWeight(.medium)
+//                                       }
+//                                       .tint(.black)
+//                                       .padding()
+//                                       
+//                                   }
+//                                   Text("Detalles del Aviso")
+//                                       .font(.title)
+//                                   
+//                                   ForEach(moreViewModel.filteredEvents, id: \.id) { event in
+//                                       VStack(alignment: .leading) {
+//                                           Text("Usuario: \(event.idUsuario ?? "N/A")")
+//                                           Text("Fecha: \(event.fechaEvento)")
+//                                           Text("Hora de Inicio: \(event.horaInicio)")
+//                                           Text("Hora de Fin: \(event.horaFin)")
+//                                       }
+//                                       
+//                                   }
+//                                   
+//                                  
+//                                   Button(action: {
+//                                       isActive = true
+//                                   }, label: {
+//                                       Text("Eliminar")
+//                                           .font(.system(size: 16, weight: .bold))
+//                                           .foregroundColor(.black)
+//                                           .frame(height: 40)
+//                                           .padding()
+//                                   }).disabled(moreViewModel.isVisibleButtonDelEvent)
+//                                   
+//                               }
+//                               .frame(width: 300)
+//                               .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+//                               .shadow(radius: 5)
+//                           }
                         
                     }.frame(maxWidth: .infinity, maxHeight: .infinity).overlay(
                         Group {

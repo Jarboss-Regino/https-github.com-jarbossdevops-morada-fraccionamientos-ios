@@ -16,7 +16,7 @@ struct EventsView: View {
     @State private var calendarID = UUID()
     
     var body: some View {
-        //NavigationView {
+        NavigationView {
                     ZStack {
                         CalendarView(selectedDate: $moreViewModel.selectedDate, events: $moreViewModel.events)
                             .id(calendarID)
@@ -24,13 +24,14 @@ struct EventsView: View {
                                 calendarID = UUID()
                             })
                             .onChange(of: moreViewModel.selectedDate, {
-                                moreViewModel.filterEvents()
-                                print("onChance")
+                                Task{
+                                    moreViewModel.filterEvents()
+                                }
+                                
                             }).onAppear{
                                 Task{
                                     moreViewModel.filteredEvents = []
                                     await moreViewModel.getEvents()
-                                    print("onAppear")
                                 }
                             }
                         if !moreViewModel.filteredEvents.isEmpty {
@@ -48,29 +49,29 @@ struct EventsView: View {
                                        .padding()
                                        
                                    }
-                                   Text("Detalles del Aviso")
+                                   Text("Detalles del Evento")
                                        .font(.title)
                                    
                                    ForEach(moreViewModel.filteredEvents, id: \.id) { event in
                                        VStack(alignment: .leading) {
-                                           Text("Usuario: \(event.idUsuario ?? "N/A")")
-                                           Text("Fecha: \(event.fechaEvento)")
-                                           Text("Hora de Inicio: \(event.horaInicio)")
-                                           Text("Hora de Fin: \(event.horaFin)")
+                                           Text("Usuario: \(event.name)")
+                                           Text("Fecha: \(event.formatDate ?? "N/A")")
+                                           Text("Hora de Inicio: \(event.dateI)")
+                                           Text("Hora de Fin: \(event.dateF)")
                                        }
                                        
                                    }
                                    
-                                  
-                                   Button(action: {
-                                       isActive = true
-                                   }, label: {
-                                       Text("Eliminar")
-                                           .font(.system(size: 16, weight: .bold))
-                                           .foregroundColor(.black)
-                                           .frame(height: 40)
-                                           .padding()
-                                   }).disabled(moreViewModel.isVisibleButtonDelEvent)
+                                   Spacer().frame(maxHeight: 40)
+//                                   Button(action: {
+//                                       isActive = true
+//                                   }, label: {
+//                                       Text("Eliminar")
+//                                           .font(.system(size: 16, weight: .bold))
+//                                           .foregroundColor(.black)
+//                                           .frame(height: 40)
+//                                           .padding()
+//                                   }).disabled(moreViewModel.isVisibleButtonDelEvent)
                                    
                                }
                                .frame(width: 300)
@@ -83,9 +84,9 @@ struct EventsView: View {
                             if isActive {
                                 QuestionDialog(isActive: $isActive, title: "¿Está seguro de eliminar este evento?", buttonTitle: "Si", action: {
                                     Task{
-                                        await moreViewModel.deleteEvent()
-                                        moreViewModel.filteredEvents = []
-                                        await moreViewModel.getEvents()
+//                                        await moreViewModel.deleteEvent()
+//                                        moreViewModel.filteredEvents = []
+//                                        await moreViewModel.getEvents()
                                         print("Evento eliminado")
                                         
                                     }
@@ -116,7 +117,7 @@ struct EventsView: View {
                        
                 }).navigationBarBackButtonHidden(true)
                     .navigationBarTitleDisplayMode(.inline)
-        //}
+        }
     }
 }
 

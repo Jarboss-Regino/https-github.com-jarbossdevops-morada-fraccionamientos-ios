@@ -8,30 +8,44 @@
 import Foundation
 
 struct Evento: Identifiable, Codable,CalendarEventProtocol {
-    var id: String
-    var idUsuario: String?
-    var fechaEvento: String
-    var horaInicio: String
-    var horaFin: String
-    var personas: Int
-    var comentarios: String
-    var fecha: String
-    var estatus: Int
+    let id: String
+    let user: String
+    let persons: String
+    let tittle: String
+    let description: String
+    let uuid: String
+    let uuidSuperAdmin: String
+    let idAssigned: AssignedID
+    let v: Int
+    let assigned: [String]
+    let name: String
+    let lastName: String
+    let dateI: String
+    let dateF: String
     var fechaEvent: Date?
+    var formatDate: String?
+    var realDate: String?
+    
+  
+    
 
     enum CodingKeys: String, CodingKey {
-        case id
-        case idUsuario = "id_usuario"
-        case fechaEvento = "fechaevento"
-        case horaInicio = "horainicio"
-        case horaFin = "horafin"
-        case personas
-        case comentarios
-        case fecha
-        case estatus
+        case id = "_id"
+        case user
+        case persons
+        case tittle
+        case description
+        case uuid
+        case uuidSuperAdmin
+        case idAssigned
+        case v = "__v"
+        case assigned
+        case name
+        case lastName
+        case dateI
+        case dateF
+       
     }
 }
 
-struct EventResponse: Codable {
-    let registros: [Evento]
-}
+

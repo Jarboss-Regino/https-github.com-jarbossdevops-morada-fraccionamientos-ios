@@ -37,82 +37,82 @@ class EventsViewModel: ObservableObject{
     
     
     init(){
-        var type = UserSession.shared.userResponse?.tipo
-        if let ttipo = type {
-            mtipo = ttipo
-            
-        } else {
-            print("El tipo es nil")
-        }
+//        var type = UserSession.shared.userResponse?.tipo
+//        if let ttipo = type {
+//            mtipo = ttipo
+//            
+//        } else {
+//            print("El tipo es nil")
+//        }
     }
     /// EVENTS FUNCS
     
     @MainActor
     func getEvents() async{
-        do{
-            var id: String = "0"
-            if mtipo != 0{
-                id = (UserSession.shared.userResponse?.idCliente)!
-            }
-            let body = EventRequest(source1: "0", source2: id)
-            
-            
-            let response: EventResponse = try await apiService.post(urlString: ApiEndpoints.getEventosUrl, body: body)
-            
-            if !response.registros.isEmpty{
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                
-                self.events = response.registros.compactMap { registro in
-                    if let mfechaEvento = dateFormatter.date(from: registro.fechaEvento) {
-                        return Evento(id: registro.id, idUsuario: registro.idUsuario, fechaEvento: registro.fechaEvento, horaInicio: registro.horaInicio, horaFin: registro.horaFin, personas: registro.personas, comentarios: registro.comentarios, fecha: registro.fecha, estatus: registro.estatus,fechaEvent: mfechaEvento)
-                        
-                    } else {
-                        return nil
-                    }
-                }
-                print("get events")
-                self.refreshTrigger.toggle()
-                filterEvents()
-            }else{
-                print("No hay eventos")
-            }
-            
-            
-        } catch let error as ApiError {
-            // Manejar errores específicos de la API
-            DispatchQueue.main.async {
-                //self.isLoading = false
-                //self.errorMessage = "Error: \(error)"
-                //self.showError = true
-                //self.isSearching = false
-                print("ERROR: \(error)")
-            }
-        } catch {
-            // Manejar errores genéricos
-            DispatchQueue.main.async {
-                //self.isLoading = false
-                //self.errorMessage = "Ocurrió un error inesperado"
-                //self.showError = true
-                //self.isSearching = false
-                print("ERROR: \(error)")
-            }
-        }
+//        do{
+//            var id: String = "0"
+//            if mtipo != 0{
+//                id = (UserSession.shared.userResponse?.idCliente)!
+//            }
+//            let body = EventRequest(source1: "0", source2: id)
+//            
+//            
+//            let response: EventResponse = try await apiService.post(urlString: ApiEndpoints.getEventosUrl, body: body)
+//            
+//            if !response.registros.isEmpty{
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "yyyy-MM-dd"
+//                
+//                self.events = response.registros.compactMap { registro in
+//                    if let mfechaEvento = dateFormatter.date(from: registro.fechaEvento) {
+//                        return Evento(id: registro.id, idUsuario: registro.idUsuario, fechaEvento: registro.fechaEvento, horaInicio: registro.horaInicio, horaFin: registro.horaFin, personas: registro.personas, comentarios: registro.comentarios, fecha: registro.fecha, estatus: registro.estatus,fechaEvent: mfechaEvento)
+//                        
+//                    } else {
+//                        return nil
+//                    }
+//                }
+//                print("get events")
+//                self.refreshTrigger.toggle()
+//                filterEvents()
+//            }else{
+//                print("No hay eventos")
+//            }
+//            
+//            
+//        } catch let error as ApiError {
+//            // Manejar errores específicos de la API
+//            DispatchQueue.main.async {
+//                //self.isLoading = false
+//                //self.errorMessage = "Error: \(error)"
+//                //self.showError = true
+//                //self.isSearching = false
+//                print("ERROR: \(error)")
+//            }
+//        } catch {
+//            // Manejar errores genéricos
+//            DispatchQueue.main.async {
+//                //self.isLoading = false
+//                //self.errorMessage = "Ocurrió un error inesperado"
+//                //self.showError = true
+//                //self.isSearching = false
+//                print("ERROR: \(error)")
+//            }
+//        }
     }
     
     @MainActor
     func filterEvents() {
-        print("filterEvents")
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Ajusta el formato si es necesario
-        
-        self.filteredEvents = self.events.filter {
-            guard let eventDate = dateFormatter.date(from: $0.fechaEvento) else {
-                return false
-            }
-            return Calendar.current.isDate(eventDate, inSameDayAs: self.selectedDate)
-        }
+//        print("filterEvents")
+//        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd" // Ajusta el formato si es necesario
+//        
+//        self.filteredEvents = self.events.filter {
+//            guard let eventDate = dateFormatter.date(from: $0.fechaEvento) else {
+//                return false
+//            }
+//            return Calendar.current.isDate(eventDate, inSameDayAs: self.selectedDate)
+//        }
     }
     
     @MainActor

@@ -47,8 +47,8 @@ class ApiEndpoints{
     static var searhcAgendaUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=buscadorLetrasag"
     }
-    static var getEventosUrl: String {
-        return baseUrl+"/Fraccionamientos/GET/?source1=evento&source2=getevento"
+    static func getEventosUrl(uuid: String) -> String {
+        return baseUrl+"/management/getEvent?uuid="+uuid
     }
     static var setEventoUrl: String {
         return baseUrl+"/Fraccionamientos/POST/?source1=evento&source2=setevento"
