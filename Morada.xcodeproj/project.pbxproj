@@ -27,6 +27,7 @@
 		8D21E81C2C9E2C9A007E17FF /* NewUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E81B2C9E2C9A007E17FF /* NewUserViewModel.swift */; };
 		8D21E81E2CA1C4FC007E17FF /* NewUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E81D2CA1C4FC007E17FF /* NewUserResponse.swift */; };
 		8D21E8212CA1EB09007E17FF /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D21E8202CA1EB09007E17FF /* UserModel.swift */; };
+		8D369C2D2D441948008C10B3 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D369C2C2D441948008C10B3 /* CustomTextField.swift */; };
 		8D55251A2CD4227A009EE8F4 /* AvisoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5525192CD4227A009EE8F4 /* AvisoResponse.swift */; };
 		8D55251C2CD423B2009EE8F4 /* AvisoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D55251B2CD423B2009EE8F4 /* AvisoRequest.swift */; };
 		8D55251E2CD42885009EE8F4 /* AvisosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D55251D2CD42885009EE8F4 /* AvisosView.swift */; };
@@ -97,6 +98,10 @@
 		8DBFFE632CA49D8E00088F0F /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBFFE622CA49D8E00088F0F /* MoreView.swift */; };
 		8DDEBB862CA3232600EC6BB8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDEBB852CA3232600EC6BB8 /* HomeView.swift */; };
 		8DDEBB882CA3277A00EC6BB8 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDEBB872CA3277A00EC6BB8 /* Routes.swift */; };
+		8DE345522D4815EA00494AB8 /* AdminsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345512D4815EA00494AB8 /* AdminsResponse.swift */; };
+		8DE345542D49288200494AB8 /* AdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345532D49288200494AB8 /* AdminViewModel.swift */; };
+		8DE345562D49358000494AB8 /* ItemEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345552D49358000494AB8 /* ItemEventView.swift */; };
+		8DE345582D493BB000494AB8 /* CustomDialogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345572D493BB000494AB8 /* CustomDialogEvent.swift */; };
 		8DEC8AEF2CEE394D00DADBDF /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AEE2CEE394D00DADBDF /* EmptyView.swift */; };
 		8DEC8AF12CF4E6C200DADBDF /* CustomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */; };
 		8DEC8AF32D11E02A00DADBDF /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AF22D11E02A00DADBDF /* SplashScreen.swift */; };
@@ -144,6 +149,7 @@
 		8D21E81B2C9E2C9A007E17FF /* NewUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewModel.swift; sourceTree = "<group>"; };
 		8D21E81D2CA1C4FC007E17FF /* NewUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserResponse.swift; sourceTree = "<group>"; };
 		8D21E8202CA1EB09007E17FF /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		8D369C2C2D441948008C10B3 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		8D5525192CD4227A009EE8F4 /* AvisoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvisoResponse.swift; sourceTree = "<group>"; };
 		8D55251B2CD423B2009EE8F4 /* AvisoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvisoRequest.swift; sourceTree = "<group>"; };
 		8D55251D2CD42885009EE8F4 /* AvisosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvisosView.swift; sourceTree = "<group>"; };
@@ -214,6 +220,10 @@
 		8DBFFE622CA49D8E00088F0F /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		8DDEBB852CA3232600EC6BB8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8DDEBB872CA3277A00EC6BB8 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
+		8DE345512D4815EA00494AB8 /* AdminsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminsResponse.swift; sourceTree = "<group>"; };
+		8DE345532D49288200494AB8 /* AdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewModel.swift; sourceTree = "<group>"; };
+		8DE345552D49358000494AB8 /* ItemEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEventView.swift; sourceTree = "<group>"; };
+		8DE345572D493BB000494AB8 /* CustomDialogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogEvent.swift; sourceTree = "<group>"; };
 		8DEC8AEE2CEE394D00DADBDF /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRouter.swift; sourceTree = "<group>"; };
 		8DEC8AF22D11E02A00DADBDF /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -330,6 +340,7 @@
 				8D5525512CE3DBDE009EE8F4 /* AgendaResponse.swift */,
 				8DBDAE072D2D9BB600564A75 /* LoginResponse.swift */,
 				8DBDAE0B2D2DD42D00564A75 /* UserResponse.swift */,
+				8DE345512D4815EA00494AB8 /* AdminsResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -343,6 +354,7 @@
 				8D21E81B2C9E2C9A007E17FF /* NewUserViewModel.swift */,
 				8D1BF84B2CA46519006DDF8A /* HomeViewModel.swift */,
 				8D5D6ED62CA49F5D007CBAFC /* MoreViewModel.swift */,
+				8DE345532D49288200494AB8 /* AdminViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -462,6 +474,9 @@
 				8D5525392CDAC265009EE8F4 /* ButtonIcon.swift */,
 				8D55253F2CDBFB6D009EE8F4 /* ToolBarBack.swift */,
 				8D5525532CE4F962009EE8F4 /* AccessDialog.swift */,
+				8D369C2C2D441948008C10B3 /* CustomTextField.swift */,
+				8DE345552D49358000494AB8 /* ItemEventView.swift */,
+				8DE345572D493BB000494AB8 /* CustomDialogEvent.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -640,6 +655,7 @@
 				8DEC8AF32D11E02A00DADBDF /* SplashScreen.swift in Sources */,
 				8D21E8162C9DEC07007E17FF /* PasswordView.swift in Sources */,
 				8D5525442CDD2AD3009EE8F4 /* RegisterVisitResponse.swift in Sources */,
+				8DE345582D493BB000494AB8 /* CustomDialogEvent.swift in Sources */,
 				8DDEBB862CA3232600EC6BB8 /* HomeView.swift in Sources */,
 				8D5525482CE29ABF009EE8F4 /* QrRequest.swift in Sources */,
 				8D76D0A72CBDBBED009B0866 /* NewEventResponse.swift in Sources */,
@@ -658,6 +674,7 @@
 				8DEC8AEF2CEE394D00DADBDF /* EmptyView.swift in Sources */,
 				8D55252E2CD96E2E009EE8F4 /* ToolBar.swift in Sources */,
 				8D21E7DE2C99DDC1007E17FF /* MoradaApp.swift in Sources */,
+				8D369C2D2D441948008C10B3 /* CustomTextField.swift in Sources */,
 				8D76D0972CB5B6B7009B0866 /* AgendaRequest.swift in Sources */,
 				8D98DC1A2CC7FB2C00F91733 /* AddReservationView.swift in Sources */,
 				8D55254E2CE3BDC6009EE8F4 /* GetVistasResponse.swift in Sources */,
@@ -668,6 +685,7 @@
 				8D21E81E2CA1C4FC007E17FF /* NewUserResponse.swift in Sources */,
 				8D76D09F2CB87845009B0866 /* EventRequest.swift in Sources */,
 				8D5525202CD95311009EE8F4 /* DeleteEventRequest.swift in Sources */,
+				8DE345522D4815EA00494AB8 /* AdminsResponse.swift in Sources */,
 				8D5525522CE3DBDE009EE8F4 /* AgendaResponse.swift in Sources */,
 				8D55251C2CD423B2009EE8F4 /* AvisoRequest.swift in Sources */,
 				8D21E81C2C9E2C9A007E17FF /* NewUserViewModel.swift in Sources */,
@@ -679,6 +697,7 @@
 				8D76D0A32CB97B70009B0866 /* CalendarView.swift in Sources */,
 				8D76D0862CAB4E43009B0866 /* ResidentResponse.swift in Sources */,
 				8DBDAE082D2D9BB600564A75 /* LoginResponse.swift in Sources */,
+				8DE345542D49288200494AB8 /* AdminViewModel.swift in Sources */,
 				8DBFFE632CA49D8E00088F0F /* MoreView.swift in Sources */,
 				8D76D0932CB4857A009B0866 /* CheckOutResponse.swift in Sources */,
 				8D5525362CDABE31009EE8F4 /* SimpleToolBar.swift in Sources */,
@@ -700,6 +719,7 @@
 				8D21E8102C9A30B8007E17FF /* ApiService.swift in Sources */,
 				8D76D09D2CB877C0009B0866 /* EventResponse.swift in Sources */,
 				8D55252A2CD96593009EE8F4 /* Reservation.swift in Sources */,
+				8DE345562D49358000494AB8 /* ItemEventView.swift in Sources */,
 				8D76D0A52CBD84B0009B0866 /* NewEventRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -18,22 +18,12 @@ class MoreViewModel: ObservableObject{
     @Published var filteredEvents: [Evento] = []
     @Published var selectedDate = Date()
     @Published var isVisibleButtonDelEvent: Bool = true
-    // add event variables
-    @Published var numPeople: Int = 1
-    @Published var date = Date()
-    @Published var startTime = Date()
-    @Published var endTime = Date()
     
-    @Published var isLoading = false
-    @Published var showError = false
-    @Published var errorMessage = ""
-    
-    @Published var showMessage = false
-    @Published var successMessage = ""
-    
-    @Published var disableButton = false
-    
+    @Published var selectedEvent: Evento? = nil
+    @Published var showPopupEvent: Bool = false
+   
     @Published var idEvent: String = ""
+    @Published var disableButton = false
     
     // Incidents variables
     @Published var fetchDate = Date()
@@ -93,6 +83,8 @@ class MoreViewModel: ObservableObject{
     
     @Published var tipoUsuario: String?
     let idUser = UserSession.shared.userData?.uuid
+    let username = UserSession.shared.userData?.username
+    let uuidAdmin = UserSession().userData?.uuidSuperAdmin
     
     init(){
         self.tipo = UserSession.shared.userResponse?.tipo
@@ -114,6 +106,7 @@ class MoreViewModel: ObservableObject{
         }else{
             print("error al obtener el tipo de usuario")
         }
+        
     }
     
     func getDateFormatter() -> DateFormatter {
@@ -168,8 +161,7 @@ class MoreViewModel: ObservableObject{
                         return nil
                     }
                 }
-                print("get events")
-                print(self.events)
+                
                 self.refreshTrigger.toggle()
                 filterEvents()
             }else{
@@ -212,89 +204,10 @@ class MoreViewModel: ObservableObject{
         }
     }
     
-    @MainActor
-    func creaeNewEvent() async{
-        do {
-            let ahora = Date()
-            print(ahora)
-            
-            
-            if numPeople <= 0{
-                self.errorMessage = "El número de personas debe ser mayor a 0"
-                self.showError = true
-                return
-            }
-            
-            self.showError = false
-            guard date >= ahora else {
-                self.errorMessage = "La fecha del evento debe ser en el futuro."
-                self.showError = true
-                return
-            }
-            self.showError = false
-            guard startTime >= ahora else {
-                self.errorMessage = "La hora de inicio debe ser mayor a la hora actual."
-                self.showError = true
-                return
-            }
-            self.showError = false
-            guard endTime > ahora && endTime > startTime else {
-                self.errorMessage = "La hora de finalización debe ser mayor a la hora actual y a la hora de inicio."
-                self.showError = true
-                return
-            }
-            self.isLoading = true
-            var id: String = "0"
-            if mtipo != 0{
-                id = (UserSession.shared.userResponse?.idCliente)!
-            }
-            
-            let idUser = (UserSession.shared.userResponse?.id)!
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let soloFecha = dateFormatter.string(from: date)
-            
-            let timeFormatter = DateFormatter()
-            timeFormatter.dateFormat = "HH:mm"
-            let start = timeFormatter.string(from: startTime)
-            let end = timeFormatter.string(from: endTime)
-            
-            let totalPeople = String(numPeople)
-            
-            let body = NewEventRequest(source1: idUser, source2: soloFecha, source3: start, source4: end, source5: totalPeople, source6: "", source7: id)
-            
-            let response: NewEventResponse = try await apiService.post(urlString: ApiEndpoints.setEventoUrl, body: body)
-            
-            
-            if response.estatus == "ok" {
-                self.isLoading = false
-                self.showError = false
-                self.disableButton = true
-                self.successMessage = "Evento reservado"
-                self.showMessage = true
-            }else{
-                self.isLoading = false
-                self.errorMessage = "Ocurrio un error al registrar el evento"
-                self.showError = true
-            }
-            
-            
-            
-        } catch let error as ApiError {
-            // Manejar errores específicos de la API
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.showError = true
-                print("ERROR: \(error)")
-            }
-            
-        } catch {
-            self.isLoading = false
-            self.showError = true
-            print("ERROR: \(error)")
-        }
-    }
+    
+    
+    
+    
     
     @MainActor
     func deleteEvent() async{
@@ -334,19 +247,7 @@ class MoreViewModel: ObservableObject{
         }
     }
     
-    @MainActor
-    func resetFields(){
-        self.disableButton = false
-        self.showError = false
-        self.errorMessage = ""
-        self.numPeople = 1
-        self.showMessage = false
-        self.successMessage = ""
-        self.date = Date()
-        self.startTime = Date()
-        self.endTime = Date()
-        
-    }
+   
     
     // INCIDENTS
     
@@ -507,11 +408,11 @@ class MoreViewModel: ObservableObject{
             
         } catch let error as ApiError {
             
-            print("ERROR: \(error)")
+            //print("ERROR: \(error)")
             self.isLoadingReservations = false
         } catch {
             self.isLoadingReservations = false
-            print("ERROR: \(error)")
+            //print("ERROR: \(error)")
             
         }
     }
@@ -541,12 +442,12 @@ class MoreViewModel: ObservableObject{
         }catch let error as ApiError {
             
                 
-            print("Error: \(error)")
+            //print("Error: \(error)")
                 
             
         } catch {
             
-            print("Error desconocido")
+            //print("Error desconocido")
             
         }
     }
@@ -621,12 +522,12 @@ class MoreViewModel: ObservableObject{
         }catch let error as ApiError {
             
             self.isLoadingReservation = false
-            print("Error: \(error)")
+            //print("Error: \(error)")
                 
             
         } catch {
             self.isLoadingReservation = false
-            print("Error desconocido")
+           // print("Error desconocido")
             
         }
     }
@@ -692,11 +593,11 @@ class MoreViewModel: ObservableObject{
             
         } catch let error as ApiError {
             
-            print("ERROR: \(error)")
+            //print("ERROR: \(error)")
             
         } catch {
             
-            print("ERROR: \(error)")
+            //print("ERROR: \(error)")
             
         }
     }

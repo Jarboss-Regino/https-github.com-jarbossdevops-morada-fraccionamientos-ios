@@ -8,8 +8,7 @@
 import Foundation
 
 struct NewEventResponse: Codable {
-    let estatus: String
-    let eventoId: String?
-    let eventoFecha: String?
+    let message: String
+    
 }
 

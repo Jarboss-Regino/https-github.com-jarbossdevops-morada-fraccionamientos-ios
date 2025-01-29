@@ -8,11 +8,13 @@
 import Foundation
 
 struct NewEventRequest: Codable{
-    let source1: String
-    let source2: String
-    let source3: String
-    let source4: String
-    let source5: String
-    let source6: String
-    let source7: String
+    let user: String
+    let dateI: String
+    let dateF: String
+    let persons: String
+    let tittle: String
+    let description: String
+    let uuidSuperAdmin: String
+    let uuid: String
+    let idAssigned: String
 }

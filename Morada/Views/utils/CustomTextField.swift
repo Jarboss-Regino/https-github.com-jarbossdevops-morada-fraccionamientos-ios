@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct CustomTextField: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+    let placeholder: String
+        @Binding var text: String
+
+        var body: some View {
+            VStack(spacing: 4) {
+                TextField(placeholder, text: $text)
+                    .padding(8)
+                    .cornerRadius(16)
+                    
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue, Color.purple]),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+                .frame(height: 2)
+            }
+            .frame(height: 60)
+        }
 }
 
-#Preview {
-    CustomTextField()
-}
+

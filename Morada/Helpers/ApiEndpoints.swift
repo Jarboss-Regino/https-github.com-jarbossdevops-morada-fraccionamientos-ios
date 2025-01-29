@@ -51,10 +51,13 @@ class ApiEndpoints{
         return baseUrl+"/management/getEvent?uuid="+uuid
     }
     static var setEventoUrl: String {
-        return baseUrl+"/Fraccionamientos/POST/?source1=evento&source2=setevento"
+        return baseUrl+"/management/createEvent"
     }
     static var deleteEventoUrl: String {
         return baseUrl+"/Fraccionamientos/POST/?source1=evento&source2=deleventoid"
+    }
+    static func getAdminsUrls(idAssigned: String) -> String {
+        return baseUrl+"/management/getAdmin?idAssigned="+idAssigned
     }
     static func getIncidentsUrl(idUuid: String) -> String {
         return baseUrl+"/management/getIncidence?uuid="+idUuid

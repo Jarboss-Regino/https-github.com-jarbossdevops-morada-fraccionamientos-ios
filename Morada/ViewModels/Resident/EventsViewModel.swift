@@ -165,22 +165,22 @@ class EventsViewModel: ObservableObject{
             
             let totalPeople = String(numPeople)
             
-            let body = NewEventRequest(source1: idUser, source2: soloFecha, source3: start, source4: end, source5: totalPeople, source6: "", source7: id)
-            
-            let response: NewEventResponse = try await apiService.post(urlString: ApiEndpoints.setEventoUrl, body: body)
-            
-            
-            if response.estatus == "ok" {
-                self.isLoading = false
-                self.showError = false
-                self.disableButton = true
-                self.successMessage = "Evento reservado"
-                self.showMessage = true
-            }else{
-                self.isLoading = false
-                self.errorMessage = "Ocurrio un error al registrar el evento"
-                self.showError = true
-            }
+//            let body = NewEventRequest(source1: idUser, source2: soloFecha, source3: start, source4: end, source5: totalPeople, source6: "", source7: id)
+//            
+//            let response: NewEventResponse = try await apiService.post(urlString: ApiEndpoints.setEventoUrl, body: body)
+//            
+//            
+//            if response.estatus == "ok" {
+//                self.isLoading = false
+//                self.showError = false
+//                self.disableButton = true
+//                self.successMessage = "Evento reservado"
+//                self.showMessage = true
+//            }else{
+//                self.isLoading = false
+//                self.errorMessage = "Ocurrio un error al registrar el evento"
+//                self.showError = true
+//            }
             
             
             
