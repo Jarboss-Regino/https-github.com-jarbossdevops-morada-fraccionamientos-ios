@@ -7,19 +7,39 @@
 
 import Foundation
 
-struct AvisoResponse: Codable{
-    var registros: [Aviso]
+struct AvisoResponse: Codable, Identifiable{
+    let id: String
+    let userName: String
+    let description: String
+    let place: String
+    let adjunto: String
+    let uuid: String
+    let uuidSuperAdmin: String
+    let idAssigned: AssignedID
+    let v: Int
+    let assigned: [String]
+    let name: String
+    let lastName: String
+    let date: String
+    let hour: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case userName
+        case description
+        case place
+        case adjunto
+        case uuid
+        case uuidSuperAdmin
+        case idAssigned
+        case v = "__v"
+        case assigned
+        case name
+        case lastName
+        case date
+        case hour
+    }
 }
 
-struct Aviso: Identifiable, Codable,CalendarEventProtocol{
-    var id: String
-    var nombre: String
-    var contenido: String
-    var fecha: String
-    var lugar: String
-    var adjunto: String
-    var hora: String
-    var estatus: Int
-    var fechaEvent: Date?
-}
+
 

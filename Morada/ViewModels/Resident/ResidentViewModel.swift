@@ -10,8 +10,8 @@ import Foundation
 class ResidentViewModel: ObservableObject{
     
     // AVISOS VARIABLES
-    @Published var avisosEvents: [Aviso] = []
-    @Published var avisosFilteredEvents: [Aviso] = []
+    @Published var avisosEvents: [AvisoResponse] = []
+    @Published var avisosFilteredEvents: [AvisoResponse] = []
     @Published var avisoSelectedDate = Date()
     
     // Reservaciones variables
@@ -55,39 +55,39 @@ class ResidentViewModel: ObservableObject{
 //            if mtipo != 0{
 //                //id = (UserSession.shared.userResponse?.idCliente)!
 //            }
-            let body = AvisoRequest(source1: "0", source2: id,source3: "")
+//            let body = AvisoRequest(source1: "0", source2: id,source3: "")
             
             
-            let response: AvisoResponse = try await apiService.post(urlString: ApiEndpoints.getAvisosUrl, body: body)
-            
-            if !response.registros.isEmpty{
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                
-                self.avisosEvents = response.registros.compactMap { registro in
-                    if let mfechaEvento = dateFormatter.date(from: registro.fecha) {
-                        return Aviso(
-                            id: registro.id,
-                            nombre: registro.nombre,
-                            contenido: registro.contenido,
-                            fecha: registro.fecha,
-                            lugar: registro.lugar,
-                            adjunto: registro.adjunto,
-                            hora: registro.hora,
-                            estatus: registro.estatus,
-                            fechaEvent: mfechaEvento
-                        )
-                        
-                    } else {
-                        return nil
-                    }
-                }
-                print("get events ejecutado")
-                
-                AvisoFilterEvents()
-            }else{
-                print("No hay eventos en avisos")
-            }
+//            let response: AvisoResponse = try await apiService.post(urlString: ApiEndpoints.getAvisosUrl, body: body)
+//            
+//            if !response.registros.isEmpty{
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "yyyy-MM-dd"
+//                
+//                self.avisosEvents = response.registros.compactMap { registro in
+//                    if let mfechaEvento = dateFormatter.date(from: registro.fecha) {
+//                        return Aviso(
+//                            id: registro.id,
+//                            nombre: registro.nombre,
+//                            contenido: registro.contenido,
+//                            fecha: registro.fecha,
+//                            lugar: registro.lugar,
+//                            adjunto: registro.adjunto,
+//                            hora: registro.hora,
+//                            estatus: registro.estatus,
+//                            fechaEvent: mfechaEvento
+//                        )
+//                        
+//                    } else {
+//                        return nil
+//                    }
+//                }
+//                print("get events ejecutado")
+//                
+//                AvisoFilterEvents()
+//            }else{
+//                print("No hay eventos en avisos")
+//            }
             
             
         } catch let error as ApiError {
@@ -105,15 +105,15 @@ class ResidentViewModel: ObservableObject{
     func AvisoFilterEvents() {
         
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Ajusta el formato si es necesario
-        
-        self.avisosFilteredEvents = self.avisosEvents.filter {
-            guard let eventDate = dateFormatter.date(from: $0.fecha) else {
-                return false
-            }
-            return Calendar.current.isDate(eventDate, inSameDayAs: self.avisoSelectedDate)
-        }
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd" // Ajusta el formato si es necesario
+//        
+//        self.avisosFilteredEvents = self.avisosEvents.filter {
+//            guard let eventDate = dateFormatter.date(from: $0.fecha) else {
+//                return false
+//            }
+//            return Calendar.current.isDate(eventDate, inSameDayAs: self.avisoSelectedDate)
+//        }
     }
     
     /// Reservations func

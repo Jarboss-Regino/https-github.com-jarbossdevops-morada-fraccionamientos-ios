@@ -102,6 +102,9 @@
 		8DE345542D49288200494AB8 /* AdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345532D49288200494AB8 /* AdminViewModel.swift */; };
 		8DE345562D49358000494AB8 /* ItemEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345552D49358000494AB8 /* ItemEventView.swift */; };
 		8DE345582D493BB000494AB8 /* CustomDialogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345572D493BB000494AB8 /* CustomDialogEvent.swift */; };
+		8DE3455A2D4A93E500494AB8 /* CustomDialogAvisos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345592D4A93E500494AB8 /* CustomDialogAvisos.swift */; };
+		8DE3455C2D4AC15600494AB8 /* AddAvisoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3455B2D4AC15600494AB8 /* AddAvisoView.swift */; };
+		8DE3455E2D4ACF7100494AB8 /* NewAvisoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3455D2D4ACF7100494AB8 /* NewAvisoResponse.swift */; };
 		8DEC8AEF2CEE394D00DADBDF /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AEE2CEE394D00DADBDF /* EmptyView.swift */; };
 		8DEC8AF12CF4E6C200DADBDF /* CustomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */; };
 		8DEC8AF32D11E02A00DADBDF /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AF22D11E02A00DADBDF /* SplashScreen.swift */; };
@@ -224,6 +227,9 @@
 		8DE345532D49288200494AB8 /* AdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewModel.swift; sourceTree = "<group>"; };
 		8DE345552D49358000494AB8 /* ItemEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEventView.swift; sourceTree = "<group>"; };
 		8DE345572D493BB000494AB8 /* CustomDialogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogEvent.swift; sourceTree = "<group>"; };
+		8DE345592D4A93E500494AB8 /* CustomDialogAvisos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogAvisos.swift; sourceTree = "<group>"; };
+		8DE3455B2D4AC15600494AB8 /* AddAvisoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAvisoView.swift; sourceTree = "<group>"; };
+		8DE3455D2D4ACF7100494AB8 /* NewAvisoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAvisoResponse.swift; sourceTree = "<group>"; };
 		8DEC8AEE2CEE394D00DADBDF /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRouter.swift; sourceTree = "<group>"; };
 		8DEC8AF22D11E02A00DADBDF /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -341,6 +347,7 @@
 				8DBDAE072D2D9BB600564A75 /* LoginResponse.swift */,
 				8DBDAE0B2D2DD42D00564A75 /* UserResponse.swift */,
 				8DE345512D4815EA00494AB8 /* AdminsResponse.swift */,
+				8DE3455D2D4ACF7100494AB8 /* NewAvisoResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -477,6 +484,7 @@
 				8D369C2C2D441948008C10B3 /* CustomTextField.swift */,
 				8DE345552D49358000494AB8 /* ItemEventView.swift */,
 				8DE345572D493BB000494AB8 /* CustomDialogEvent.swift */,
+				8DE345592D4A93E500494AB8 /* CustomDialogAvisos.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -494,6 +502,7 @@
 				8D98DC112CC6AC6300F91733 /* ReservationsView.swift */,
 				8D98DC192CC7FB2B00F91733 /* AddReservationView.swift */,
 				8D55251D2CD42885009EE8F4 /* AvisosView.swift */,
+				8DE3455B2D4AC15600494AB8 /* AddAvisoView.swift */,
 			);
 			path = OperativeViews;
 			sourceTree = "<group>";
@@ -662,6 +671,7 @@
 				8D55251A2CD4227A009EE8F4 /* AvisoResponse.swift in Sources */,
 				8DEC8AF12CF4E6C200DADBDF /* CustomRouter.swift in Sources */,
 				8D98DC162CC6C9F400F91733 /* ReservationRequest.swift in Sources */,
+				8DE3455C2D4AC15600494AB8 /* AddAvisoView.swift in Sources */,
 				8D5525252CD9611A009EE8F4 /* Avisos.swift in Sources */,
 				8D98DC122CC6AC6300F91733 /* ReservationsView.swift in Sources */,
 				8D76D0892CAB50CD009B0866 /* ResidentRequest.swift in Sources */,
@@ -669,6 +679,7 @@
 				8D5525302CDA7963009EE8F4 /* EmailRequest.swift in Sources */,
 				8D21E8142C9A388D007E17FF /* ApiEndpoints.swift in Sources */,
 				8D98DC1F2CC8213100F91733 /* PopupDatePicker.swift in Sources */,
+				8DE3455A2D4A93E500494AB8 /* CustomDialogAvisos.swift in Sources */,
 				8D76D08D2CAEEFEE009B0866 /* CheckOutViewModel.swift in Sources */,
 				8D55254C2CE3BBC2009EE8F4 /* GetVisitRequest.swift in Sources */,
 				8DEC8AEF2CEE394D00DADBDF /* EmptyView.swift in Sources */,
@@ -702,6 +713,7 @@
 				8D76D0932CB4857A009B0866 /* CheckOutResponse.swift in Sources */,
 				8D5525362CDABE31009EE8F4 /* SimpleToolBar.swift in Sources */,
 				8D98DC1D2CC81EE500F91733 /* DateSelectorView.swift in Sources */,
+				8DE3455E2D4ACF7100494AB8 /* NewAvisoResponse.swift in Sources */,
 				8D76D09B2CB70E2B009B0866 /* EventsView.swift in Sources */,
 				8D5525542CE4F962009EE8F4 /* AccessDialog.swift in Sources */,
 				8D1BF8482CA373BB006DDF8A /* AppScreen.swift in Sources */,

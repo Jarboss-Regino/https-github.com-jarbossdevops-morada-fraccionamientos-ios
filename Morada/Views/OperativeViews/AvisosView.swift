@@ -11,70 +11,35 @@ struct AvisosView: View {
     @ObservedObject var viewModel: MoreViewModel
     @State private var isActive = false
     @Environment(\.dismiss) var dismiss
-    @State private var calendarID = UUID()
+    @State private var isSheetPresented = false
     var body: some View {
         //NavigationStack{
-            ZStack{
-                CalendarView(
-                    selectedDate: $viewModel.avisoSelectedDate,
-                    events: $viewModel.avisosEvents
-                ).onChange(of: viewModel.avisoSelectedDate,{
-                    calendarID = UUID()
-                    viewModel.AvisoFilterEvents()
-                })
-                    
-                
-                if !viewModel.avisosFilteredEvents.isEmpty {
-                       VStack {
-                           HStack {
-                               Spacer()
-                               Button {
-                                   viewModel.avisosFilteredEvents = []
-                               } label: {
-                                   Image(systemName: "xmark")
-                                       .font(.title2)
-                                       .fontWeight(.medium)
-                               }
-                               .tint(.black)
-                               .padding()
-                               
-                           }
-                           Text("Detalles del Evento")
-                               .font(.title)
-                           
-                           ForEach(viewModel.avisosFilteredEvents, id: \.id) { event in
-                               VStack(alignment: .leading) {
-                                   Text("Usuario: \(event.nombre)")
-                                   Text("Fecha: \(event.fecha)")
-                                   Text("Hora: \(event.hora)")
-                                   Text("Lugar: \(event.lugar)")
-                               }.padding(.bottom, 15)
-                               
-                           }
-                           
-                           
-                          
-//                           Button(action: {
-//                               isActive = true
-//                           }, label: {
-//                               Text("Cerrar")
-//                                   .font(.system(size: 16, weight: .bold))
-//                                   .foregroundColor(.black)
-//                                   .frame(height: 40)
-//                                   .padding()
-//                           })
-                           
-                       }
-                       .frame(width: 300)
-                       .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
-                       .shadow(radius: 5)
-                   }
-                
+            VStack{
+                List(viewModel.avisosEvents, id: \.id) { option in
+                    itemAvisosViews(data: option,viewModel: viewModel)
+                }.listStyle(.inset).frame(maxWidth: .infinity).padding(.horizontal,32).padding(.top,10).scrollIndicators(.hidden).refreshable {
+                    Task{
+                        
+                        await viewModel.getAvisos()
+                    }
+                }
+      
             }.frame(maxWidth: .infinity, maxHeight: .infinity).onAppear{
                 Task{
                     await viewModel.getAvisos()
                 }
-            }.toolbar(content: {
+            }.overlay(
+                Group{
+                    if viewModel.showPopupAviso, let aviso =
+                        viewModel.avisoSelected {
+                        CustomDialogAvisos(isActive: $viewModel.showPopupAviso, data: aviso).onDisappear{
+                            Task{
+                                await viewModel.getAvisos()
+                            }
+                        }
+                    }
+                }
+            ).toolbar(content: {
                 ToolbarItem(placement: .principal) {
                         CustomToolbar(
                             title: "Avisos",
@@ -83,15 +48,63 @@ struct AvisosView: View {
                                 
                             },
                             trailingAction: {
-                                
+                                isSheetPresented = true
                             }
                         
                         )
                     }
             }).navigationBarBackButtonHidden(true)
                 .navigationBarTitleDisplayMode(.inline)
+                .sheet(isPresented: $isSheetPresented) {
+                    AddAvisoView(viewModel: viewModel).onDisappear{
+                        Task{
+                            await viewModel.resetAvisoFields()
+                            await viewModel.getAvisos()
+                        }
+                    }
+                }
+                
         //}
         }
+}
+
+struct itemAvisosViews:View {
+    var data: AvisoResponse
+    @ObservedObject var viewModel: MoreViewModel
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(data.userName)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Text(data.place)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                Text(data.description)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                Text("\(data.date) \(data.hour ?? "00:00")")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }.padding()
+            Spacer()
+        }
+        .listRowBackground(Color.white)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.purple.opacity(0.5), lineWidth: 1)
+                .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+        )
+        .listRowInsets(EdgeInsets())
+        .padding(.vertical,5)
+        .onTapGesture {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.10) {
+                viewModel.avisoSelected = data
+                viewModel.showPopupAviso = true
+            }
+        }
+    }
 }
 
 

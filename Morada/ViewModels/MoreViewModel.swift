@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UIKit
 class MoreViewModel: ObservableObject{
     
     @Published var tipo: Int?
@@ -74,9 +74,20 @@ class MoreViewModel: ObservableObject{
     
     
     // AVISOS VARIABLES
-    @Published var avisosEvents: [Aviso] = []
-    @Published var avisosFilteredEvents: [Aviso] = []
-    @Published var avisoSelectedDate = Date()
+    @Published var avisosEvents: [AvisoResponse] = []
+    @Published var avisosFilteredEvents: [AvisoResponse] = []
+    @Published var avisoSelected: AvisoResponse? = nil
+    @Published var showPopupAviso = false
+    
+    @Published var placeAviso = ""
+    @Published var descriptionAviso = ""
+    
+    @Published var showErrorAviso = false
+    @Published var errorMsgAviso = ""
+    
+    @Published var showSuccessAviso = false
+    @Published var successMsgAviso = ""
+    
     
     private let apiService = ApiService()
     @Published var showButtonBack = true
@@ -408,11 +419,11 @@ class MoreViewModel: ObservableObject{
             
         } catch let error as ApiError {
             
-            //print("ERROR: \(error)")
+            print("ERROR: \(error)")
             self.isLoadingReservations = false
         } catch {
             self.isLoadingReservations = false
-            //print("ERROR: \(error)")
+            print("ERROR: \(error)")
             
         }
     }
@@ -442,12 +453,12 @@ class MoreViewModel: ObservableObject{
         }catch let error as ApiError {
             
                 
-            //print("Error: \(error)")
+            print("Error: \(error)")
                 
             
         } catch {
             
-            //print("Error desconocido")
+            print("Error desconocido")
             
         }
     }
@@ -522,12 +533,12 @@ class MoreViewModel: ObservableObject{
         }catch let error as ApiError {
             
             self.isLoadingReservation = false
-            //print("Error: \(error)")
+            print("Error: \(error)")
                 
             
         } catch {
             self.isLoadingReservation = false
-           // print("Error desconocido")
+            print("Error desconocido")
             
         }
     }
@@ -552,40 +563,35 @@ class MoreViewModel: ObservableObject{
     @MainActor
     func getAvisos() async{
         do{
-            let id: String = "0"
-            if mtipo != 0{
-                //id = (UserSession.shared.userResponse?.idCliente)!
-            }
-            let body = AvisoRequest(source1: "0", source2: id,source3: "")
-            
-            
-            let response: AvisoResponse = try await apiService.post(urlString: ApiEndpoints.getAvisosUrl, body: body)
-            
-            if !response.registros.isEmpty{
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                
-                self.avisosEvents = response.registros.compactMap { registro in
-                    if let mfechaEvento = dateFormatter.date(from: registro.fecha) {
-                        return Aviso(
-                            id: registro.id,
-                            nombre: registro.nombre,
-                            contenido: registro.contenido,
-                            fecha: registro.fecha,
-                            lugar: registro.lugar,
-                            adjunto: registro.adjunto,
-                            hora: registro.hora,
-                            estatus: registro.estatus,
-                            fechaEvent: mfechaEvento
+            let response: [AvisoResponse] = try await apiService.get(urlString: ApiEndpoints.getAvisosUrl(uuid: self.idUser!))
+
+            if !response.isEmpty{
+
+                let avisoProcesados = response.map{ aviso in
+                        return AvisoResponse(
+                            id: aviso.id,
+                            userName: aviso.userName,
+                            description: aviso.description,
+                            place: aviso.place,
+                            adjunto: ApiEndpoints.getImageAviso(img: aviso.adjunto, idAssigned: aviso.idAssigned.getStringValue()),
+                            uuid: aviso.uuid,
+                            uuidSuperAdmin: aviso.uuidSuperAdmin,
+                            idAssigned: aviso.idAssigned,
+                            v: aviso.v,
+                            assigned: aviso.assigned,
+                            name: aviso.name,
+                            lastName: aviso.lastName,
+                            date: formatDate(aviso.date),
+                            hour: formatTimeOnly(aviso.date)
                         )
-                        
-                    } else {
-                        return nil
-                    }
                 }
+                
+                self.avisosEvents.removeAll()
+                self.avisosEvents = avisoProcesados
                 print("get events ejecutado")
                 
-                AvisoFilterEvents()
+                
+                //AvisoFilterEvents()
             }else{
                 print("No hay eventos en avisos")
             }
@@ -593,13 +599,106 @@ class MoreViewModel: ObservableObject{
             
         } catch let error as ApiError {
             
-            //print("ERROR: \(error)")
+            print("ERROR: \(error)")
             
         } catch {
             
-            //print("ERROR: \(error)")
+            print("ERROR: \(error)")
             
         }
+    }
+    
+    @MainActor
+    func createAviso() async {
+        do{
+            self.errorMsgAviso = "Todos los campos deben llernarse"
+            self.successMsgAviso = "Aviso creado correctamente"
+            
+            
+            if self.placeAviso.isEmpty{
+                self.showSuccessAviso = false
+                self.showErrorAviso = true
+                return
+            }
+            if self.descriptionAviso.isEmpty{
+                self.showSuccessAviso = false
+                self.showErrorAviso = true
+                return
+            }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let currentDate = dateFormatter.string(from: Date())
+            
+            let idAssignedValue: String = {
+                switch UserSession.shared.userData?.idAssigned{
+                case .string(let value):
+                    return value
+                case .array(let values):
+                    return values.joined(separator: ",") // Une los elementos del array como una cadena separada por comas
+                case .none:
+                    return ""
+                }
+            }()
+            
+            let body = AvisoRequest(
+                userName: self.username!,
+                description: self.descriptionAviso,
+                place: self.placeAviso,
+                date: currentDate,
+                uuidSuperAdmin: self.uuidAdmin!,
+                uuid: self.idUser!,
+                idAssigned: idAssignedValue,
+                adjunto: generateTemporaryImage() ?? ""
+            )
+            
+            let response: NewAvisoResponse = try await apiService.postJson(urlString: ApiEndpoints.setAvisoUrl, body: body)
+
+            if response.message == "Notice created successfully"{
+                self.showSuccessAviso = true
+                self.showErrorAviso = false
+                self.placeAviso = ""
+                self.descriptionAviso = ""
+            }else{
+                print("Ocurrio un error")
+                self.showSuccessAviso = false
+                self.errorMsgAviso = "Ocurrio un error"
+                self.showErrorAviso = true
+            }
+            
+            
+        } catch let error as ApiError {
+            
+            print("ERROR: \(error)")
+            
+        } catch {
+            
+            print("ERROR: \(error)")
+            
+        }
+    }
+    
+    func resetAvisoFields(){
+        self.placeAviso = ""
+        self.descriptionAviso = ""
+        self.showErrorAviso = false
+        self.showSuccessAviso = false
+        self.errorMsgAviso = ""
+        self.successMsgAviso = ""
+    }
+    
+    func generateTemporaryImage() -> String? {
+        let size = CGSize(width: 100, height: 100)
+        UIGraphicsBeginImageContext(size)
+        UIColor.blue.setFill()
+        UIRectFill(CGRect(origin: .zero, size: size))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        if let imageData = image?.jpegData(compressionQuality: 0.8) {
+            return imageData.base64EncodedString()
+        }
+        return nil
     }
     
     @MainActor
@@ -609,12 +708,12 @@ class MoreViewModel: ObservableObject{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd" // Ajusta el formato si es necesario
         
-        self.avisosFilteredEvents = self.avisosEvents.filter {
-            guard let eventDate = dateFormatter.date(from: $0.fecha) else {
-                return false
-            }
-            return Calendar.current.isDate(eventDate, inSameDayAs: self.avisoSelectedDate)
-        }
+//        self.avisosFilteredEvents = self.avisosEvents.filter {
+//            guard let eventDate = dateFormatter.date(from: $0.fecha) else {
+//                return false
+//            }
+//            return Calendar.current.isDate(eventDate, inSameDayAs: self.avisoSelectedDate)
+//        }
     }
     
     @MainActor

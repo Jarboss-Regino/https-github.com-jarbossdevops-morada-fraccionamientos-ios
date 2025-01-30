@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct NewAvisoResponse: Codable{
+    let message: String
+    let fileName: String
+}

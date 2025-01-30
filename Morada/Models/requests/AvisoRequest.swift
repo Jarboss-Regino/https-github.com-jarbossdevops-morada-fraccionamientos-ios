@@ -8,8 +8,14 @@
 import Foundation
 
 struct AvisoRequest: Codable{
-    let source1: String
-    let source2: String
-    let source3: String
-
+    let userName: String
+    let description: String
+    let place: String
+    let date: String
+    let uuidSuperAdmin: String
+    let uuid: String
+    let idAssigned: String
+    let adjunto: String
 }
+
+    

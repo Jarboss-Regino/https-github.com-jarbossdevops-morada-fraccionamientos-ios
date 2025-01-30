@@ -65,6 +65,9 @@ class ApiEndpoints{
     static func getImageUrl(img: String,uuid: String) -> String {
         return "https://bucket-control-morada-fraccionamientos-staging.s3.us-east-1.amazonaws.com/Incidences/\(uuid)/\(img)"
     }
+    static func getImageAviso(img: String,idAssigned: String) -> String {
+        return "https://bucket-control-morada-fraccionamientos-staging.s3.us-east-1.amazonaws.com/Notices/\(idAssigned)/\(img)"
+    }
     static var getIncidentsByDateUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=incidencia&source2=getincidencia"
     }
@@ -74,8 +77,11 @@ class ApiEndpoints{
     static var setReservationUrl: String {
         return baseUrl+"/management/createReservation"
     }
-    static var getAvisosUrl: String {
-        return baseUrl+"/Fraccionamientos/GET/?source1=aviso&source2=getavisoApp"
+    static func getAvisosUrl(uuid: String) -> String {
+        return baseUrl+"/management/getNotice?uuid="+uuid
+    }
+    static var setAvisoUrl: String {
+        return baseUrl+"/management/createNotice"
     }
     static var setAgendaUrl: String {
         return baseUrl+"/Fraccionamientos/POST/?source1=visita&source2=setAgenda"
