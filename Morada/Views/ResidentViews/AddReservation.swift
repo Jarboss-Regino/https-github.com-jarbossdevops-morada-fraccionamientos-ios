@@ -17,25 +17,8 @@ struct AddReservation: View {
         ScrollView{
             ZStack {
                 VStack{
-                    HStack {
-                        Spacer()
-                        Button {
-                            //Task{
-                            //isPresented = false
-                            showSheet = false
-                            //await viewModel.getEvents()
-                            //viewModel.resetFields()
-                            //}
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.title2)
-                                .fontWeight(.medium)
-                        }
-                        .tint(.black)
-                        .padding(.vertical)
-                        
-                    }
-                    Text("Reservar").font(.title).padding(.bottom,15)
+                   
+                    Text("Reservar").font(.title).padding(.bottom,15).padding(.top,20)
                     
                     
                     VStack {
@@ -62,38 +45,7 @@ struct AddReservation: View {
                     
                     
                     
-                    VStack() {
-                        Text("Persona que reserva:").font(.headline)
-                            
-                        Menu {
-                            ForEach(viewModel.residentsList, id: \.id) { option in
-                                Button(action: {
-                                    viewModel.selectedResident = option
-                                }) {
-                                    Text(option.nombre)
-                                        .padding()
-                                        .cornerRadius(8)
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text(viewModel.selectedResident?.nombre ?? "Selecciona una opción")
-                                   
-                                    .overlay(
-                                        LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
-                                            .mask({
-                                                Text(viewModel.selectedResident?.nombre ?? "Selecciona una opción")
-                                                    
-                                            })
-                                    )
-                                
-                                Image(systemName: "chevron.down")
-                            }.padding(.leading,25)
-                            .cornerRadius(8)
-                        }
-
-                      
-                    }
+                    
                     
                     
                     VStack {

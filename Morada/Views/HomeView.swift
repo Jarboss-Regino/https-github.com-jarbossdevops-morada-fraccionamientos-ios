@@ -20,7 +20,7 @@ struct HomeView: View {
                     // Definimos las opciones para el tipo 1
                     if tipo == "residente" {
                         
-                        Avisos(viewModel: reViewModel)
+                        Avisos()
                             .tabItem {
                                 VStack {
                                     Image(selectedTab == 0 ? "comu_pres" : "comu_nor")

@@ -50,44 +50,38 @@ class ResidentViewModel: ObservableObject{
     @MainActor
     func getAvisos() async{
         do{
-            //  regresar a let la variable id
-            let id: String = "0"
-//            if mtipo != 0{
-//                //id = (UserSession.shared.userResponse?.idCliente)!
-//            }
-//            let body = AvisoRequest(source1: "0", source2: id,source3: "")
-            
-            
-//            let response: AvisoResponse = try await apiService.post(urlString: ApiEndpoints.getAvisosUrl, body: body)
-//            
-//            if !response.registros.isEmpty{
-//                let dateFormatter = DateFormatter()
-//                dateFormatter.dateFormat = "yyyy-MM-dd"
-//                
-//                self.avisosEvents = response.registros.compactMap { registro in
-//                    if let mfechaEvento = dateFormatter.date(from: registro.fecha) {
-//                        return Aviso(
-//                            id: registro.id,
-//                            nombre: registro.nombre,
-//                            contenido: registro.contenido,
-//                            fecha: registro.fecha,
-//                            lugar: registro.lugar,
-//                            adjunto: registro.adjunto,
-//                            hora: registro.hora,
-//                            estatus: registro.estatus,
-//                            fechaEvent: mfechaEvento
-//                        )
-//                        
-//                    } else {
-//                        return nil
-//                    }
-//                }
-//                print("get events ejecutado")
-//                
-//                AvisoFilterEvents()
-//            }else{
-//                print("No hay eventos en avisos")
-//            }
+            let response: [AvisoResponse] = try await apiService.get(urlString: ApiEndpoints.getAvisosUrl(uuid: self.idUser!))
+
+            if !response.isEmpty{
+
+                let avisoProcesados = response.map{ aviso in
+                        return AvisoResponse(
+                            id: aviso.id,
+                            userName: aviso.userName,
+                            description: aviso.description,
+                            place: aviso.place,
+                            adjunto: ApiEndpoints.getImageAviso(img: aviso.adjunto, idAssigned: aviso.idAssigned.getStringValue()),
+                            uuid: aviso.uuid,
+                            uuidSuperAdmin: aviso.uuidSuperAdmin,
+                            idAssigned: aviso.idAssigned,
+                            v: aviso.v,
+                            assigned: aviso.assigned,
+                            name: aviso.name,
+                            lastName: aviso.lastName,
+                            date: formatDate(aviso.date),
+                            hour: formatTimeOnly(aviso.date)
+                        )
+                }
+                
+                self.avisosEvents.removeAll()
+                self.avisosEvents = avisoProcesados
+                print("get avisos ejecutado")
+                
+                
+                //AvisoFilterEvents()
+            }else{
+                print("No hay avisos")
+            }
             
             
         } catch let error as ApiError {

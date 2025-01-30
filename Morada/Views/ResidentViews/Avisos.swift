@@ -8,35 +8,60 @@
 import SwiftUI
 
 struct Avisos: View {
-    @ObservedObject var viewModel: ResidentViewModel
-    @State private var isActive = false
-    @Environment(\.dismiss) var dismiss
-    @State private var calendarID = UUID()
-    
+    @ObservedObject var viewModel = MoreViewModel()
+    @State private var isSheetPresented = false
     var body: some View {
-        //NavigationView{
+        NavigationView{
             ZStack{
-
-                    
+   
                 
-                
+                List(viewModel.avisosEvents, id: \.id) { option in
+                    itemAvisosViews(data: option,viewModel: viewModel)
+                }.listStyle(.inset).frame(maxWidth: .infinity).padding(.horizontal,32).padding(.top,10).scrollIndicators(.hidden).refreshable {
+                    Task{
+                        
+                        await viewModel.getAvisos()
+                    }
+                }
                            
-                           
-                          
-
-                
+ 
             }.toolbar(content: {
                 ToolbarItem(placement: .principal) {
-                    SimpleToolBar(title: "Avisos")
+                    ToolBar(
+                        title: "Avisos",
+                        trailingAction: {
+                            isSheetPresented = true
+                        }
+                    )
                 }
-            })
+            }).sheet(isPresented: $isSheetPresented) {
+                AddAvisoView(viewModel: viewModel).onDisappear{
+                    Task{
+                        viewModel.resetAvisoFields()
+                        await viewModel.getAvisos()
+                    }
+                }
+                
+                
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity).onAppear{
                 Task{
                     await viewModel.getAvisos()
                 }
             }.navigationBarBackButtonHidden(true)
-                .navigationBarTitleDisplayMode(.inline)
-        //}
+                .navigationBarTitleDisplayMode(.inline).overlay(
+                    Group{
+                        if viewModel.showPopupAviso, let aviso =
+                            viewModel.avisoSelected {
+                            CustomDialogAvisos(isActive: $viewModel.showPopupAviso, data: aviso).onDisappear{
+                                Task{
+                                    await viewModel.getAvisos()
+                                }
+                            }
+                        }
+                    }
+                )
+        }
     }
 }
 
