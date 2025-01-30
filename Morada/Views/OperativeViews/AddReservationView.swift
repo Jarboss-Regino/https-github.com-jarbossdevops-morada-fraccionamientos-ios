@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddReservationView: View {
-    @ObservedObject var viewModel: MoreViewModel
+    @ObservedObject var viewModel: ResidentViewModel
     @Binding var showSheet: Bool
     @State private var isDatePickerVisible = false
     @State private var isStartTimePickerVisible = false
@@ -17,25 +17,8 @@ struct AddReservationView: View {
         ScrollView{
             ZStack {
                 VStack{
-                    HStack {
-                        Spacer()
-                        Button {
-                            //Task{
-                            //isPresented = false
-                            showSheet = false
-                            //await viewModel.getEvents()
-                            //viewModel.resetFields()
-                            //}
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.title2)
-                                .fontWeight(.medium)
-                        }
-                        .tint(.black)
-                        .padding(.vertical)
-                        
-                    }
-                    Text("Reservar").font(.title).padding(.bottom,15)
+                    
+                    Text("Reservar").font(.title).padding(.top,20).padding(.bottom,30)
                     
                     
                     VStack {
@@ -60,41 +43,7 @@ struct AddReservationView: View {
                         .frame(height: 2)
                     }.frame(height: 60)
                     
-                    
-                    
-                    VStack() {
-                        Text("Persona que reserva:").font(.headline)
-                            
-                        Menu {
-                            ForEach(viewModel.residentsList, id: \.id) { option in
-                                Button(action: {
-                                    viewModel.selectedResident = option
-                                }) {
-                                    Text(option.nombre)
-                                        .padding()
-                                        .cornerRadius(8)
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text(viewModel.selectedResident?.nombre ?? "Selecciona una opción")
-                                   
-                                    .overlay(
-                                        LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
-                                            .mask({
-                                                Text(viewModel.selectedResident?.nombre ?? "Selecciona una opción")
-                                                    
-                                            })
-                                    )
-                                
-                                Image(systemName: "chevron.down")
-                            }.padding(.leading,25)
-                            .cornerRadius(8)
-                        }
 
-                      
-                    }
-                    
                     
                     VStack {
                         Text("Número de personas").font(.headline)
@@ -206,8 +155,7 @@ struct AddReservationView: View {
                             .foregroundColor(.white)
                             .font(.headline)
                             .cornerRadius(10)
-                    }.padding(.top, 25).disabled(viewModel.disableButtonReservation)
-                        .opacity(viewModel.disableButton ? 0.5 : 1.0)
+                    }.padding(.top, 25)
                     
                     
                 }

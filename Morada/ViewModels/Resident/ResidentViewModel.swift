@@ -147,6 +147,8 @@ class ResidentViewModel: ObservableObject{
                         idOperative: reservation.idOperative,
                         v: reservation.v,
                         assigned: reservation.assigned,
+                        name: reservation.name,
+                        lastName: reservation.lastName,
                         date: formatDate(reservation.date)
                     )
                     
@@ -222,16 +224,43 @@ class ResidentViewModel: ObservableObject{
     @MainActor
     func createReservation() async {
         do{
+            let ahora = Date()
             self.isLoadingReservation = true
             if self.placeReservation.isEmpty{
                 self.errorMessageReservation = "Todos los campos son obligatorios"
                 self.showErrorReservation = true
+                self.showMessageReservaton = false
                 return
             }
             self.showErrorReservation = false
             if self.comments.isEmpty {
                 self.errorMessageReservation = "Todos los campos son obligatorios"
                 self.showErrorReservation = true
+                self.showMessageReservaton = false
+                return
+            }
+            let calendar = Calendar.current
+            let truncatedDate = calendar.startOfDay(for: dateReservation)
+            let truncatedAhora = calendar.startOfDay(for: ahora)
+           
+            guard truncatedDate >= truncatedAhora else {
+                self.errorMessageReservation = "La fecha de la reservación debe ser en el futuro."
+                self.showErrorReservation = true
+                self.showMessageReservaton = false
+                return
+            }
+            self.showErrorReservation = false
+            guard startTimeReservation >= ahora else {
+                self.errorMessageReservation = "La hora de inicio debe ser mayor a la hora actual."
+                self.showErrorReservation = true
+                self.showMessageReservaton = false
+                return
+            }
+            self.showErrorReservation = false
+            guard endTimeReservation > ahora && endTimeReservation > startTimeReservation else {
+                self.errorMessageReservation = "La hora de finalización debe ser mayor a la hora actual y a la hora de inicio."
+                self.showErrorReservation = true
+                self.showMessageReservaton = false
                 return
             }
             self.showErrorReservation = false
@@ -281,10 +310,14 @@ class ResidentViewModel: ObservableObject{
                 self.successMessageReservation = "Reservación registrada"
                 self.showMessageReservaton = true
                 self.disableButtonReservation = true
+                
+                self.placeReservation = ""
+                self.comments = ""
             }else{
                 self.errorMessageReservation = "Ocurrio un error"
                 self.showErrorReservation = true
                 self.disableButtonReservation = false
+                self.showMessageReservaton = false
             }
             self.isLoadingReservation = false
         }catch let error as ApiError {
@@ -313,7 +346,6 @@ class ResidentViewModel: ObservableObject{
         self.endTimeReservation = Date()
         self.comments = ""
         self.placeReservation = ""
-        self.selectedResident = nil
     }
     
     @MainActor

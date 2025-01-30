@@ -22,7 +22,9 @@ struct ReservationsResponse: Codable, Identifiable {
     let idAdministrative: String?
     let idOperative: String?
     let v: Int
-    let assigned: String
+    let assigned: [String]
+    let name: String
+    let lastName: String
     let date: String
     
     // Decodificar el campo `_id` como `id`
@@ -42,6 +44,8 @@ struct ReservationsResponse: Codable, Identifiable {
         case idOperative
         case v = "__v"
         case assigned
+        case name
+        case lastName
         case date
     }
 }

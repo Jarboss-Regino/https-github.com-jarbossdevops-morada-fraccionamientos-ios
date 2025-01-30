@@ -401,6 +401,8 @@ class MoreViewModel: ObservableObject{
                         idOperative: reservation.idOperative,
                         v: reservation.v,
                         assigned: reservation.assigned,
+                        name: reservation.name,
+                        lastName: reservation.lastName,
                         date: formatDate(reservation.date)
                     )
                     

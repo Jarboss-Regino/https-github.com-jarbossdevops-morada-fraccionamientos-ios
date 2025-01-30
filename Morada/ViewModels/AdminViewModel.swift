@@ -48,7 +48,6 @@ class AdminViewModel: ObservableObject{
     func creaeNewEvent() async{
         do {
             let ahora = Date()
-            print(ahora)
             
             if admins.isEmpty{
                 self.errorMessage = "Debe de llenar todos los campos"

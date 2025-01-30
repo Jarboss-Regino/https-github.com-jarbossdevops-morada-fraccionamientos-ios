@@ -37,7 +37,7 @@ struct MoreView: View {
                             defaultButton(icon: "camera.fill", title: "Incidencias")
                         }
                         
-                        NavigationLink(destination: ReservationsView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
+                        NavigationLink(destination: ReservationsView().navigationBarBackButtonHidden(true)){
                             defaultButton(icon: "camera.fill", title: "Reservaciones")
                         }
                         NavigationLink(destination: AvisosView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
@@ -55,7 +55,7 @@ struct MoreView: View {
                             defaultButton(icon: "camera.fill", title: "Incidencias")
                         }
                         
-                        NavigationLink(destination: ReservationsView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
+                        NavigationLink(destination: ReservationsView().navigationBarBackButtonHidden(true)){
                             defaultButton(icon: "camera.fill", title: "Reservaciones")
                         }
                         NavigationLink(destination: AvisosView(viewModel: viewModel).navigationBarBackButtonHidden(true)){

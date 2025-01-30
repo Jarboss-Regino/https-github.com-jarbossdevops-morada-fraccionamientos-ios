@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReservationsView: View {
-    @ObservedObject var viewModel = MoreViewModel()
+    @ObservedObject var viewModel = ResidentViewModel()
     @State private var isSheetPresented = false
     @Environment(\.dismiss) var dismiss
     var body: some View {
@@ -108,7 +108,12 @@ struct ReservationsView: View {
                     )
                 }
             }).sheet(isPresented: $isSheetPresented) {
-                AddReservationView(viewModel: viewModel, showSheet: $isSheetPresented)
+                AddReservationView(viewModel: viewModel, showSheet: $isSheetPresented).onDisappear{
+                    Task{
+                        await viewModel.resetFieldsReseravation()
+                        await viewModel.getReservations()
+                    }
+                }
                 
                 
             }
@@ -135,7 +140,7 @@ struct ReservationsView: View {
 /// ITEMS DESIG
 struct itemReservation: View{
     var data: ReservationsResponse
-    @ObservedObject var mviewModel: MoreViewModel
+    @ObservedObject var mviewModel: ResidentViewModel
     
     var body: some View{
         HStack {
