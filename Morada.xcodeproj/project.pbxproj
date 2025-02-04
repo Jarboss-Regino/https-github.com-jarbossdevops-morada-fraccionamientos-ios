@@ -105,6 +105,7 @@
 		8DE3455A2D4A93E500494AB8 /* CustomDialogAvisos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345592D4A93E500494AB8 /* CustomDialogAvisos.swift */; };
 		8DE3455C2D4AC15600494AB8 /* AddAvisoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3455B2D4AC15600494AB8 /* AddAvisoView.swift */; };
 		8DE3455E2D4ACF7100494AB8 /* NewAvisoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3455D2D4ACF7100494AB8 /* NewAvisoResponse.swift */; };
+		8DE345622D526C8B00494AB8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE345612D526C8B00494AB8 /* Utils.swift */; };
 		8DEC8AEF2CEE394D00DADBDF /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AEE2CEE394D00DADBDF /* EmptyView.swift */; };
 		8DEC8AF12CF4E6C200DADBDF /* CustomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */; };
 		8DEC8AF32D11E02A00DADBDF /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEC8AF22D11E02A00DADBDF /* SplashScreen.swift */; };
@@ -230,6 +231,7 @@
 		8DE345592D4A93E500494AB8 /* CustomDialogAvisos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogAvisos.swift; sourceTree = "<group>"; };
 		8DE3455B2D4AC15600494AB8 /* AddAvisoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAvisoView.swift; sourceTree = "<group>"; };
 		8DE3455D2D4ACF7100494AB8 /* NewAvisoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAvisoResponse.swift; sourceTree = "<group>"; };
+		8DE345612D526C8B00494AB8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8DEC8AEE2CEE394D00DADBDF /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRouter.swift; sourceTree = "<group>"; };
 		8DEC8AF22D11E02A00DADBDF /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				8D1BF8452CA34DB3006DDF8A /* UserSession.swift */,
 				8D1BF8472CA373BB006DDF8A /* AppScreen.swift */,
 				8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */,
+				8DE345612D526C8B00494AB8 /* Utils.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -704,6 +707,7 @@
 				8D76D0AD2CC021E2009B0866 /* IncidentsView.swift in Sources */,
 				8D5525282CD961F9009EE8F4 /* ResidentViewModel.swift in Sources */,
 				8D21E80E2C9A2E29007E17FF /* LoginDto.swift in Sources */,
+				8DE345622D526C8B00494AB8 /* Utils.swift in Sources */,
 				8D21E8182C9E08B7007E17FF /* EmailResponse.swift in Sources */,
 				8D76D0A32CB97B70009B0866 /* CalendarView.swift in Sources */,
 				8D76D0862CAB4E43009B0866 /* ResidentResponse.swift in Sources */,

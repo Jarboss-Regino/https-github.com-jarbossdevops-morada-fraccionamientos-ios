@@ -12,7 +12,7 @@ struct CustomDialog: View {
     @Binding var isActive: Bool
 
     let title: String
-    let data: Registro
+    let data: CheckOutResponse
     let buttonTitle: String
     let action: () -> ()
     @State private var offset: CGFloat = 1000
@@ -32,24 +32,20 @@ struct CustomDialog: View {
                     .padding()
 
                 Text("Visitante:").font(.title2)
-                Text("\(data.nombre)")
+                Text("\(data.name)")
                 
                 Text("Residente:").font(.title2).padding(.top,10)
-                if data.idresidente != nil{
-                    Text("\(data.residente ?? "")")
-                }else{
-                    Text("\(data.visita_a ?? "")")
-                }
+                Text("\(data.visit)")
                 
                 
                 Text("Domicilio:").font(.title2).padding(.top,10)
-                Text("\(data.domicilio)")
+                Text("\(data.address)")
                 
                 Text("Tipo de Visita:").font(.title2).padding(.top,10)
-                Text("\(data.tipovis)")
+                Text("\(data.typeVisit)")
                 
                 Text("Fecha:").font(.title2).padding(.top,10)
-                Text("\(data.fecha)")
+                Text("\(data.dateI)")
 
                 Button {
                     action()

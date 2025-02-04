@@ -34,8 +34,8 @@ class ApiEndpoints{
         return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=getresidentes"
     }
     
-    static var getBinnacleUrl: String {
-        return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=ingresadas"
+    static func getBinnacleUrl(uuid:String) -> String {
+        return baseUrl+"/management/getRecord?uuid="+uuid
     }
     
     static var getAgendaUrl: String {

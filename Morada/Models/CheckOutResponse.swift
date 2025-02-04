@@ -8,31 +8,28 @@
 import Foundation
 
 struct CheckOutResponse: Codable {
-    var registros: [Registro]
-        var status: String
-        var tipo: String?
-        var total: Int?
-        var sin_llegar: Int?
-        var dentro: Int?
-        var fuera: Int?
-}
+    let id: String
+    let name: String
+    let issue: String
+    let visit: String
+    let address: String
+    let phone: String
+    let typeVisit: String
+    let evidence: [String]
+    let status: String
+    let uuid: String
+    let uuidSuperAdmin: String
+    let idAssigned: AssignedID
+    let v: Int
+    let assigned: AssignedValue
+    let lastName: String
+    let dateI: String
+    let dateF: String?
 
-struct Registro: Codable, Identifiable {
-    var id: String
-    var estatus: Int
-    var nombre: String
-    var domicilio: String
-    var numero: String
-    var visita_a: String?
-    var tipovis: String
-    var idresidente: String?
-    var residente: String?
-    var correo: String?
-    var fecha: String
-    var hora: String
-    var entrada: String
-    var salida: String
-    var evidencia: String?
-    var tabla: String
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case name, issue, visit, address, phone, typeVisit, evidence, status
+        case uuid, uuidSuperAdmin, idAssigned, v = "__v", assigned, lastName, dateI, dateF
+    }
 }
 

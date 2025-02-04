@@ -52,9 +52,6 @@ struct CheckOutView: View {
                             viewModel.changeColor(active: 1)
                             await viewModel.fetchBinnacleRegisters()
                         }
-                        
-                        
-                        print("Botón de inicio de sesión presionado")
                     }) {
                         Text("Bitácora")
                             .frame(maxWidth: .infinity)
@@ -138,7 +135,7 @@ struct CheckOutView: View {
                     Task{
                         viewModel.changeTitle(title:"Bitácora")
                         viewModel.changeColor(active: 1)
-                        await viewModel.fetchBinnacleRegisters()
+                        
                     }
                 }
             
@@ -155,24 +152,20 @@ struct CheckOutView: View {
 }
 
 struct item: View{
-    var data: Registro
+    var data: CheckOutResponse
     @ObservedObject var mviewModel: CheckOutViewModel
     var body: some View{
         VStack{
             HStack{
-                Text(data.nombre)
+                Text(data.name)
                 Spacer()
-                Text(data.tipovis)
+                Text(data.typeVisit)
             }.padding(5)
             HStack{
-                if data.idresidente != nil{
-                    Text(data.residente ?? "NA")
-                }else{
-                    Text(data.visita_a ?? "NA")
-                }
+                Text(data.visit)
                 
                 Spacer()
-                Text(data.domicilio)
+                Text(data.address)
             }.padding(5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

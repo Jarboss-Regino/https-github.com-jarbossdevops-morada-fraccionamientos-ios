@@ -12,9 +12,9 @@ class CheckOutViewModel: ObservableObject{
     @Published var title = ""
     @Published var searchText = ""
     @Published var isSearching = false // Estado para el indicador de progreso
-    @Published var filteredVisitas: [Registro] = [] // Resultados filtrados
+    @Published var filteredVisitas: [CheckOutResponse] = [] // Resultados filtrados
     @Published var showModal = false
-    @Published var selectedVisita: Registro? = nil
+    @Published var selectedVisita: CheckOutResponse? = nil
     @Published var selectedButton: Int = 1
     
     
@@ -24,87 +24,85 @@ class CheckOutViewModel: ObservableObject{
     
     private let apiService = ApiService()
 
-    @Published var registros: [Registro] = []
+    @Published var registros: [CheckOutResponse] = []
+    @Published var selectedItemBinnacle: [CheckOutResponse] = []
+    
+    private let uuid = UserSession.shared.userData?.uuid
+    
+    init(){
+        Task{
+            await fetchBinnacleRegisters()
+        }
+    }
     
     @MainActor
     func startSearch() async{
-        isSearching = true
+        self.isSearching = true
         
-        var url = ""
-        
-        if self.selectedButton == 1{
-            url = ApiEndpoints.searchBinnacleUrl
-        }else{
-            url = ApiEndpoints.searhcAgendaUrl
-        }
-        
-        let body = SearchRequest(source1: "0", source2: "1", source3: self.searchText.trimmingCharacters(in: .whitespaces))
-
-        do {
-            let response: [Registro] = try await apiService.post(urlString: url, body: body)
-            if response.first?.estatus == 1{
-                
-                let registrosPrcesados = response.map{ registro in
-                    return Registro(id: registro.id, estatus: registro.estatus, nombre: registro.nombre, domicilio: registro.domicilio, numero: registro.numero,visita_a: registro.visita_a, tipovis: registro.tipovis, fecha: registro.fecha, hora: registro.hora, entrada: registro.entrada, salida: registro.salida, tabla: registro.tabla)
-                    
-                }
-                
-                DispatchQueue.main.async {
-                    self.registros.removeAll()
-                    self.registros = registrosPrcesados
-                    print(self.registros)
-                }
-                
-            }
-            self.isSearching = false
+        if !registros.isEmpty{
+            let trimmedSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
             
-        } catch let error as ApiError {
-            // Manejar errores específicos de la API
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.errorMessage = "Error: \(error)"
-                self.showError = true
-                self.isSearching = false
-                print("ERROR: \(error)")
+            let filteredIncidents = registros.filter { item in
+
+                item.name.lowercased().contains(trimmedSearchText) ||
+                item.issue.lowercased().contains(trimmedSearchText) ||
+                item.visit.lowercased().contains(trimmedSearchText) ||
+                item.address.lowercased().contains(trimmedSearchText) ||
+                item.typeVisit.lowercased().contains(trimmedSearchText)
             }
-        } catch {
-            // Manejar errores genéricos
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.errorMessage = "Ocurrió un error inesperado"
-                self.showError = true
-                self.isSearching = false
-                print("ERROR: \(error)")
+            
+            if filteredIncidents.isEmpty {
+                print("No se encontró ningun registro")
+            } else {
+                self.registros = filteredIncidents
+                print("Incidencias filtradas: \(self.registros)")
             }
+        }else{
+            print("No se encontró ningun registro")
         }
-        
-        
-        
-        
-    
+        self.isSearching = false
     }
     
     @MainActor
     func fetchBinnacleRegisters() async{
         do {
             self.isSearching = true
-            let body = BinnacleRequest(source1: "0")
             
-            let response: CheckOutResponse = try await apiService.post(urlString: ApiEndpoints.getBinnacleUrl, body: body)
             
-            if response.status == "ok"{
+            let response: [CheckOutResponse] = try await apiService.get(urlString: ApiEndpoints.getBinnacleUrl(uuid: self.uuid!) )
+            
+            if !response.isEmpty{
                 
-                let registrosPrcesados = response.registros.map{ registro in
-                    return Registro(id: registro.id, estatus: registro.estatus, nombre: registro.nombre, domicilio: registro.domicilio, numero: registro.numero,visita_a: registro.visita_a, tipovis: registro.tipovis, fecha: registro.fecha, hora: registro.hora, entrada: registro.entrada, salida: registro.salida, tabla: registro.tabla)
+                let registrosPrcesados = response.map{ registro in
+                    return CheckOutResponse(
+                        id: registro.id,
+                        name: registro.name,
+                        issue: registro.issue,
+                        visit: registro.visit,
+                        address: registro.address,
+                        phone: registro.phone,
+                        typeVisit: registro.typeVisit,
+                        evidence: registro.evidence,
+                        status: registro.status,
+                        uuid: registro.uuid,
+                        uuidSuperAdmin: registro.uuidSuperAdmin,
+                        idAssigned: registro.idAssigned,
+                        v: registro.v,
+                        assigned: registro.assigned,
+                        lastName: registro.lastName,
+                        dateI: Utils.formatDate(registro.dateI),
+                        dateF: registro.dateF
+                    )
                     
                 }
                 
-                DispatchQueue.main.async {
-                    self.registros.removeAll()
-                    self.registros = registrosPrcesados
-                    print(self.registros)
-                }
                 
+                self.registros.removeAll()
+                self.registros = registrosPrcesados
+            print("Registros ejecutado")
+                
+            }else{
+                print("No hay registros en la bitacora")
             }
             self.isSearching = false
             
@@ -131,49 +129,49 @@ class CheckOutViewModel: ObservableObject{
     
     @MainActor
     func fetchAgendaRegisters() async{
-        do {
-            self.isSearching = true
-            //var id = (UserSession.shared.userResponse?.idCliente)!
-            
-            let body = AgendaRequest(source1: "1", source2: "")
-            
-            let response: CheckOutResponse = try await apiService.post(urlString: ApiEndpoints.getAgendaUrl, body: body)
-            
-            if response.status == "ok"{
-                
-                let registrosPrcesados = response.registros.map{ registro in
-                    return Registro(id: registro.id, estatus: registro.estatus, nombre: registro.nombre, domicilio: registro.domicilio, numero: registro.numero,visita_a: registro.visita_a, tipovis: registro.tipovis,idresidente: registro.idresidente,residente: registro.residente,correo: registro.correo, fecha: registro.fecha, hora: registro.hora, entrada: registro.entrada, salida: registro.salida, tabla: registro.tabla)
-                    
-                }
-                
-                DispatchQueue.main.async {
-                    self.registros.removeAll()
-                    self.registros = registrosPrcesados
-                    print(self.registros)
-                }
-               
-            }
-            
-            self.isSearching = false
-        } catch let error as ApiError {
-            // Manejar errores específicos de la API
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.errorMessage = "Error: \(error)"
-                self.showError = true
-                self.isSearching = false
-                print("ERROR: \(error)")
-            }
-        } catch {
-            // Manejar errores genéricos
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.errorMessage = "Ocurrió un error inesperado"
-                self.showError = true
-                self.isSearching = false
-                print("ERROR: \(error)")
-            }
-        }
+//        do {
+//            self.isSearching = true
+//            //var id = (UserSession.shared.userResponse?.idCliente)!
+//            
+//            let body = AgendaRequest(source1: "1", source2: "")
+//            
+//            let response: CheckOutResponse = try await apiService.post(urlString: ApiEndpoints.getAgendaUrl, body: body)
+//            
+//            if response.status == "ok"{
+//                
+//                let registrosPrcesados = response.registros.map{ registro in
+//                    return Registro(id: registro.id, estatus: registro.estatus, nombre: registro.nombre, domicilio: registro.domicilio, numero: registro.numero,visita_a: registro.visita_a, tipovis: registro.tipovis,idresidente: registro.idresidente,residente: registro.residente,correo: registro.correo, fecha: registro.fecha, hora: registro.hora, entrada: registro.entrada, salida: registro.salida, tabla: registro.tabla)
+//                    
+//                }
+//                
+//                DispatchQueue.main.async {
+//                    self.registros.removeAll()
+//                    self.registros = registrosPrcesados
+//                    print(self.registros)
+//                }
+//               
+//            }
+//            
+//            self.isSearching = false
+//        } catch let error as ApiError {
+//            // Manejar errores específicos de la API
+//            DispatchQueue.main.async {
+//                self.isLoading = false
+//                self.errorMessage = "Error: \(error)"
+//                self.showError = true
+//                self.isSearching = false
+//                print("ERROR: \(error)")
+//            }
+//        } catch {
+//            // Manejar errores genéricos
+//            DispatchQueue.main.async {
+//                self.isLoading = false
+//                self.errorMessage = "Ocurrió un error inesperado"
+//                self.showError = true
+//                self.isSearching = false
+//                print("ERROR: \(error)")
+//            }
+//        }
     }
     
     
