@@ -36,4 +36,13 @@ class Utils {
         }
         return nil
     }
+    
+    // Obtiene la fecha y hora actual
+    static func getDateHour() -> String{
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let formattedDate = dateFormatter.string(from: currentDate)
+        return formattedDate
+    }
 }

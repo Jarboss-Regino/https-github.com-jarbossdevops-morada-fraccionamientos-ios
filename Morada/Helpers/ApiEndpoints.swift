@@ -30,8 +30,8 @@ class ApiEndpoints{
         return baseUrl+"/Fraccionamientos/POST/?source1=index&source2=setusuario"
     }
     
-    static var getResidentsUrl: String {
-        return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=getresidentes"
+    static func getResidentsUrl(idAssigned: String) -> String {
+        return baseUrl+"/management/getResidentRecord?idAssigned="+idAssigned
     }
     
     static func getBinnacleUrl(uuid:String) -> String {
@@ -47,6 +47,15 @@ class ApiEndpoints{
     static var searhcAgendaUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=buscadorLetrasag"
     }
+    
+    static var updateStatusRegisterBinncle: String {
+        return baseUrl+"/management/updateRecord"
+    }
+    
+    static var setVisit: String{
+        return baseUrl+"/management/createRecordVisit"
+    }
+    
     static func getEventosUrl(uuid: String) -> String {
         return baseUrl+"/management/getEvent?uuid="+uuid
     }

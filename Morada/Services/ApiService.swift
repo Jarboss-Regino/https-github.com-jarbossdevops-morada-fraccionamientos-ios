@@ -82,6 +82,11 @@ class ApiService {
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
                 throw ApiError.serverError("Error del servidor: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
             }
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("📩 Respuesta del servidor: \(jsonString)")
+            } else {
+                print("❌ No se pudo convertir la respuesta en String")
+            }
         
             do {
                 let decodedResponse = try JSONDecoder().decode(U.self, from: data)

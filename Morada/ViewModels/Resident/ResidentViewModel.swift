@@ -45,6 +45,16 @@ class ResidentViewModel: ObservableObject{
     var mtipo: Int?
     
     let idUser = UserSession.shared.userData?.uuid
+    let idAssignedValue: String = {
+        switch UserSession.shared.userData?.idAssigned{
+        case .string(let value):
+            return value
+        case .array(let values):
+            return values.joined(separator: ",") // Une los elementos del array como una cadena separada por comas
+        case .none:
+            return ""
+        }
+    }()
     
     // AVISOS FUNCS
     @MainActor
@@ -183,19 +193,11 @@ class ResidentViewModel: ObservableObject{
     @MainActor
     func getResidents() async{
         do{
-            let idSucursal = UserSession.shared.userResponse?.idCliente ?? ""
-            
-            
-            let body = ResidentRequest(source1: idSucursal)
-            
-            let response: [ResidentResponse] = try await apiService.post(urlString: ApiEndpoints.getResidentsUrl, body: body)
+            let response: [ResidentResponse] = try await apiService.get(urlString: ApiEndpoints.getResidentsUrl(idAssigned: self.idAssignedValue))
             
             if !response.isEmpty{
-                let residentesProcesados = response.map { residente in
-                    return ResidentResponse(id: residente.id, nombre: residente.nombre)
-                }
                 self.residentsList.removeAll()
-                self.residentsList = residentesProcesados
+                self.residentsList = response
             }else{
                 print("No hay residentes")
             }

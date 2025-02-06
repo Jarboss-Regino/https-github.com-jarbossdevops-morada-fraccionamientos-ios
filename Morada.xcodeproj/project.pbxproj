@@ -58,6 +58,9 @@
 		8D5525522CE3DBDE009EE8F4 /* AgendaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5525512CE3DBDE009EE8F4 /* AgendaResponse.swift */; };
 		8D5525542CE4F962009EE8F4 /* AccessDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5525532CE4F962009EE8F4 /* AccessDialog.swift */; };
 		8D5D6ED72CA49F5D007CBAFC /* MoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5D6ED62CA49F5D007CBAFC /* MoreViewModel.swift */; };
+		8D7215732D52A20F009AD026 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215722D52A20F009AD026 /* QRCodeScannerView.swift */; };
+		8D7215752D53CE71009AD026 /* SetVisitRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215742D53CE71009AD026 /* SetVisitRequest.swift */; };
+		8D7215772D53EEA9009AD026 /* SetVisitResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215762D53EEA9009AD026 /* SetVisitResponse.swift */; };
 		8D76D0842CAB0303009B0866 /* CheckinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */; };
 		8D76D0862CAB4E43009B0866 /* ResidentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */; };
 		8D76D0892CAB50CD009B0866 /* ResidentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */; };
@@ -184,6 +187,9 @@
 		8D5525512CE3DBDE009EE8F4 /* AgendaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaResponse.swift; sourceTree = "<group>"; };
 		8D5525532CE4F962009EE8F4 /* AccessDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessDialog.swift; sourceTree = "<group>"; };
 		8D5D6ED62CA49F5D007CBAFC /* MoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewModel.swift; sourceTree = "<group>"; };
+		8D7215722D52A20F009AD026 /* QRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
+		8D7215742D53CE71009AD026 /* SetVisitRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVisitRequest.swift; sourceTree = "<group>"; };
+		8D7215762D53EEA9009AD026 /* SetVisitResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVisitResponse.swift; sourceTree = "<group>"; };
 		8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinViewModel.swift; sourceTree = "<group>"; };
 		8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentResponse.swift; sourceTree = "<group>"; };
 		8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentRequest.swift; sourceTree = "<group>"; };
@@ -350,6 +356,7 @@
 				8DBDAE0B2D2DD42D00564A75 /* UserResponse.swift */,
 				8DE345512D4815EA00494AB8 /* AdminsResponse.swift */,
 				8DE3455D2D4ACF7100494AB8 /* NewAvisoResponse.swift */,
+				8D7215762D53EEA9009AD026 /* SetVisitResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -400,6 +407,7 @@
 				8D1BF8472CA373BB006DDF8A /* AppScreen.swift */,
 				8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */,
 				8DE345612D526C8B00494AB8 /* Utils.swift */,
+				8D7215722D52A20F009AD026 /* QRCodeScannerView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -467,6 +475,7 @@
 				8D5525472CE29ABF009EE8F4 /* QrRequest.swift */,
 				8D55254B2CE3BBC2009EE8F4 /* GetVisitRequest.swift */,
 				8D55254F2CE3DAE4009EE8F4 /* GetVisitAgendaRequest.swift */,
+				8D7215742D53CE71009AD026 /* SetVisitRequest.swift */,
 			);
 			path = requests;
 			sourceTree = "<group>";
@@ -667,6 +676,7 @@
 				8DEC8AF32D11E02A00DADBDF /* SplashScreen.swift in Sources */,
 				8D21E8162C9DEC07007E17FF /* PasswordView.swift in Sources */,
 				8D5525442CDD2AD3009EE8F4 /* RegisterVisitResponse.swift in Sources */,
+				8D7215772D53EEA9009AD026 /* SetVisitResponse.swift in Sources */,
 				8DE345582D493BB000494AB8 /* CustomDialogEvent.swift in Sources */,
 				8DDEBB862CA3232600EC6BB8 /* HomeView.swift in Sources */,
 				8D5525482CE29ABF009EE8F4 /* QrRequest.swift in Sources */,
@@ -700,6 +710,7 @@
 				8D76D09F2CB87845009B0866 /* EventRequest.swift in Sources */,
 				8D5525202CD95311009EE8F4 /* DeleteEventRequest.swift in Sources */,
 				8DE345522D4815EA00494AB8 /* AdminsResponse.swift in Sources */,
+				8D7215752D53CE71009AD026 /* SetVisitRequest.swift in Sources */,
 				8D5525522CE3DBDE009EE8F4 /* AgendaResponse.swift in Sources */,
 				8D55251C2CD423B2009EE8F4 /* AvisoRequest.swift in Sources */,
 				8D21E81C2C9E2C9A007E17FF /* NewUserViewModel.swift in Sources */,
@@ -731,6 +742,7 @@
 				8D21E81A2C9E2BB3007E17FF /* NewUserView.swift in Sources */,
 				8D21E8212CA1EB09007E17FF /* UserModel.swift in Sources */,
 				8D76D0952CB4884D009B0866 /* BinnacleRequest.swift in Sources */,
+				8D7215732D52A20F009AD026 /* QRCodeScannerView.swift in Sources */,
 				8D76D08B2CADD520009B0866 /* CheckOutView.swift in Sources */,
 				8D21E8102C9A30B8007E17FF /* ApiService.swift in Sources */,
 				8D76D09D2CB877C0009B0866 /* EventResponse.swift in Sources */,

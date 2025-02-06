@@ -174,6 +174,65 @@ class CheckOutViewModel: ObservableObject{
 //        }
     }
     
+    @MainActor
+    func checkOut() async {
+        do {
+            self.isSearching = true
+            
+            
+            let response: [CheckOutResponse] = try await apiService.get(urlString: ApiEndpoints.getBinnacleUrl(uuid: self.uuid!) )
+            
+            if !response.isEmpty{
+                
+                let registrosPrcesados = response.map{ registro in
+                    return CheckOutResponse(
+                        id: registro.id,
+                        name: registro.name,
+                        issue: registro.issue,
+                        visit: registro.visit,
+                        address: registro.address,
+                        phone: registro.phone,
+                        typeVisit: registro.typeVisit,
+                        evidence: registro.evidence,
+                        status: registro.status,
+                        uuid: registro.uuid,
+                        uuidSuperAdmin: registro.uuidSuperAdmin,
+                        idAssigned: registro.idAssigned,
+                        v: registro.v,
+                        assigned: registro.assigned,
+                        lastName: registro.lastName,
+                        dateI: Utils.formatDate(registro.dateI),
+                        dateF: registro.dateF
+                    )
+                    
+                }
+                
+                
+                self.registros.removeAll()
+                self.registros = registrosPrcesados
+            print("Registros ejecutado")
+                
+            }else{
+                print("No hay registros en la bitacora")
+            }
+            self.isSearching = false
+            
+        } catch let error as ApiError {
+            // Manejar errores específicos de la API
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.errorMessage = "Error: \(error)"
+                self.showError = true
+                self.isSearching = false
+                print("ERROR: \(error)")
+            }
+        } catch {
+          
+            print("ERROR: \(error)")
+        }
+        
+    }
+    
     
     @MainActor
     func changeTitle(title: String) {

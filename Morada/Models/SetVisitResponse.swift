@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct SetVisitResponse: Codable{
+    let message: String
+    let fileNames: [String]
+}

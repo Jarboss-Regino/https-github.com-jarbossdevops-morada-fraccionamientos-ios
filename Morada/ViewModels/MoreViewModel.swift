@@ -432,37 +432,37 @@ class MoreViewModel: ObservableObject{
     
     @MainActor
     func getResidents() async{
-        do{
-            let idSucursal = UserSession.shared.userResponse?.idCliente ?? ""
-            
-            
-            let body = ResidentRequest(source1: idSucursal)
-            
-            let response: [ResidentResponse] = try await apiService.post(urlString: ApiEndpoints.getResidentsUrl, body: body)
-            
-            if !response.isEmpty{
-                let residentesProcesados = response.map { residente in
-                    return ResidentResponse(id: residente.id, nombre: residente.nombre)
-                }
-                self.residentsList.removeAll()
-                self.residentsList = residentesProcesados
-            }else{
-                print("No hay residentes")
-            }
-            
-            
-            
-        }catch let error as ApiError {
-            
-                
-            print("Error: \(error)")
-                
-            
-        } catch {
-            
-            print("Error desconocido")
-            
-        }
+//        'do{
+//            let idSucursal = UserSession.shared.userResponse?.idCliente ?? ""
+//
+//
+//            let body = ResidentRequest(source1: idSucursal)
+//
+//            let response: [ResidentResponse] = try await apiService.post(urlString: ApiEndpoints.getResidentsUrl, body: body)
+//
+//            if !response.isEmpty{
+//                let residentesProcesados = response.map { residente in
+//                    return ResidentResponse(id: residente.id, nombre: residente.nombre)
+//                }
+//                self.residentsList.removeAll()
+//                self.residentsList = residentesProcesados
+//            }else{
+//                print("No hay residentes")
+//            }
+//
+//
+//
+//        }catch let error as ApiError {
+//
+//
+//            print("Error: \(error)")
+//
+//
+//        } catch {
+//
+//            print("Error desconocido")
+//
+//        }
     }
     
     @MainActor

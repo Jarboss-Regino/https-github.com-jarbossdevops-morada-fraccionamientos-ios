@@ -77,16 +77,16 @@ struct CheckinView: View {
                                     .frame(height: 2)
                         }.frame(height: 60)
                         
-                        VStack {
-                            TextField("Correo", text: $viewModel.email)
-                                .cornerRadius(16)
-                            LinearGradient(
-                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                    .frame(height: 2)
-                        }.frame(height: 60)
+//                        VStack {
+//                            TextField("Correo", text: $viewModel.email)
+//                                .cornerRadius(16)
+//                            LinearGradient(
+//                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
+//                                        startPoint: .leading,
+//                                        endPoint: .trailing
+//                                    )
+//                                    .frame(height: 2)
+//                        }.frame(height: 60)
                         
                         VStack {
                             TextField("Fecha de llegada", text: $viewModel.arrivalDate)
@@ -124,29 +124,40 @@ struct CheckinView: View {
                                     )
                                     .frame(height: 2)
                         }.frame(height: 60)
+                        VStack {
+                            TextField("Asunto", text: $viewModel.issue)
+                                .cornerRadius(16)
+                            LinearGradient(
+                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                    .frame(height: 2)
+                        }.frame(height: 60)
                         
                         HStack() {
                             Text("Visita a:")
                                 
                             Spacer()
                             Menu {
-                                ForEach(viewModel.names, id: \.self) { option in
+                                ForEach(viewModel.names, id: \.id) { option in
                                     Button(action: {
                                         viewModel.selectedName = option
+                                        viewModel.address = viewModel.selectedName?.address ?? ""
                                     }) {
-                                        Text(option)
+                                        Text(option.name)
                                             .padding()
                                             .cornerRadius(8)
                                     }
                                 }
                             } label: {
                                 HStack {
-                                    Text(viewModel.selectedName ?? "Selecciona una opción")
+                                    Text(viewModel.selectedName?.name ?? "Selecciona una opción")
                                        
                                         .overlay(
                                             LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
                                                 .mask({
-                                                    Text(viewModel.selectedName ?? "Selecciona una opción")
+                                                    Text(viewModel.selectedName?.name ?? "Selecciona una opción")
                                                         
                                                 })
                                         )
@@ -176,8 +187,13 @@ struct CheckinView: View {
                         }.frame(height: 60)
                         
                         VStack {
-                            TextField("Número", text: $viewModel.number)
+                            TextField("Teléfono", text: $viewModel.number)
                                 .cornerRadius(16)
+                                .keyboardType(.numberPad)
+                                .onChange(of: viewModel.number, { oldValue, newValue in
+                                    viewModel.number = String(newValue.prefix(10)).filter { $0.isNumber }
+                                })
+                                
                             LinearGradient(
                                         gradient: Gradient(colors: [Color.blue, Color.purple]),
                                         startPoint: .leading,
@@ -271,10 +287,16 @@ struct CheckinView: View {
                                 .font(.subheadline)
                                 .padding(.horizontal, 16)
                         }
+                        if viewModel.showSuccessMsg {
+                            Text("\(viewModel.msgSuccess)")
+                                .foregroundColor(.green)
+                                .font(.subheadline)
+                                .padding(.horizontal, 16)
+                        }
                         
                         Button(action: {
                             Task{
-                                viewModel.doRegister()
+                                await viewModel.doRegister()
                             }
                             print("Botón de inicio de sesión presionado")
                         }) {
