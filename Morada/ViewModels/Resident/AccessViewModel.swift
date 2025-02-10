@@ -10,9 +10,16 @@ import UIKit
 import SwiftUI
 
 class AccessViewModel: ObservableObject {
+    // visiter
     @Published var name = ""
-    @Published var address = ""
+    @Published var email = ""
     @Published var phone = ""
+    @Published var typeVisit = ""
+    
+    // resident data
+    @Published var residentsList: [ResidentResponse] = []
+    @Published var selectedResident: ResidentResponse? = nil
+    @Published var address = ""
     @Published var company = ""
     
     @Published var idSucursal: String?
@@ -50,6 +57,19 @@ class AccessViewModel: ObservableObject {
     
     private let apiService = ApiService()
     
+    let uuidAdmin = UserSession.shared.userData?.uuidSuperAdmin
+    let uuid = UserSession.shared.userData?.uuid
+    let idAssignedValue: String = {
+        switch UserSession.shared.userData?.idAssigned{
+        case .string(let value):
+            return value
+        case .array(let values):
+            return values.joined(separator: ",") // Une los elementos del array como una cadena separada por comas
+        case .none:
+            return ""
+        }
+    }()
+    
     init(){
         let type = UserSession.shared.userResponse?.tipo
         if let ttipo = type {
@@ -57,6 +77,39 @@ class AccessViewModel: ObservableObject {
             
         } else {
             print("El tipo es nil")
+        }
+        
+        Task{
+            await getResidents()
+        }
+    }
+    
+    @MainActor
+    func getResidents() async{
+        do{
+            
+            
+            let response: [ResidentResponse] = try await apiService.get(urlString: ApiEndpoints.getResidentsUrl(idAssigned: self.idAssignedValue))
+            
+            if !response.isEmpty{
+                self.residentsList.removeAll()
+                self.residentsList = response
+            }else{
+                print("No hay residentes")
+            }
+            
+            
+            
+        }catch let error as ApiError {
+            
+                
+            print("Error: \(error)")
+                
+            
+        } catch {
+            
+            print("Error desconocido")
+            
         }
     }
     

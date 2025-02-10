@@ -45,67 +45,20 @@ struct bodyView: View {
     @State var isEndTimePickerVisible = false
     var body: some View {
         VStack{
-            HStack {
-                Text("Tipo de visita:")
-                Spacer()
-                
-                Menu {
-                    ForEach(viewModel.tiposVisita, id: \.self) { option in
-                        Button(action: {
-                            viewModel.resetFields()
-                            viewModel.selectedOption = option
-                        }) {
-                            Text(option)
-                                .padding()
-                                .cornerRadius(8)
-                        }
-                    }
-                } label: {
-                    HStack {
-                        Text(viewModel.selectedOption ?? "Selecciona una opción")
-                           
-                            .overlay(
-                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
-                                    .mask({
-                                        Text( viewModel.selectedOption  ?? "Selecciona una opción")
-                                            
-                                    })
-                            )
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                    }.padding(.leading,10)
-                    .cornerRadius(8)
-                }
-                
-
-              
-            }
             
-            // TEXTFIELDS
-            if viewModel.selectedOption == "Paquetería"{
-                VStack {
-                    TextField("Empresa", text: $viewModel.company)
-                        .cornerRadius(16)
-                    LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                            .frame(height: 2)
-                }.frame(height: 60)
-            }else{
-                VStack {
-                    TextField("Nombre y apellido", text: $viewModel.name)
-                        .cornerRadius(16)
-                    LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                            .frame(height: 2)
-                }.frame(height: 60)
-            }
             
+            
+            
+            VStack {
+                TextField("Nombre y apellido", text: $viewModel.name)
+                    .cornerRadius(16)
+                LinearGradient(
+                            gradient: Gradient(colors: [Color.blue, Color.purple]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .frame(height: 2)
+            }.frame(height: 60)
             
             VStack {
                 TextField("Teléfono", text: $viewModel.phone)
@@ -122,84 +75,89 @@ struct bodyView: View {
                         .frame(height: 2)
             }.frame(height: 60)
             
-            // DATE AND HOUR PICKERS
-            if viewModel.selectedOption != "Empleado" {
-                VStack {
-                    Text("Fecha de llegada: ").font(.headline)
+            VStack {
+                TextField("Tipo de visita", text: $viewModel.typeVisit)
+                    .cornerRadius(16)
+                LinearGradient(
+                            gradient: Gradient(colors: [Color.blue, Color.purple]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .frame(height: 2)
+            }.frame(height: 60)
+            
+            HStack {
+                Text("Fecha de llegada: ").font(.headline)
+                Spacer()
+                Text(viewModel.date, formatter: dateFormatter)
+                    .onTapGesture {
+                        withAnimation {
+                            isDatePickerVisible.toggle()
+                        }
+                    }.padding(8).background(
+                        RoundedRectangle(cornerRadius: 10) // Fondo redondeado
+                            .fill(Color.purple.opacity(0.1)) // Color de fondo con opacidad
+                    ).overlay( // Borde con color púrpura y opacidad
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.purple.opacity(0.6), lineWidth: 2)
+                    )
                     
-                    Text(viewModel.date, formatter: dateFormatter)
-                        .onTapGesture {
-                            withAnimation {
-                                isDatePickerVisible.toggle()
-                            }
-                        }.padding(8).background(
-                            RoundedRectangle(cornerRadius: 10) // Fondo redondeado
-                                .fill(Color.purple.opacity(0.1)) // Color de fondo con opacidad
-                        ).overlay( // Borde con color púrpura y opacidad
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.purple.opacity(0.6), lineWidth: 2)
-                        )
-                        
-                }.padding(.top,10)
-            }
+            }.padding(.top,10)
             
+            HStack {
+                Text("Hora de evento:").font(.headline)
+                Spacer()
+                Text(viewModel.eventTime, formatter: timeFormatter)
+                    .onTapGesture {
+                        withAnimation {
+                            startEventPickerVisible.toggle()
+                        }
+                    }.padding(8).background(
+                        RoundedRectangle(cornerRadius: 10) // Fondo redondeado
+                            .fill(Color.purple.opacity(0.1)) // Color de fondo con opacidad
+                    ).overlay( // Borde con color púrpura y opacidad
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.purple.opacity(0.6), lineWidth: 2)
+                    )
+            }.padding(.top,10)
             
-            if viewModel.selectedOption != "Paquetería" && viewModel.selectedOption != "Empleado"{
-                VStack {
-                    Text("Hora de evento:").font(.headline)
-                    Text(viewModel.eventTime, formatter: timeFormatter)
-                        .onTapGesture {
-                            withAnimation {
-                                startEventPickerVisible.toggle()
-                            }
-                        }.padding(8).background(
-                            RoundedRectangle(cornerRadius: 10) // Fondo redondeado
-                                .fill(Color.purple.opacity(0.1)) // Color de fondo con opacidad
-                        ).overlay( // Borde con color púrpura y opacidad
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.purple.opacity(0.6), lineWidth: 2)
-                        )
-                }.padding(.top,10)
-            }
-            
-            if viewModel.selectedOption == "Empleado"{
-                VStack {
-                    Text("Fecha inicio: ").font(.headline)
-                    
-                    Text(viewModel.startTime, formatter: dateFormatter)
-                        .onTapGesture {
-                            withAnimation {
-                                isStartTimePickerVisible.toggle()
-                            }
-                        }.padding(8).background(
-                            RoundedRectangle(cornerRadius: 10) // Fondo redondeado
-                                .fill(Color.purple.opacity(0.1)) // Color de fondo con opacidad
-                        ).overlay( // Borde con color púrpura y opacidad
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.purple.opacity(0.6), lineWidth: 2)
-                        )
-                        
-                }.padding(.top,10)
+            HStack {
+                Text("Visita a:").font(.headline)
+                Spacer()
                 
-                VStack {
-                    Text("Fecha fin: ").font(.headline)
-                    
-                    Text(viewModel.endTime, formatter: dateFormatter)
-                        .onTapGesture {
-                            withAnimation {
-                                isEndTimePickerVisible.toggle()
-                            }
-                        }.padding(8).background(
-                            RoundedRectangle(cornerRadius: 10) // Fondo redondeado
-                                .fill(Color.purple.opacity(0.1)) // Color de fondo con opacidad
-                        ).overlay( // Borde con color púrpura y opacidad
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.purple.opacity(0.6), lineWidth: 2)
-                        )
-                        
-                }.padding(.top,10)
-            }
+                Menu {
+                    ForEach(viewModel.residentsList, id: \.id) { option in
+                        Button(action: {
+                            //viewModel.resetFields()
+                            viewModel.selectedResident = option
+                        }) {
+                            Text(option.name)
+                                .padding()
+                                .cornerRadius(8)
+                        }
+                    }
+                } label: {
+                    HStack {
+                        Text(viewModel.selectedResident?.name ?? "Selecciona una opción")
+                           
+                            .overlay(
+                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
+                                    .mask({
+                                        Text( viewModel.selectedResident?.name  ?? "Selecciona una opción")
+                                            
+                                    })
+                            )
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                    }.padding(.leading,10)
+                    .cornerRadius(8)
+                }
+                
+
+              
+            }.padding(.top, 10)
             
+           
             
             // ERRORS MESSAGE AND BUTTON
             Spacer()
