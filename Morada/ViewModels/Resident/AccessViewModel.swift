@@ -48,10 +48,13 @@ class AccessViewModel: ObservableObject {
     @Published var title = ""
     @Published var searchText = ""
     @Published var isSearching = false // Estado para el indicador de progreso
-    @Published var registros: [DetailVisitas] = [] // Resultados filtrados
+    @Published var registros: [GetVistasResponse] = [] // Resultados filtrados
     @Published var showModal = false
-    @Published var selectedVisita: DetailVisitas? = nil
+    @Published var selectedVisita: GetVistasResponse? = nil
     @Published var selectedButton: Int = 1
+    
+    @Published var binnacleList: [CheckOutResponse] = [] // Resultados filtrados
+    @Published var selectedBinnacle: CheckOutResponse? = nil
     
     var mtipo: Int?
     
@@ -117,113 +120,79 @@ class AccessViewModel: ObservableObject {
     func creaeNewEvent() async{
         do {
             let ahora = Date()
-            print(ahora)
-            
-            if selectedOption == nil{
-                self.errorMessage = "Todos los campos deben ir llenos."
-                self.showError = true
-                return
-            }
-            
-            if selectedOption == "Familiar/Amigo"{
-                if name.isEmpty || phone.isEmpty{
-                    self.errorMessage = "Todos los campos deben ir llenos."
-                    self.showError = true
-                    return
-                }
-                if !isValidPhoneNumber(phone) {
-                    self.errorMessage = "Número de teléfono inválido"
-                    self.showError = true
-                    return
-                }
-                guard date >= ahora else {
-                    self.errorMessage = "La fecha del evento debe ser en el futuro."
-                    self.showError = true
-                    return
-                }
-                guard eventTime >= ahora else {
-                    self.errorMessage = "La hora del evento debe ser mayor a la hora actual."
-                    self.showError = true
-                    return
-                }
-            }
-            
-            if selectedOption == "Paquetería"{
-                if company.isEmpty || phone.isEmpty{
-                    self.errorMessage = "Todos los campos deben ir llenos."
-                    self.showError = true
-                    return
-                }
-                if !isValidPhoneNumber(phone) {
-                    self.errorMessage = "Número de teléfono inválido"
-                    self.showError = true
-                    return
-                }
-                guard date >= ahora else {
-                    self.errorMessage = "La fecha del evento debe ser en el futuro."
-                    self.showError = true
-                    return
-                }
-            }
-                
-                
-            
-            
-            if selectedOption == "Empleado"{
-                if name.isEmpty || phone.isEmpty{
-                    self.errorMessage = "Todos los campos deben ir llenos."
-                    self.showError = true
-                    return
-                }
-                if !isValidPhoneNumber(phone) {
-                    self.errorMessage = "Número de teléfono inválido"
-                    self.showError = true
-                    return
-                }
-                guard startTime >= ahora else {
-                    self.errorMessage = "La fecha de inicio debe ser en el futuro."
-                    self.showError = true
-                    return
-                }
-                guard endTime > ahora else {
-                    self.errorMessage = "La fecha fin no debe ser mayor a la fecha inicio"
-                    self.showError = true
-                    return
-                }
-            }
-   
-            self.showError = false
-            
-            var idUser: String = "0"
-//            if mtipo != 0{
-                idUser = (UserSession.shared.userResponse?.id)!
-//            }
-//            
-            let idFraccionamiento = (UserSession.shared.userResponse?.idCliente)!
-            
+            let calendar = Calendar.current
+            let today = calendar.startOfDay(for: ahora) // Esto elimina la hora y solo deja la fecha
+
+            // Usa `calendar.startOfDay` para también asegurar que `date` se compara solo como fecha, sin la hora
+            let selectedDate = calendar.startOfDay(for: date)
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let soloFecha = dateFormatter.string(from: date)
-            let fechaInicio = dateFormatter.string(from: startTime)
-            let fechaFin = dateFormatter.string(from: endTime)
             
             let timeFormatter = DateFormatter()
             timeFormatter.dateFormat = "HH:mm"
             let startEvent = timeFormatter.string(from: eventTime)
+
+            if name.isEmpty || email.isEmpty || phone.isEmpty || typeVisit.isEmpty{
+                self.errorMessage = "Todos los campos son obligatorios."
+                self.showError = true
+                return
+            }
+            if !Utils.isValidEmail(email: email){
+                self.errorMessage = "Correo inválido."
+                self.showError = true
+                return
+            }
+            if !isValidPhoneNumber(phone) {
+                self.errorMessage = "Número de teléfono inválido"
+                self.showError = true
+                return
+            }
+            guard selectedDate >= today else {
+                self.errorMessage = "La fecha de visita debe ser hoy o en el futuro."
+                self.showError = true
+                return
+            }
+            
+//            if selectedResident == nil{
+//                self.errorMessage = "Todos los campos son obligatorios."
+//                self.showError = true
+//                return
+//            }
+//           
+            self.showError = false
            
             
-            let body = VisitRequest(source1: self.selectedOption!, source2: idUser, source3: self.name, source4: "", source5: "", source6: self.phone, source7: soloFecha, source8: startEvent, source9: idFraccionamiento, source10: fechaInicio, source11: fechaFin)
+            if let resident = self.residentsList.first(where: { $0.uuid == self.uuid }) {
+                self.selectedResident = resident
+            }
+           
+            
+            let body = VisitRequest(
+                name: self.name,
+                email: self.email,
+                visit: self.selectedResident?.username ?? "",
+                address: self.selectedResident?.address ?? "",
+                phone: self.phone,
+                typeVisit: self.typeVisit,
+                dateI: "\(soloFecha) \(startEvent)",
+                uuidSuperAdmin: self.uuidAdmin!,
+                uuid: self.uuid!,
+                idAssigned: self.idAssignedValue
+            )
 
             
-            let response: RegisterVisitResponse = try await apiService.post(urlString: ApiEndpoints.setAgendaUrl, body: body)
+            let response: RegisterVisitResponse = try await apiService.postJson(urlString: ApiEndpoints.setAgendaUrl, body: body)
           
-            if response.status == "ok" {
+            if response.message == "Agenda of visits created successfully" {
                 self.isLoading = false
                 self.showError = false
-                self.disableButton = true
+                //self.disableButton = true
                 self.successMessage = "Evento reservado"
                 self.showMessage = true
-                await getImg(id: response.id)
+                
+                await getImg(id: response.fileName.first ?? "",uuid: self.uuid!)
+                clearFields()
             }else{
                 self.isLoading = false
                 self.errorMessage = "Ocurrio un error al registrar el evento"
@@ -247,22 +216,29 @@ class AccessViewModel: ObservableObject {
         }
     }
     
+    func clearFields(){
+        self.name = ""
+        self.email = ""
+        self.phone = ""
+        self.typeVisit = ""
+        self.selectedResident = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.showError = false
+            self.showMessage = false
+        }
+    }
+    
     @MainActor
-    func getImg(id:String) async{
+    func getImg(id:String,uuid: String) async{
         do{
-            let body = QrRequest(data: id, source2: "centercomm", source3: "centercomm_"+id, source4: "")
             
-            let response: QrResponse = try await apiService.post(urlString: ApiEndpoints.getImgUrl, body: body)
             
-            // Paso 2: Construye la URL completa con el nombre de la imagen
-            let imageUrlString = "\(ApiEndpoints.getQrUrl)\(response.img)"
-            guard let imageUrl = URL(string: imageUrlString) else { return }
-            // Paso 3: Descarga la imagen
-            let (data, _) = try await URLSession.shared.data(from: imageUrl)
-            guard let image = UIImage(data: data) else { return }
+            let urlImg = ApiEndpoints.getQrUrl(id: id, uuid: uuid)
+            let dataImg = try await apiService.downloadImage(from: urlImg)
+            
             
             // Paso 4: Abre el UIActivityViewController para compartir
-            let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            let activityVC = UIActivityViewController(activityItems: [dataImg], applicationActivities: nil)
             
             // Opcional: Si quieres solo WhatsApp, puedes filtrar las actividades de esta forma
             //activityVC.excludedActivityTypes = [.postToFacebook, .postToTwitter, .mail, .message]
@@ -329,45 +305,40 @@ class AccessViewModel: ObservableObject {
     func fetchBinnacleRegisters() async{
         do {
             self.isSearching = true
-            var idFraccionamiento: String = "0"
-            if mtipo != 1{
-                idFraccionamiento = (UserSession.shared.userResponse?.idCliente)!
-            }
-//
-            let idUser = (UserSession.shared.userResponse?.id)!
+            let response: [CheckOutResponse] = try await apiService.get(urlString: ApiEndpoints.getBinnacleUrl(uuid: self.uuid!) )
             
-            let body = GetVisitRequest(source1: "00", source2: "", source3: idFraccionamiento, source4: idUser)
-            
-            let response: GetVistasResponse = try await apiService.post(urlString: ApiEndpoints.getVisitasUrl, body: body)
-            
-            if !response.registros.isEmpty{
+            if !response.isEmpty{
                 
-                let registrosPrcesados = response.registros.map{ registro in
-                    return DetailVisitas(
+                let registrosPrcesados = response.map{ registro in
+                    return CheckOutResponse(
                         id: registro.id,
-                        estatus: registro.estatus,
-                        nombre: registro.nombre,
-                        domicilio: registro.domicilio,
-                        numero: registro.numero,
-                        visita_a: registro.visita_a,
-                        tipovis: registro.tipovis,                        
-                        fecha: formatDate(registro.fecha),
-                        hora: formatTimeOnly(registro.hora),
-                        entrada: formatTimeOnly(registro.entrada),
-                        salida: formatTimeOnly(registro.salida),
-                        evidencia: registro.evidencia,
-                        tabla: registro.tabla
+                        name: registro.name,
+                        issue: registro.issue,
+                        visit: registro.visit,
+                        address: registro.address,
+                        phone: registro.phone,
+                        typeVisit: registro.typeVisit,
+                        evidence: registro.evidence,
+                        status: registro.status,
+                        uuid: registro.uuid,
+                        uuidSuperAdmin: registro.uuidSuperAdmin,
+                        idAssigned: registro.idAssigned,
+                        v: registro.v,
+                        assigned: registro.assigned,
+                        lastName: registro.lastName,
+                        dateI: Utils.formatDate(registro.dateI),
+                        dateF: registro.dateF
                     )
                     
-                    
                 }
                 
-                DispatchQueue.main.async {
-                    self.registros.removeAll()
-                    self.registros = registrosPrcesados
-                    print(self.registros)
-                }
                 
+                self.binnacleList.removeAll()
+                self.binnacleList = registrosPrcesados
+            print("Registros ejecutado")
+                
+            }else{
+                print("No hay registros en la bitacora")
             }
             self.isSearching = false
             
@@ -396,46 +367,39 @@ class AccessViewModel: ObservableObject {
     func fetchAgendaRegisters() async{
         do {
             self.isSearching = true
-            var idFraccionamiento: String = "0"
-            if mtipo != 1{
-                idFraccionamiento = (UserSession.shared.userResponse?.idCliente)!
-            }
-            //
-            let idUser = (UserSession.shared.userResponse?.id)!
+            let response: [GetVistasResponse] = try await apiService.get(urlString: ApiEndpoints.getVisitasUrl(uuid: self.uuidAdmin!))
             
-            
-            let body = GetVisitAgendaRequest(source1: "00", source2: idFraccionamiento, source3: idUser)
-            
-            let response: GetVistasResponse = try await apiService.post(urlString: ApiEndpoints.getVisitasAgendaUrl, body: body)
-            
-            if response.status == "ok"{
+            if !response.isEmpty{
                 
-                let registrosPrcesados = response.registros.map{ registro in
-                    return DetailVisitas(
+                let registrosPrcesados = response.map{ registro in
+                    return GetVistasResponse(
                         id: registro.id,
-                        estatus: registro.estatus,
-                        residente: registro.residente,
-                        nombre: registro.nombre,
-                        domicilio: registro.domicilio,
-                        numero: registro.numero,
-                        tipovis: registro.tipovis,                        
-                        fecha: formatDate(registro.fecha),
-                        hora: formatTimeOnly(registro.hora),
-                        entrada: formatTimeOnly(registro.entrada),
-                        salida: formatTimeOnly(registro.salida), 
-                        tabla: registro.tabla
+                        name: registro.name,
+                        visit: registro.visit,
+                        email: registro.email,
+                        address: registro.address,
+                        phone: registro.phone,
+                        typeVisit: registro.typeVisit,
+                        evidence: registro.evidence,
+                        status: registro.status,
+                        uuid: registro.uuid,
+                        uuidSuperAdmin: registro.uuidSuperAdmin,
+                        idAssigned: registro.idAssigned,
+                        v: registro.v,
+                        dateI: Utils.formatDate(registro.dateI ?? ""),
+                        dateF: registro.dateF
                     )
+                    
                     
                 }
                 
-                DispatchQueue.main.async {
-                    self.registros.removeAll()
-                    self.registros = registrosPrcesados
-                    print(self.registros)
-                }
-               
+                
+                self.registros.removeAll()
+                self.registros = registrosPrcesados
+                print(self.registros)
+                
+                
             }
-            
             self.isSearching = false
         } catch let error as ApiError {
             // Manejar errores específicos de la API
@@ -456,6 +420,24 @@ class AccessViewModel: ObservableObject {
                 print("ERROR: \(error)")
             }
         }
+    }
+    
+    func getIconName(for status: String) -> String {
+        switch status {
+        case "0":
+            return "sync" // sin llegar
+        case "1":
+            return "entrada1" // entrada
+        case "2":
+            return "salida1" // salida
+        default:
+            return "info.circle.fill" // Ícono por defecto
+        }
+    }
+    
+    @MainActor
+    func shareQr() async{
+        
     }
     
     private func formatTimeOnly(_ timeString: String) -> String {

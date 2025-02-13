@@ -13,26 +13,29 @@ struct RegisterVisitView: View {
     
     var body: some View {
         NavigationView{
-            
+            ScrollView{
                 
-            ZStack{
                 
-                bodyView(viewModel: viewModel).padding(.top,30)
                 
-            }
-            .frame(maxWidth: .infinity).padding(.horizontal, 32)
-            .toolbar(content: {
-                ToolbarItem(placement: .principal) {
-                    ToolBarBack(title: "Registro de visitante", dismissAction: {dismiss()})
+                
+                ZStack{
+                    
+                    bodyView(viewModel: viewModel).padding(.top,30)
+                    
                 }
-            }).navigationBarBackButtonHidden(true)
-                .navigationBarTitleDisplayMode(.inline)
-                .onAppear{
-                    viewModel.disableButton = false
-                    viewModel.resetFields()
-                }
+                .frame(maxHeight: .infinity).padding(.horizontal, 32)
+                .toolbar(content: {
+                    ToolbarItem(placement: .principal) {
+                        ToolBarBack(title: "Registro de visitante", dismissAction: {dismiss()})
+                    }
+                }).navigationBarBackButtonHidden(true)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .onAppear{
+                        viewModel.disableButton = false
+                        viewModel.resetFields()
+                    }
                 
-            
+            }.ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
 }
@@ -63,10 +66,25 @@ struct bodyView: View {
             VStack {
                 TextField("Teléfono", text: $viewModel.phone)
                     .cornerRadius(16)
+                    .keyboardType(.phonePad)
                     .onChange(of: viewModel.phone) { oldValue, newValue in
                         viewModel.phone = String(newValue.prefix(10).filter { $0.isNumber })
 
                     }
+                LinearGradient(
+                            gradient: Gradient(colors: [Color.blue, Color.purple]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .frame(height: 2)
+            }.frame(height: 60)
+            VStack {
+
+                TextField("Correo", text: $viewModel.email)
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
                 LinearGradient(
                             gradient: Gradient(colors: [Color.blue, Color.purple]),
                             startPoint: .leading,
@@ -121,41 +139,41 @@ struct bodyView: View {
                     )
             }.padding(.top,10)
             
-            HStack {
-                Text("Visita a:").font(.headline)
-                Spacer()
-                
-                Menu {
-                    ForEach(viewModel.residentsList, id: \.id) { option in
-                        Button(action: {
-                            //viewModel.resetFields()
-                            viewModel.selectedResident = option
-                        }) {
-                            Text(option.name)
-                                .padding()
-                                .cornerRadius(8)
-                        }
-                    }
-                } label: {
-                    HStack {
-                        Text(viewModel.selectedResident?.name ?? "Selecciona una opción")
-                           
-                            .overlay(
-                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
-                                    .mask({
-                                        Text( viewModel.selectedResident?.name  ?? "Selecciona una opción")
-                                            
-                                    })
-                            )
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                    }.padding(.leading,10)
-                    .cornerRadius(8)
-                }
-                
-
-              
-            }.padding(.top, 10)
+//            HStack {
+//                Text("Visita a:").font(.headline)
+//                Spacer()
+//                
+//                Menu {
+//                    ForEach(viewModel.residentsList, id: \.id) { option in
+//                        Button(action: {
+//                            //viewModel.resetFields()
+//                            viewModel.selectedResident = option
+//                        }) {
+//                            Text(option.name)
+//                                .padding()
+//                                .cornerRadius(8)
+//                        }
+//                    }
+//                } label: {
+//                    HStack {
+//                        Text(viewModel.selectedResident?.name ?? "Selecciona una opción")
+//                           
+//                            .overlay(
+//                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
+//                                    .mask({
+//                                        Text( viewModel.selectedResident?.name  ?? "Selecciona una opción")
+//                                            
+//                                    })
+//                            )
+//                        Spacer()
+//                        Image(systemName: "chevron.down")
+//                    }.padding(.leading,10)
+//                    .cornerRadius(8)
+//                }
+//                
+//
+//              
+//            }.padding(.top, 10)
             
            
             

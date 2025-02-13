@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 
@@ -121,6 +122,26 @@ class ApiService {
                 throw ApiError.decodingError
             }
         }
+    
+    func downloadImage(from urlString: String) async throws -> UIImage {
+        guard let url = URL(string: urlString) else {
+            throw ApiError.invalidUrl
+        }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        // Verificar el código de estado HTTP
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+            throw ApiError.serverError("Error del servidor: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+        }
+        
+        // Intentar convertir a UIImage
+        guard let image = UIImage(data: data) else {
+            throw ApiError.decodingError
+        }
+        
+        return image
+    }
 }
 
 

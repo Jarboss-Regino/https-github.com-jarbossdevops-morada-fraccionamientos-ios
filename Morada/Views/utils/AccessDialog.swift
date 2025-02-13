@@ -11,7 +11,7 @@ struct AccessDialog: View {
     @Binding var isActive: Bool
 
     let title: String
-    let data: DetailVisitas
+    let data: GetVistasResponse
     let buttonTitle: String
     @Binding var showButton: Int
     let action: () -> ()
@@ -35,7 +35,7 @@ struct AccessDialog: View {
                     Text("Nombre:").font(.body)
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
-                    Text("\(data.nombre)")
+                    Text("\(data.name)")
                 }
                 
                 HStack(alignment: .center){
@@ -43,7 +43,7 @@ struct AccessDialog: View {
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     
-                    Text("\(data.tipovis)")
+                    Text("\(data.typeVisit)")
                 }
                 
                 
@@ -51,23 +51,23 @@ struct AccessDialog: View {
                     Text("Fecha de la visita:").font(.body)
                         .fontWeight(.semibold)
                     .foregroundColor(.primary)
-                    Text("\(data.fecha)")
+                    Text("\(data.dateI ?? "")")
                 }
                 
                 
                 
-                HStack(alignment: .center){
-                    Text("Hora:").font(.body)
-                        .fontWeight(.semibold)
-                    .foregroundColor(.primary)
-                    Text("\(data.hora)")
-                }
+//                HStack(alignment: .center){
+//                    Text("Hora:").font(.body)
+//                        .fontWeight(.semibold)
+//                    .foregroundColor(.primary)
+//                    Text("\(data.hora)")
+//                }
                 
 
-                if showButton != 1{
+                if data.status == "0" {
                     Button {
                         action()
-                        close()
+                        //close()
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)

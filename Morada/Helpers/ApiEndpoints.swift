@@ -93,16 +93,17 @@ class ApiEndpoints{
         return baseUrl+"/management/createNotice"
     }
     static var setAgendaUrl: String {
-        return baseUrl+"/Fraccionamientos/POST/?source1=visita&source2=setAgenda"
+        return baseUrl+"/management/createAgenda"
     }
     static var getImgUrl: String {
         return proUrl+"/QR_plugin/"
     }
-    static var getQrUrl: String {
-        return proUrl+"/QR_plugin/temp/centercomm/"
+    static func getQrUrl(id: String, uuid: String) -> String {
+        return "https://bucket-control-morada-fraccionamientos-staging.s3.us-east-1.amazonaws.com"+"/Agenda/"+uuid+"/"+id
     }
-    static var getVisitasUrl: String {
-        return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=get_visitasApp"
+    
+    static func getVisitasUrl(uuid: String) -> String {
+        return baseUrl+"/management/getAgenda?uuidSuperAdmin="+uuid
     }
     static var getVisitasAgendaUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=getAgendaApp"

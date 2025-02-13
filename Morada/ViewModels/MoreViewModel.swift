@@ -565,7 +565,7 @@ class MoreViewModel: ObservableObject{
     @MainActor
     func getAvisos() async{
         do{
-            let response: [AvisoResponse] = try await apiService.get(urlString: ApiEndpoints.getAvisosUrl(uuid: self.idUser!))
+            let response: [AvisoResponse] = try await apiService.get(urlString: ApiEndpoints.getAvisosUrl(uuid: self.idUser ?? ""))
 
             if !response.isEmpty{
 

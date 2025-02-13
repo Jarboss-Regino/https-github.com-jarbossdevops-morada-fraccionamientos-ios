@@ -8,7 +8,6 @@
 import Foundation
 
 struct RegisterVisitResponse: Codable{
-    let status:String
-    let id: String
-    let estatus: Int
+    let message:String
+    let fileName: [String]
 }

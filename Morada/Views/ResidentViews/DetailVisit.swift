@@ -39,7 +39,9 @@ struct DetailVisit: View {
                 if viewModel.showModal, let visita = viewModel.selectedVisita {
                     AccessDialog(isActive: $viewModel.showModal, title: "Detalles de la visita", data: visita, buttonTitle: "Compartir Qr",
                                  showButton: $viewModel.selectedButton,action: {
-                        print("saliendo...")
+                        Task{
+                            await viewModel.getImg(id: viewModel.selectedVisita?.evidence ?? "", uuid: viewModel.selectedVisita?.uuid ?? "")
+                        }
                     })
                 }
             }
@@ -133,36 +135,43 @@ struct bodyViewDetail: View {
                     .padding()
                 Spacer()
             } else {
-                List(viewModel.registros, id: \.id) { option in
-                    itemAgenta(data: option, mviewModel: viewModel)
-                }.listStyle(.inset).frame(maxWidth: .infinity).scrollIndicators(.hidden)
+                if viewModel.selectedButton == 1{
+                    List(viewModel.binnacleList, id: \.id) { option in
+                        ItemAgendaView(data: option, mviewModel: viewModel)
+                    }.listStyle(.inset).frame(maxWidth: .infinity).scrollIndicators(.hidden)
+                }else{
+                    List(viewModel.registros, id: \.id) { option in
+                        itemAgenta(data: option, mviewModel: viewModel)
+                    }.listStyle(.inset).frame(maxWidth: .infinity).scrollIndicators(.hidden)
+                }
+                
             }
         }
     }
 }
 
 struct itemAgenta: View{
-    var data: DetailVisitas
+    var data: GetVistasResponse
     @ObservedObject var mviewModel: AccessViewModel
     var body: some View{
         
         HStack(alignment: .center, spacing: 10) {
             // Ícono único para toda la información
-            Image(systemName: "info.circle.fill")
+            Image(mviewModel.getIconName(for: data.status))
                 .resizable()
                 .scaledToFit()
                 .frame(width: 30, height: 30)
                 .foregroundColor(.blue)
-                .padding(.top, 5) // Alineación vertical
-            
+                .padding(.leading,10)
+                
             
             VStack(alignment: .leading){
-                Text(data.nombre).font(.body)
+                Text(data.name).font(.body)
                     .fontWeight(.semibold)
                 .foregroundColor(.primary)
                 HStack{
                     Text("Número: ")
-                    Text(data.numero ?? "NA")
+                    Text(data.phone)
                 }
                 
                 HStack{
@@ -172,12 +181,11 @@ struct itemAgenta: View{
                     Text("No aplica")
                 }
                 
-                HStack{
-                    Text("Código de acceso: ")
-                    Text(data.id)
-                }
+               
                 
             }
+            
+            Spacer()
         }
         
         .frame(maxWidth: .infinity, maxHeight: .infinity)
