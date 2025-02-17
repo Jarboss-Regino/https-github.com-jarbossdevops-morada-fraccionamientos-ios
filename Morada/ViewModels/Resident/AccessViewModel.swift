@@ -326,8 +326,9 @@ class AccessViewModel: ObservableObject {
                         v: registro.v,
                         assigned: registro.assigned,
                         lastName: registro.lastName,
-                        dateI: Utils.formatDate(registro.dateI),
-                        dateF: registro.dateF
+                        dateI: registro.dateI,
+                        dateF: registro.dateF,
+                        dateFormated: Utils.formatDate(registro.dateI)
                     )
                     
                 }
@@ -367,7 +368,7 @@ class AccessViewModel: ObservableObject {
     func fetchAgendaRegisters() async{
         do {
             self.isSearching = true
-            let response: [GetVistasResponse] = try await apiService.get(urlString: ApiEndpoints.getVisitasUrl(uuid: self.uuidAdmin!))
+            let response: [GetVistasResponse] = try await apiService.get(urlString: ApiEndpoints.getVisitasUrl(uuid: self.uuid ?? ""))
             
             if !response.isEmpty{
                 
@@ -386,8 +387,12 @@ class AccessViewModel: ObservableObject {
                         uuidSuperAdmin: registro.uuidSuperAdmin,
                         idAssigned: registro.idAssigned,
                         v: registro.v,
-                        dateI: Utils.formatDate(registro.dateI ?? ""),
-                        dateF: registro.dateF
+                        assigned: registro.assigned,
+                        nameUser: registro.nameUser,
+                        lastName:registro.lastName,
+                        dateI: registro.dateI,
+                        dateF: registro.dateF,
+                        dateFormated: Utils.formatDate(registro.dateI ?? "")
                     )
                     
                     
@@ -396,7 +401,6 @@ class AccessViewModel: ObservableObject {
                 
                 self.registros.removeAll()
                 self.registros = registrosPrcesados
-                print(self.registros)
                 
                 
             }

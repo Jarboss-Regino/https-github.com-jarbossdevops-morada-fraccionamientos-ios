@@ -116,9 +116,16 @@ struct CheckOutView: View {
                             .padding()
                         Spacer()
                     } else {
-                        List(viewModel.registros, id: \.id) { option in
-                            item(data: option, mviewModel: viewModel)
-                        }.listStyle(.inset).frame(maxWidth: .infinity).scrollIndicators(.hidden)
+                        if viewModel.selectedButton == 1{
+                            List(viewModel.registros, id: \.id) { option in
+                                item(data: option, mviewModel: viewModel)
+                            }.listStyle(.inset).frame(maxWidth: .infinity).scrollIndicators(.hidden)
+                        }else{
+                            List(viewModel.agendaList, id: \.id) { option in
+                                itemAgenda(data: option, mviewModel: viewModel)
+                            }.listStyle(.inset).frame(maxWidth: .infinity).scrollIndicators(.hidden)
+                        }
+                        
                     }
                 }
                 
@@ -141,7 +148,16 @@ struct CheckOutView: View {
             
             if viewModel.showModal, let visita = viewModel.selectedVisita {
                 CustomDialog(isActive: $viewModel.showModal, title: "Detalles de la visita", data: visita, buttonTitle: "Marcar salida", action: {
-                    print("saliendo...")
+                    Task{
+                        await viewModel.checkOutBinnacle()
+                    }
+                })
+            }
+            if viewModel.showModal, let visita = viewModel.selectedItemAgenda {
+                DialogAgendaItemView(isActive: $viewModel.showModal, title: "Detalles de la visita", data: visita, buttonTitle: "Marcar salida", action: {
+                    Task{
+                        await viewModel.checkOutAgenda()
+                    }
                 })
             }
            
@@ -191,6 +207,45 @@ struct item: View{
     }
 }
 
+struct itemAgenda: View{
+    var data: GetVistasResponse
+    @ObservedObject var mviewModel: CheckOutViewModel
+    var body: some View{
+        VStack{
+            HStack{
+                Text(data.name)
+                Spacer()
+                Text(data.typeVisit)
+            }.padding(5)
+            HStack{
+                Text(data.visit)
+                
+                Spacer()
+                Text(data.address)
+            }.padding(5)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .listRowBackground(Color.white)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.purple.opacity(0.5), lineWidth: 1)
+                .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+        )
+        .listRowInsets(EdgeInsets())
+        .padding(.vertical,5)
+        .onTapGesture {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.10) {
+                mviewModel.selectedItemAgenda = data
+                mviewModel.showModal = true
+            }
+        }
+        
+        
+        
+        
+    }
+}
 
 
 

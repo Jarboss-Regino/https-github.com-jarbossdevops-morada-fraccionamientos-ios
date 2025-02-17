@@ -1,18 +1,17 @@
 //
-//  CustomDialog.swift
-//  morada-fraccionamientos-ios
+//  DialogAgendaItemView.swift
+//  Morada
 //
-//  Created by MacBook Air on 03/10/24.
+//  Created by MacBook Air on 13/02/25.
 //
 
 import SwiftUI
 
-
-struct CustomDialog: View {
+struct DialogAgendaItemView: View {
     @Binding var isActive: Bool
 
     let title: String
-    let data: CheckOutResponse
+    let data: GetVistasResponse
     let buttonTitle: String
     let action: () -> ()
     @State private var offset: CGFloat = 1000

@@ -21,12 +21,16 @@ struct GetVistasResponse: Codable, Identifiable{
   let uuidSuperAdmin: String
   let idAssigned: AssignedID
     let v: Int
+    let assigned: AssignedValue
+    let nameUser:String
+    let lastName:String
   let dateI: String?
   let dateF: String?
+    let dateFormated: String?
   
   enum CodingKeys: String, CodingKey {
       case id = "_id"
-      case name, visit, email, address, phone, typeVisit, evidence, status, uuid, uuidSuperAdmin, idAssigned, v = "__v", dateI, dateF
+      case name,visit, email, address, phone, typeVisit, evidence, status, uuid, uuidSuperAdmin, idAssigned, v = "__v",assigned,nameUser,lastName, dateI, dateF, dateFormated
   }
 }
     

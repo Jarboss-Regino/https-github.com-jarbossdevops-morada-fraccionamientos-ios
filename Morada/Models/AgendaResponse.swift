@@ -8,21 +8,29 @@
 import Foundation
 
 struct AgendaResponse: Codable{
-    let registros: [AgendaItem]
+    let agenda: AgendaItem
 }
 
 struct AgendaItem: Codable, Identifiable{
-    var id: String
-    var tipovis: String
-    var residente: String
-    var nombre: String
-    var correo: String
-    var domicilio: String
-    var numero: String
-    var fecha: String
-    var hora: String
-    var estatus: Int
-    var entrada: String
-    var salida: String
-    var tabla: String
+    let id: String
+        let name: String
+        let visit: String
+        let email: String
+        let address: String
+        let phone: String
+        let typeVisit: String
+        let dateI: String
+        let evidence: String
+        let status: String
+        let uuid: String
+        let uuidSuperAdmin: String
+        let idAssigned: String
+        let version: Int
+        let dateF: String
+
+        enum CodingKeys: String, CodingKey {
+            case id = "_id"
+            case name, visit, email, address, phone, typeVisit, dateI, evidence, status, uuid, uuidSuperAdmin, idAssigned, dateF
+            case version = "__v"
+        }
 }

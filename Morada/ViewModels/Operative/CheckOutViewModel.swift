@@ -25,9 +25,13 @@ class CheckOutViewModel: ObservableObject{
     private let apiService = ApiService()
 
     @Published var registros: [CheckOutResponse] = []
-    @Published var selectedItemBinnacle: [CheckOutResponse] = []
+    @Published var selectedItemBinnacle: CheckOutResponse? = nil
+    
+    @Published var agendaList: [GetVistasResponse] = []
+    @Published var selectedItemAgenda: GetVistasResponse? = nil
     
     private let uuid = UserSession.shared.userData?.uuid
+    let uuidAdmin = UserSession.shared.userData?.uuidSuperAdmin
     
     init(){
         Task{
@@ -69,11 +73,13 @@ class CheckOutViewModel: ObservableObject{
             self.isSearching = true
             
             
-            let response: [CheckOutResponse] = try await apiService.get(urlString: ApiEndpoints.getBinnacleUrl(uuid: self.uuid!) )
+            let response: [CheckOutResponse] = try await apiService.get(urlString: ApiEndpoints.getBinnacleUrl(uuid: self.uuid ?? "") )
             
             if !response.isEmpty{
                 
-                let registrosPrcesados = response.map{ registro in
+                let registrosPrcesados = response
+                    .filter{$0.status == "1"}
+                    .map{ registro in
                     return CheckOutResponse(
                         id: registro.id,
                         name: registro.name,
@@ -90,8 +96,9 @@ class CheckOutViewModel: ObservableObject{
                         v: registro.v,
                         assigned: registro.assigned,
                         lastName: registro.lastName,
-                        dateI: Utils.formatDate(registro.dateI),
-                        dateF: registro.dateF
+                        dateI: registro.dateI,
+                        dateF: registro.dateF,
+                        dateFormated: Utils.formatDate(registro.dateI)
                     )
                     
                 }
@@ -129,67 +136,20 @@ class CheckOutViewModel: ObservableObject{
     
     @MainActor
     func fetchAgendaRegisters() async{
-//        do {
-//            self.isSearching = true
-//            //var id = (UserSession.shared.userResponse?.idCliente)!
-//            
-//            let body = AgendaRequest(source1: "1", source2: "")
-//            
-//            let response: CheckOutResponse = try await apiService.post(urlString: ApiEndpoints.getAgendaUrl, body: body)
-//            
-//            if response.status == "ok"{
-//                
-//                let registrosPrcesados = response.registros.map{ registro in
-//                    return Registro(id: registro.id, estatus: registro.estatus, nombre: registro.nombre, domicilio: registro.domicilio, numero: registro.numero,visita_a: registro.visita_a, tipovis: registro.tipovis,idresidente: registro.idresidente,residente: registro.residente,correo: registro.correo, fecha: registro.fecha, hora: registro.hora, entrada: registro.entrada, salida: registro.salida, tabla: registro.tabla)
-//                    
-//                }
-//                
-//                DispatchQueue.main.async {
-//                    self.registros.removeAll()
-//                    self.registros = registrosPrcesados
-//                    print(self.registros)
-//                }
-//               
-//            }
-//            
-//            self.isSearching = false
-//        } catch let error as ApiError {
-//            // Manejar errores específicos de la API
-//            DispatchQueue.main.async {
-//                self.isLoading = false
-//                self.errorMessage = "Error: \(error)"
-//                self.showError = true
-//                self.isSearching = false
-//                print("ERROR: \(error)")
-//            }
-//        } catch {
-//            // Manejar errores genéricos
-//            DispatchQueue.main.async {
-//                self.isLoading = false
-//                self.errorMessage = "Ocurrió un error inesperado"
-//                self.showError = true
-//                self.isSearching = false
-//                print("ERROR: \(error)")
-//            }
-//        }
-    }
-    
-    @MainActor
-    func checkOut() async {
         do {
             self.isSearching = true
-            
-            
-            let response: [CheckOutResponse] = try await apiService.get(urlString: ApiEndpoints.getBinnacleUrl(uuid: self.uuid!) )
+            let response: [GetVistasResponse] = try await apiService.get(urlString: ApiEndpoints.getVisitasUrl(uuid: self.uuid!))
             
             if !response.isEmpty{
                 
-                let registrosPrcesados = response.map{ registro in
-                    return CheckOutResponse(
+                let registrosPrcesados = response
+                    .filter{$0.status != "0"}
+                    .map{ registro in
+                    return GetVistasResponse(
                         id: registro.id,
                         name: registro.name,
-                        issue: registro.issue,
                         visit: registro.visit,
+                        email: registro.email,
                         address: registro.address,
                         phone: registro.phone,
                         typeVisit: registro.typeVisit,
@@ -200,20 +160,59 @@ class CheckOutViewModel: ObservableObject{
                         idAssigned: registro.idAssigned,
                         v: registro.v,
                         assigned: registro.assigned,
+                        nameUser: registro.nameUser,
                         lastName: registro.lastName,
-                        dateI: Utils.formatDate(registro.dateI),
-                        dateF: registro.dateF
+                        dateI: registro.dateI,
+                        dateF: registro.dateF,
+                        dateFormated: Utils.formatDate(registro.dateI ?? "")
                     )
+                    
                     
                 }
                 
                 
-                self.registros.removeAll()
-                self.registros = registrosPrcesados
-            print("Registros ejecutado")
+                self.agendaList.removeAll()
+                self.agendaList = registrosPrcesados
+            }else{
+                print("no hay registros en agenda")
+            }
+            self.isSearching = false
+        } catch let error as ApiError {
+            // Manejar errores específicos de la API
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.errorMessage = "Error: \(error)"
+                self.showError = true
+                self.isSearching = false
+                print("ERROR: \(error)")
+            }
+        } catch {
+            // Manejar errores genéricos
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.errorMessage = "Ocurrió un error inesperado"
+                self.showError = true
+                self.isSearching = false
+                print("ERROR: \(error)")
+            }
+        }
+    }
+    
+    @MainActor
+    func checkOutBinnacle() async {
+        do {
+            self.isSearching = true
+            
+            let body = CheckOutBinncleRequest(id: self.selectedVisita?.id ?? "", status: "2", dateF: Utils.getDateHour())
+            
+            let response: CheckOutBinnacleResponse = try await apiService.patchJson(urlString: ApiEndpoints.updateStatusRegisterBinncle, body: body)
+            
+            if !response.agenda.id.isEmpty{
+               
+                print("Salida marcada desde bitacora")
                 
             }else{
-                print("No hay registros en la bitacora")
+                print("Ocurrio un error al marcar la salida")
             }
             self.isSearching = false
             
@@ -231,6 +230,40 @@ class CheckOutViewModel: ObservableObject{
             print("ERROR: \(error)")
         }
         
+    }
+    
+    @MainActor
+    func checkOutAgenda() async{
+        do {
+            
+            let body = CheckOutAgendaRequest(
+                id: self.selectedItemAgenda?.id ?? "",
+                status: "2",
+                dateF: Utils.getDateHour(),
+                dateI: self.selectedItemAgenda?.dateI ?? "",
+                uuid: self.selectedItemAgenda?.uuid ?? "",
+                idAssigned: self.selectedItemAgenda?.idAssigned.getStringValue() ?? ""
+            )
+            
+            let response: AgendaResponse = try await apiService.patchJson(urlString: ApiEndpoints.updateStatusAgendaUrl, body: body)
+            
+            if !response.agenda.id.isEmpty{
+                print("Salida marcada")
+                
+            }else{
+                print("Ocurrio un error")
+            }
+            
+            
+        } catch let error as ApiError {
+            // Manejar errores específicos de la API
+            
+                print("ERROR: \(error)")
+            
+        } catch {
+          
+            print("ERROR: \(error)")
+        }
     }
     
     

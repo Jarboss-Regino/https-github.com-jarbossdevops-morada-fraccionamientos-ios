@@ -62,6 +62,11 @@
 		8D7215752D53CE71009AD026 /* SetVisitRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215742D53CE71009AD026 /* SetVisitRequest.swift */; };
 		8D7215772D53EEA9009AD026 /* SetVisitResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215762D53EEA9009AD026 /* SetVisitResponse.swift */; };
 		8D7215792D5E9390009AD026 /* ItemAgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215782D5E9390009AD026 /* ItemAgendaView.swift */; };
+		8D72157B2D5EA4A5009AD026 /* DialogAgendaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D72157A2D5EA4A5009AD026 /* DialogAgendaItemView.swift */; };
+		8D72157D2D5EAA6C009AD026 /* agenda.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D72157C2D5EAA6C009AD026 /* agenda.swift */; };
+		8D72157F2D5F97B1009AD026 /* CheckOutAgendaRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D72157E2D5F97B1009AD026 /* CheckOutAgendaRequest.swift */; };
+		8D7215812D639598009AD026 /* CheckOutBinncleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215802D639598009AD026 /* CheckOutBinncleRequest.swift */; };
+		8D7215832D6398E0009AD026 /* CheckOutBinnacleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */; };
 		8D76D0842CAB0303009B0866 /* CheckinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */; };
 		8D76D0862CAB4E43009B0866 /* ResidentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */; };
 		8D76D0892CAB50CD009B0866 /* ResidentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */; };
@@ -192,6 +197,11 @@
 		8D7215742D53CE71009AD026 /* SetVisitRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVisitRequest.swift; sourceTree = "<group>"; };
 		8D7215762D53EEA9009AD026 /* SetVisitResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVisitResponse.swift; sourceTree = "<group>"; };
 		8D7215782D5E9390009AD026 /* ItemAgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAgendaView.swift; sourceTree = "<group>"; };
+		8D72157A2D5EA4A5009AD026 /* DialogAgendaItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogAgendaItemView.swift; sourceTree = "<group>"; };
+		8D72157C2D5EAA6C009AD026 /* agenda.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = agenda.swift; sourceTree = "<group>"; };
+		8D72157E2D5F97B1009AD026 /* CheckOutAgendaRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutAgendaRequest.swift; sourceTree = "<group>"; };
+		8D7215802D639598009AD026 /* CheckOutBinncleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutBinncleRequest.swift; sourceTree = "<group>"; };
+		8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutBinnacleResponse.swift; sourceTree = "<group>"; };
 		8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinViewModel.swift; sourceTree = "<group>"; };
 		8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentResponse.swift; sourceTree = "<group>"; };
 		8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentRequest.swift; sourceTree = "<group>"; };
@@ -359,6 +369,8 @@
 				8DE345512D4815EA00494AB8 /* AdminsResponse.swift */,
 				8DE3455D2D4ACF7100494AB8 /* NewAvisoResponse.swift */,
 				8D7215762D53EEA9009AD026 /* SetVisitResponse.swift */,
+				8D72157C2D5EAA6C009AD026 /* agenda.swift */,
+				8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -479,6 +491,8 @@
 				8D55254B2CE3BBC2009EE8F4 /* GetVisitRequest.swift */,
 				8D55254F2CE3DAE4009EE8F4 /* GetVisitAgendaRequest.swift */,
 				8D7215742D53CE71009AD026 /* SetVisitRequest.swift */,
+				8D72157E2D5F97B1009AD026 /* CheckOutAgendaRequest.swift */,
+				8D7215802D639598009AD026 /* CheckOutBinncleRequest.swift */,
 			);
 			path = requests;
 			sourceTree = "<group>";
@@ -500,6 +514,7 @@
 				8DE345552D49358000494AB8 /* ItemEventView.swift */,
 				8DE345572D493BB000494AB8 /* CustomDialogEvent.swift */,
 				8DE345592D4A93E500494AB8 /* CustomDialogAvisos.swift */,
+				8D72157A2D5EA4A5009AD026 /* DialogAgendaItemView.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -673,10 +688,12 @@
 				8D55253E2CDBF6AD009EE8F4 /* AccessViewModel.swift in Sources */,
 				8D5525462CE29A64009EE8F4 /* QrResponse.swift in Sources */,
 				8D5D6ED72CA49F5D007CBAFC /* MoreViewModel.swift in Sources */,
+				8D7215812D639598009AD026 /* CheckOutBinncleRequest.swift in Sources */,
 				8DBFFE612CA49C2800088F0F /* CheckinView.swift in Sources */,
 				8D55253A2CDAC265009EE8F4 /* ButtonIcon.swift in Sources */,
 				8DDEBB882CA3277A00EC6BB8 /* Routes.swift in Sources */,
 				8DEC8AF32D11E02A00DADBDF /* SplashScreen.swift in Sources */,
+				8D7215832D6398E0009AD026 /* CheckOutBinnacleResponse.swift in Sources */,
 				8D21E8162C9DEC07007E17FF /* PasswordView.swift in Sources */,
 				8D5525442CDD2AD3009EE8F4 /* RegisterVisitResponse.swift in Sources */,
 				8D7215772D53EEA9009AD026 /* SetVisitResponse.swift in Sources */,
@@ -686,6 +703,7 @@
 				8D76D0A72CBDBBED009B0866 /* NewEventResponse.swift in Sources */,
 				8D55251A2CD4227A009EE8F4 /* AvisoResponse.swift in Sources */,
 				8DEC8AF12CF4E6C200DADBDF /* CustomRouter.swift in Sources */,
+				8D72157D2D5EAA6C009AD026 /* agenda.swift in Sources */,
 				8D98DC162CC6C9F400F91733 /* ReservationRequest.swift in Sources */,
 				8DE3455C2D4AC15600494AB8 /* AddAvisoView.swift in Sources */,
 				8D5525252CD9611A009EE8F4 /* Avisos.swift in Sources */,
@@ -697,6 +715,7 @@
 				8D98DC1F2CC8213100F91733 /* PopupDatePicker.swift in Sources */,
 				8DE3455A2D4A93E500494AB8 /* CustomDialogAvisos.swift in Sources */,
 				8D76D08D2CAEEFEE009B0866 /* CheckOutViewModel.swift in Sources */,
+				8D72157B2D5EA4A5009AD026 /* DialogAgendaItemView.swift in Sources */,
 				8D55254C2CE3BBC2009EE8F4 /* GetVisitRequest.swift in Sources */,
 				8DEC8AEF2CEE394D00DADBDF /* EmptyView.swift in Sources */,
 				8D55252E2CD96E2E009EE8F4 /* ToolBar.swift in Sources */,
@@ -743,6 +762,7 @@
 				8DBDAE0C2D2DD42D00564A75 /* UserResponse.swift in Sources */,
 				8D76D0842CAB0303009B0866 /* CheckinViewModel.swift in Sources */,
 				8D21E81A2C9E2BB3007E17FF /* NewUserView.swift in Sources */,
+				8D72157F2D5F97B1009AD026 /* CheckOutAgendaRequest.swift in Sources */,
 				8D21E8212CA1EB09007E17FF /* UserModel.swift in Sources */,
 				8D76D0952CB4884D009B0866 /* BinnacleRequest.swift in Sources */,
 				8D7215732D52A20F009AD026 /* QRCodeScannerView.swift in Sources */,

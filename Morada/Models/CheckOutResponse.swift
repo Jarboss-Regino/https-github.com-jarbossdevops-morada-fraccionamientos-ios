@@ -25,11 +25,12 @@ struct CheckOutResponse: Codable {
     let lastName: String
     let dateI: String
     let dateF: String?
+    let dateFormated: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case name, issue, visit, address, phone, typeVisit, evidence, status
-        case uuid, uuidSuperAdmin, idAssigned, v = "__v", assigned, lastName, dateI, dateF
+        case uuid, uuidSuperAdmin, idAssigned, v = "__v", assigned, lastName, dateI, dateF, dateFormated
     }
 }
 

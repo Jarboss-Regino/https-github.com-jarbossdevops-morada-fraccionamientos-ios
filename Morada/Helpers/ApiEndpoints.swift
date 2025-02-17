@@ -103,9 +103,13 @@ class ApiEndpoints{
     }
     
     static func getVisitasUrl(uuid: String) -> String {
-        return baseUrl+"/management/getAgenda?uuidSuperAdmin="+uuid
+        return baseUrl+"/management/getAgenda?uuid="+uuid
     }
     static var getVisitasAgendaUrl: String {
         return baseUrl+"/Fraccionamientos/GET/?source1=visitas&source2=getAgendaApp"
+    }
+    
+    static var updateStatusAgendaUrl: String {
+        return baseUrl+"/management/updateAgenda"
     }
 }
