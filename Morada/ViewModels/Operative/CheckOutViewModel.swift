@@ -43,7 +43,7 @@ class CheckOutViewModel: ObservableObject{
     func startSearch() async{
         self.isSearching = true
         
-        if !registros.isEmpty{
+        if !registros.isEmpty && selectedButton == 1{
             let trimmedSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
             
             let filteredIncidents = registros.filter { item in
@@ -59,7 +59,27 @@ class CheckOutViewModel: ObservableObject{
                 print("No se encontró ningun registro")
             } else {
                 self.registros = filteredIncidents
-                print("Incidencias filtradas: \(self.registros)")
+                print("bitacora filtradas: \(self.registros)")
+            }
+        }else{
+            print("No se encontró ningun registro")
+        }
+        if !agendaList.isEmpty{
+            let trimmedSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            
+            let filteredIncidents = agendaList.filter { item in
+
+                item.name.lowercased().contains(trimmedSearchText) ||
+                item.visit.lowercased().contains(trimmedSearchText) ||
+                item.address.lowercased().contains(trimmedSearchText) ||
+                item.typeVisit.lowercased().contains(trimmedSearchText)
+            }
+            
+            if filteredIncidents.isEmpty {
+                print("No se encontró ningun registro")
+            } else {
+                self.agendaList = filteredIncidents
+                print("agendas filtradas: \(self.agendaList)")
             }
         }else{
             print("No se encontró ningun registro")
@@ -143,7 +163,7 @@ class CheckOutViewModel: ObservableObject{
             if !response.isEmpty{
                 
                 let registrosPrcesados = response
-                    .filter{$0.status != "0"}
+                    .filter{$0.status != "2"}
                     .map{ registro in
                     return GetVistasResponse(
                         id: registro.id,
@@ -210,6 +230,7 @@ class CheckOutViewModel: ObservableObject{
             if !response.agenda.id.isEmpty{
                
                 print("Salida marcada desde bitacora")
+                await fetchBinnacleRegisters()
                 
             }else{
                 print("Ocurrio un error al marcar la salida")
@@ -233,6 +254,53 @@ class CheckOutViewModel: ObservableObject{
     }
     
     @MainActor
+    func processScannedCode(_ code: String) async {
+        
+        if agendaList.isEmpty {
+            return
+        }
+        if let matchedItem = agendaList.first(where: { $0.id == code }) {
+            await checkOutWithQr(item: matchedItem)
+        } else {
+            print("❌ No se encontró un registro con ID: \(code)")
+        }
+        }
+    
+    @MainActor
+    func checkOutWithQr(item: GetVistasResponse) async{
+        do {
+            
+            let body = CheckOutAgendaRequest(
+                id: item.id,
+                status: "2",
+                dateF: Utils.getDateHour(),
+                dateI: item.dateI ?? "",
+                uuid: item.uuid,
+                idAssigned: item.idAssigned.getStringValue()
+            )
+            
+            let response: AgendaResponse = try await apiService.patchJson(urlString: ApiEndpoints.updateStatusAgendaUrl, body: body)
+            
+            if !response.agenda.id.isEmpty{
+                print("Salida marcada")
+                await fetchAgendaRegisters()
+            }else{
+                print("Ocurrio un error")
+            }
+            
+            
+        } catch let error as ApiError {
+            // Manejar errores específicos de la API
+            
+                print("ERROR: \(error)")
+            
+        } catch {
+          
+            print("ERROR: \(error)")
+        }
+    }
+    
+    @MainActor
     func checkOutAgenda() async{
         do {
             
@@ -249,7 +317,7 @@ class CheckOutViewModel: ObservableObject{
             
             if !response.agenda.id.isEmpty{
                 print("Salida marcada")
-                
+                await fetchAgendaRegisters()
             }else{
                 print("Ocurrio un error")
             }

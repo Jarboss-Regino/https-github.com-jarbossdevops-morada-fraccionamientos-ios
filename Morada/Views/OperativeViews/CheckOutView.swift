@@ -12,7 +12,7 @@ import SwiftUI
 struct CheckOutView: View {
     
     @ObservedObject var viewModel = CheckOutViewModel()
-    
+    @State private var isShowingScanner = false
     
     var body: some View {
         
@@ -21,25 +21,48 @@ struct CheckOutView: View {
                 
                 VStack {
                     Text("Salidas").font(.largeTitle)
-                    TextField("Buscar...", text: $viewModel.searchText)
-                        .keyboardType(.emailAddress)
-                        .textInputAutocapitalization(.never)
-                    .cornerRadius(16)
-                    .onSubmit {
-                        Task{
-                            if !viewModel.searchText.isEmpty{
-                                await viewModel.startSearch()
+                    HStack{
+                        VStack{
+                            TextField("Buscar...", text: $viewModel.searchText)
+                                .keyboardType(.emailAddress)
+                                .textInputAutocapitalization(.never)
+                            .cornerRadius(16)
+                            .onSubmit {
+                                Task{
+                                    if !viewModel.searchText.isEmpty{
+                                        await viewModel.startSearch()
+                                    }
+                                        
+                                }
                             }
-                                
+                            
+                            LinearGradient(
+                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                    .frame(height: 2)
                         }
+                        Button(action: {
+                            isShowingScanner = true
+                            
+                        }) {
+                            HStack{
+                                Image(systemName: "qrcode.viewfinder")
+                                    .foregroundColor(.white)
+                                Text("QR")
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                
+                            }.padding()
+                            
+                        }
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    
                     }
                     
-                    LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                            .frame(height: 2)
+                    
                 }
                 
                 
@@ -161,6 +184,13 @@ struct CheckOutView: View {
                 })
             }
            
+        }.sheet(isPresented: $isShowingScanner) {
+            QRCodeScannerView { scannedValue in
+                isShowingScanner = false // Cierra el escáner automáticamente
+                Task{
+                    await viewModel.processScannedCode(scannedValue)
+                }
+            }
         }
         
         
