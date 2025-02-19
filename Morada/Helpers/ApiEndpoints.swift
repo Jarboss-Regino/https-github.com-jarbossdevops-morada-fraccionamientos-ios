@@ -71,6 +71,9 @@ class ApiEndpoints{
     static func getIncidentsUrl(idUuid: String) -> String {
         return baseUrl+"/management/getIncidence?uuid="+idUuid
     }
+    static var createIncidentUrl: String{
+        return baseUrl+"/management/createIncidence"
+    }
     static func getImageUrl(img: String,uuid: String) -> String {
         return "https://bucket-control-morada-fraccionamientos-staging.s3.us-east-1.amazonaws.com/Incidences/\(uuid)/\(img)"
     }

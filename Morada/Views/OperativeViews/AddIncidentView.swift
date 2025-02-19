@@ -12,28 +12,10 @@ struct AddIncidentView: View {
     @Binding var showSheet: Bool
     var body: some View {
         VStack{
+            
+            Text("Registrar Incidente").font(.title).padding(.bottom,20).padding(.top,20)
             HStack {
-                Spacer()
-                Button {
-                    //Task{
-                        //isPresented = false
-                        showSheet = false
-                        //await viewModel.getEvents()
-                        //viewModel.resetFields()
-                    //}
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.title2)
-                        .fontWeight(.medium)
-                }
-                .tint(.black)
-                .padding(.vertical
-                )
-                
-            }
-            Text("Registrar Incidente").font(.title).padding(.bottom,20)
-            HStack {
-                Text("Tipo de visita:")
+                Text("Clasificación:")
                 Spacer()
                 
                 Menu {
@@ -75,7 +57,16 @@ struct AddIncidentView: View {
                         )
                         .frame(height: 2)
             }.frame(height: 60)
-            
+            VStack {
+                TextField("Comentarios", text: $viewModel.incidentComment)
+                    .cornerRadius(16)
+                LinearGradient(
+                            gradient: Gradient(colors: [Color.blue, Color.purple]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .frame(height: 2)
+            }.frame(height: 60)
             // BUTTONS
             VStack{
                                     
@@ -99,17 +90,23 @@ struct AddIncidentView: View {
                     .padding(.top, 5)
                 
                 
-//                if viewModel.showError {
-//                    Text("\(viewModel.messageError)")
-//                        .foregroundColor(.red)
-//                        .font(.subheadline)
-//                        .padding(.horizontal, 16)
-//                }
+                if viewModel.showErrorIncident {
+                    Text("\(viewModel.errorMessageIncident)")
+                        .foregroundColor(.red)
+                        .font(.subheadline)
+                        .padding(.horizontal, 16)
+                }
+                if viewModel.showMessageIncident {
+                    Text("\(viewModel.successMessageIncident)")
+                        .foregroundColor(.green)
+                        .font(.subheadline)
+                        .padding(.horizontal, 16)
+                }
                 
                 Button(action: {
                     Task{
                         //viewModel.doRegister()
-                        viewModel.creaNewIncident()
+                        await viewModel.creaNewIncident()
                     }
                     print("Botón de inicio de sesión presionado")
                 }) {

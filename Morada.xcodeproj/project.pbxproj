@@ -67,6 +67,8 @@
 		8D72157F2D5F97B1009AD026 /* CheckOutAgendaRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D72157E2D5F97B1009AD026 /* CheckOutAgendaRequest.swift */; };
 		8D7215812D639598009AD026 /* CheckOutBinncleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215802D639598009AD026 /* CheckOutBinncleRequest.swift */; };
 		8D7215832D6398E0009AD026 /* CheckOutBinnacleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */; };
+		8D7215852D65269A009AD026 /* NewIncidenteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215842D65269A009AD026 /* NewIncidenteResponse.swift */; };
+		8D7215872D652721009AD026 /* NewIncidentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215862D652721009AD026 /* NewIncidentRequest.swift */; };
 		8D76D0842CAB0303009B0866 /* CheckinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */; };
 		8D76D0862CAB4E43009B0866 /* ResidentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */; };
 		8D76D0892CAB50CD009B0866 /* ResidentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */; };
@@ -202,6 +204,8 @@
 		8D72157E2D5F97B1009AD026 /* CheckOutAgendaRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutAgendaRequest.swift; sourceTree = "<group>"; };
 		8D7215802D639598009AD026 /* CheckOutBinncleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutBinncleRequest.swift; sourceTree = "<group>"; };
 		8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutBinnacleResponse.swift; sourceTree = "<group>"; };
+		8D7215842D65269A009AD026 /* NewIncidenteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIncidenteResponse.swift; sourceTree = "<group>"; };
+		8D7215862D652721009AD026 /* NewIncidentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIncidentRequest.swift; sourceTree = "<group>"; };
 		8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinViewModel.swift; sourceTree = "<group>"; };
 		8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentResponse.swift; sourceTree = "<group>"; };
 		8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentRequest.swift; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 				8D7215762D53EEA9009AD026 /* SetVisitResponse.swift */,
 				8D72157C2D5EAA6C009AD026 /* agenda.swift */,
 				8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */,
+				8D7215842D65269A009AD026 /* NewIncidenteResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -493,6 +498,7 @@
 				8D7215742D53CE71009AD026 /* SetVisitRequest.swift */,
 				8D72157E2D5F97B1009AD026 /* CheckOutAgendaRequest.swift */,
 				8D7215802D639598009AD026 /* CheckOutBinncleRequest.swift */,
+				8D7215862D652721009AD026 /* NewIncidentRequest.swift */,
 			);
 			path = requests;
 			sourceTree = "<group>";
@@ -710,6 +716,7 @@
 				8D98DC122CC6AC6300F91733 /* ReservationsView.swift in Sources */,
 				8D76D0892CAB50CD009B0866 /* ResidentRequest.swift in Sources */,
 				8D98DC062CC04F9E00F91733 /* CustomToolbar.swift in Sources */,
+				8D7215852D65269A009AD026 /* NewIncidenteResponse.swift in Sources */,
 				8D5525302CDA7963009EE8F4 /* EmailRequest.swift in Sources */,
 				8D21E8142C9A388D007E17FF /* ApiEndpoints.swift in Sources */,
 				8D98DC1F2CC8213100F91733 /* PopupDatePicker.swift in Sources */,
@@ -770,6 +777,7 @@
 				8D21E8102C9A30B8007E17FF /* ApiService.swift in Sources */,
 				8D76D09D2CB877C0009B0866 /* EventResponse.swift in Sources */,
 				8D55252A2CD96593009EE8F4 /* Reservation.swift in Sources */,
+				8D7215872D652721009AD026 /* NewIncidentRequest.swift in Sources */,
 				8D7215792D5E9390009AD026 /* ItemAgendaView.swift in Sources */,
 				8DE345562D49358000494AB8 /* ItemEventView.swift in Sources */,
 				8D76D0A52CBD84B0009B0866 /* NewEventRequest.swift in Sources */,

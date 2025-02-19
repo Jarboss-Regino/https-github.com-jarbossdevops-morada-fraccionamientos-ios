@@ -126,7 +126,11 @@ struct IncidentsView: View {
                             }
                         )
                         .sheet(isPresented: $isSheetPresented, content: {
-                            AddIncidentView(viewModel: viewModel, showSheet: $isSheetPresented)
+                            AddIncidentView(viewModel: viewModel, showSheet: $isSheetPresented).onDisappear{
+                                Task{
+                                    await viewModel.getIncidents()
+                                }
+                            }
                         })
                     }
                 })

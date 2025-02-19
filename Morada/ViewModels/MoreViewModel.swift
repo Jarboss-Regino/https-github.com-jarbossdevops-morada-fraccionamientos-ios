@@ -36,6 +36,7 @@ class MoreViewModel: ObservableObject{
     
     // Add Incidentes variables
     @Published var description: String = ""
+    @Published var incidentComment: String = ""
     @Published var selectedClassication: ClassificationItem? = nil
     @Published var classificationItems: [ClassificationItem] = [ClassificationItem(id: "1", name: "Mantenimiento"),ClassificationItem(id: "2", name: "Áreas comunes"),ClassificationItem(id: "3", name: "Sugerencias")]
     
@@ -96,6 +97,17 @@ class MoreViewModel: ObservableObject{
     let idUser = UserSession.shared.userData?.uuid
     let username = UserSession.shared.userData?.username
     let uuidAdmin = UserSession().userData?.uuidSuperAdmin
+    let idAssignedValue: String = {
+        switch UserSession.shared.userData?.idAssigned{
+        case .string(let value):
+            return value
+        case .array(let values):
+            return values.joined(separator: ",") // Une los elementos del array como una cadena separada por comas
+        case .none:
+            return ""
+        }
+    }()
+    
     
     init(){
         self.tipo = UserSession.shared.userResponse?.tipo
@@ -342,13 +354,65 @@ class MoreViewModel: ObservableObject{
     
     // FALTA POR TERMINAR ESTA FUNCIONALIDAD
     @MainActor
-    func creaNewIncident(){
-        if self.selectedClassication == nil || self.description.isEmpty{
-            print("Llene todos los campos")
-            return
+    func creaNewIncident() async{
+        
+        do {
+            if self.selectedClassication == nil || self.description.isEmpty ||
+                self.incidentComment.isEmpty{
+                self.errorMessageIncident = "Todos los campos son obligatorios"
+                self.showErrorIncident = true
+                return
+            }
+            let body = NewIncidentRequest(
+                user: self.username ?? "",
+                classification: self.selectedClassication?.name ?? "",
+                description: self.description,
+                comments: self.incidentComment,
+                status: "",
+                date: Utils.getDateHour(),
+                uuidSuperAdmin: self.uuidAdmin ?? "",
+                uuid: self.idUser ?? "",
+                idAssigned: self.idAssignedValue,
+                evidence: Utils.generateTemporaryImage() ?? ""
+            )
+            
+            
+            let response: NewIncidenteResponse = try await apiService.postJson(urlString: ApiEndpoints.createIncidentUrl, body: body)
+            
+            
+            
+            if response.message == "Incidence created successfully"{
+                print(response.message)
+                self.showErrorIncident = false
+                self.successMessageIncident = "Incidencia creada correctamente"
+                self.showMessageIncident = true
+                resetIncidentFields()
+            }else{
+                print("Error: No se pudo crear la incidencia")
+                self.showMessageIncident = false
+                self.errorMessageIncident = "No se pudo crear la incidencia"
+                self.showErrorIncident = true
+               
+            }
+            
+        } catch let error as ApiError {
+            
+            print("ERROR: \(error)")
+            
+        } catch {
+            
+            print("ERROR: \(error)")
+            
         }
-        print("Datos: \(String(describing: self.selectedClassication?.name))")
-        print("Datos: \(self.description)")
+    }
+    func resetIncidentFields(){
+        self.selectedClassication = nil
+        self.description = ""
+        self.incidentComment = ""
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.showErrorIncident = false
+            self.showMessageIncident = false
+        }
     }
     
     func getClassificacion(type: String) -> String{
