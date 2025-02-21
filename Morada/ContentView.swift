@@ -169,7 +169,6 @@ struct ContentView: View {
                 }) {
                     Text("Regístrate")
                         .foregroundColor(.purple)
-                        .padding(.bottom, 5)
                         .overlay {
                             LinearGradient(
                                 gradient: Gradient(colors: [Color.blue, Color.purple]),
@@ -178,7 +177,6 @@ struct ContentView: View {
                             )
                             .mask {
                                 Text("Regístrate")
-                                    .padding(.bottom, 5)
                             }
                         }
                 }
@@ -187,7 +185,7 @@ struct ContentView: View {
             }
         }
         .frame(maxHeight: .infinity, alignment: .bottom) // Alinear abajo
-        .padding(.bottom, 40)
+        .padding(.bottom, 40).ignoresSafeArea(.keyboard, edges: .bottom)
    
 
     }
