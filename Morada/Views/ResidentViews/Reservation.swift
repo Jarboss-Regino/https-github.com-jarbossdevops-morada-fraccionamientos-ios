@@ -140,9 +140,10 @@ struct itemReservations: View{
         HStack {
             ZStack {
                 Circle()
-                    .fill(Color.purple)
+                    .fill(Color.blue)
                     .frame(width: 40, height: 40)
-                Image(systemName: "camera.fill")
+                Image("rese_nor")
+                    .renderingMode(.template)
                     .foregroundColor(.white)
                     .font(.system(size: 20))
             }
@@ -150,26 +151,32 @@ struct itemReservations: View{
             
             
             VStack(alignment: .leading, spacing: 5.0, content: {
+                Text("Lugar de reservación:")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text("\(data.placeReservation)")
-                    .font(.body).fontWeight(.semibold)
+                    .font(.body)
                     .foregroundColor(.primary)
-                HStack {
-                    Text("Por ")
-                        .font(.body).fontWeight(.semibold)
-                        .foregroundColor(.primary)
+                
+                    Text("Reservado por:")
+                        .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
                     Text("\(data.personReservation)")
                         .font(.body)
-                    .foregroundColor(.secondary)
-                }
+                    .foregroundColor(.primary)
                 
-                HStack {
-                    Text("Fecha: ")
-                        .font(.body).fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                    Text("\(data.date)")
+                
+               
+                    Text("Fecha y Hora: ")
+                        .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                    
+                    Text("\(data.date) \(data.hourI)")
                         .font(.body)
-                    .foregroundColor(.secondary)
-                }
+                    .foregroundColor(.primary)
                 
             }).padding(.leading,5).padding(.vertical,10)
             Spacer()
