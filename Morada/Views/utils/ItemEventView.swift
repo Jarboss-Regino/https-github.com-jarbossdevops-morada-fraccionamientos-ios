@@ -13,15 +13,9 @@ struct ItemEventView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             VStack(alignment: .leading, spacing: 5) {
-                Text(data.tittle)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                Text(data.description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Text(data.realDate ?? "")
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                infoRow(title: "Título:", value: data.tittle)
+                infoRow(title: "Descripción:", value: data.description)
+                infoRow(title: "Fecha:", value: data.realDate ?? "")
             }.padding()
             Spacer()
         }
@@ -41,5 +35,19 @@ struct ItemEventView: View {
             }
         }
     }
+    
+    @ViewBuilder
+        private func infoRow(title: String, value: String) -> some View {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black) // Resalta el título
+                
+                Text(value)
+                    .font(.body) // Mantiene el texto normal
+                    .foregroundColor(.primary)
+            }
+        }
 }
 
