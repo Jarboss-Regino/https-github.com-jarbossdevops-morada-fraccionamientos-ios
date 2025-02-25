@@ -58,7 +58,7 @@ struct AvisosView: View {
                 .sheet(isPresented: $isSheetPresented) {
                     AddAvisoView(viewModel: viewModel).onDisappear{
                         Task{
-                            await viewModel.resetAvisoFields()
+                            viewModel.resetAvisoFields()
                             await viewModel.getAvisos()
                         }
                     }
@@ -74,18 +74,28 @@ struct itemAvisosViews:View {
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             VStack(alignment: .leading, spacing: 5) {
+                Text("Usuario:")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.userName)
-                    .font(.headline)
+                    .font(.body)
                     .foregroundColor(.primary)
+                Text("Lugar:")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.place)
+                    .font(.body)
+                    .foregroundColor(.primary)
+                Text("Fecha:")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Text(data.description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                
                 Text("\(data.date) \(data.hour ?? "00:00")")
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                    .font(.body)
+                    .foregroundColor(.primary)
             }.padding()
             Spacer()
         }

@@ -22,6 +22,11 @@ struct Avisos: View {
                         
                         await viewModel.getAvisos()
                     }
+                }.onAppear{
+                    Task{
+                        
+                        await viewModel.getAvisos()
+                    }
                 }
                            
  

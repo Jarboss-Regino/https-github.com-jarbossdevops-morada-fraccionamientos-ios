@@ -24,24 +24,24 @@ struct MoreView: View {
 //                            defaultButton(icon: "camera.fill", title: "Eventos")
 //                        }
                         NavigationLink(destination: IncidentsView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
-                            defaultButton(icon: "camera.fill", title: "Incidencias")
+                            defaultButton(icon: "danger_nor", title: "Incidencias")
                         }
                         
 
                     }
                     else if tipo == "administrativo"{
                         NavigationLink(destination: EventsView(moreViewModel: viewModel).navigationBarBackButtonHidden(true)) {
-                            defaultButton(icon: "camera.fill", title: "Eventos")
+                            defaultButton(icon: "calendar_nor", title: "Eventos")
                         }
                         NavigationLink(destination: IncidentsView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
-                            defaultButton(icon: "camera.fill", title: "Incidencias")
+                            defaultButton(icon: "danger_nor", title: "Incidencias")
                         }
                         
                         NavigationLink(destination: ReservationsView().navigationBarBackButtonHidden(true)){
-                            defaultButton(icon: "camera.fill", title: "Reservaciones")
+                            defaultButton(icon: "rese_nor", title: "Reservaciones")
                         }
                         NavigationLink(destination: AvisosView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
-                            defaultButton(icon: "camera.fill", title: "Avisos")
+                            defaultButton(icon: "comu_norm", title: "Avisos")
                         }
                         
                         
@@ -49,24 +49,24 @@ struct MoreView: View {
                     }else if tipo == "operativo"{
                         
                         NavigationLink(destination: EventsView(moreViewModel: viewModel).navigationBarBackButtonHidden(true)) {
-                            defaultButton(icon: "camera.fill", title: "Eventos")
+                            defaultButton(icon: "calendar_nor", title: "Eventos")
                         }
                         NavigationLink(destination: IncidentsView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
-                            defaultButton(icon: "camera.fill", title: "Incidencias")
+                            defaultButton(icon: "danger_nor", title: "Incidencias")
                         }
                         
                         NavigationLink(destination: ReservationsView().navigationBarBackButtonHidden(true)){
-                            defaultButton(icon: "camera.fill", title: "Reservaciones")
+                            defaultButton(icon: "rese_nor", title: "Reservaciones")
                         }
                         NavigationLink(destination: AvisosView(viewModel: viewModel).navigationBarBackButtonHidden(true)){
-                            defaultButton(icon: "camera.fill", title: "Avisos")
+                            defaultButton(icon: "comu_norm", title: "Avisos")
                         }
                         
                         
                         
                     }
 
-                        buttonView(icon: "camera.fill", title: "Cerrar sesión", action: {
+                        buttonView(icon: "logout", title: "Cerrar sesión", action: {
                             
                             viewModel.logout()
                             click()
@@ -100,9 +100,12 @@ struct defaultButton: View {
                 Circle()
                     .fill(Color.purple)
                     .frame(width: 40, height: 40)
-                Image(systemName: icon)
+                Image(icon)
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
                     .foregroundColor(.white)
-                    .font(.system(size: 20))
             }
             .padding(.leading, 10)
             
@@ -144,9 +147,12 @@ struct buttonView: View{
                         .fill(Color.purple)
                         .frame(width: 40, height: 40)
                     
-                    Image(systemName: icon)
+                    Image(icon)
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
                         .foregroundColor(.white)
-                        .font(.system(size: 20))
                 }.padding(.leading, 10)
                     
                     

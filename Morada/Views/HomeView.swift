@@ -25,7 +25,7 @@ struct HomeView: View {
                                 VStack {
                                     Image(selectedTab == 0 ? "comu_pres" : "comu_nor")
                                     Text("Avisos")
-                                        .foregroundColor(selectedTab == 0 ? .pink : .gray)
+                                        .foregroundColor(selectedTab == 0 ? .purple : .gray)
                                 }
                             }.tag(0)
                         
@@ -34,7 +34,7 @@ struct HomeView: View {
                                 VStack {
                                     Image(selectedTab == 1 ? "Hulla_pres" : "Hulla_nor")
                                     Text("Entradas")
-                                        .foregroundColor(selectedTab == 1 ? .pink : .gray)
+                                        .foregroundColor(selectedTab == 1 ? .purple : .gray)
                                 }
                                 
                                 
@@ -54,7 +54,7 @@ struct HomeView: View {
                             VStack {
                                 Image(selectedTab == 3 ? "menu_pres" : "menu_nor")
                                 Text("Más")
-                                    .foregroundColor(selectedTab == 3 ? .pink : .gray)
+                                    .foregroundColor(selectedTab == 3 ? .purple : .gray)
                             }
                             
                         }.tag(3)
@@ -67,7 +67,7 @@ struct HomeView: View {
                                 VStack {
                                     Image(selectedTab == 0 ? "entrada_pres" : "entrada_nor")
                                     Text("Entradas")
-                                        .foregroundColor(selectedTab == 0 ? .pink : .gray)
+                                        .foregroundColor(selectedTab == 0 ? .purple : .gray)
                                 }
                             }.tag(0)
                         
@@ -87,7 +87,7 @@ struct HomeView: View {
                             VStack {
                                 Image(selectedTab == 2 ? "menu_pres" : "menu_nor")
                                 Text("Más")
-                                    .foregroundColor(selectedTab == 2 ? .pink : .gray)
+                                    .foregroundColor(selectedTab == 2 ? .purple : .gray)
                             }
                         }.tag(2)
                     }
@@ -100,7 +100,7 @@ struct HomeView: View {
                                 VStack {
                                     Image(selectedTab == 0 ? "entrada_pres" : "entrada_nor")
                                     Text("Entradas")
-                                        .foregroundColor(selectedTab == 0 ? .pink : .gray)
+                                        .foregroundColor(selectedTab == 0 ? .purple : .gray)
                                 }
                             }.tag(0)
                         
@@ -109,7 +109,7 @@ struct HomeView: View {
                                 VStack {
                                     Image(selectedTab == 1 ? "salida_pres" : "salida_nor")
                                     Text("Salidas")
-                                        .foregroundColor(selectedTab == 1 ? .pink : .gray)
+                                        .foregroundColor(selectedTab == 1 ? .purple : .gray)
                                 }
                             }.tag(1)
                         
@@ -120,13 +120,13 @@ struct HomeView: View {
                             VStack {
                                 Image(selectedTab == 2 ? "menu_pres" : "menu_nor")
                                 Text("Más")
-                                    .foregroundColor(selectedTab == 2 ? .pink : .gray)
+                                    .foregroundColor(selectedTab == 2 ? .purple : .gray)
                             }
                         }.tag(2)
                         
                         
                     }
-                }
+                }.tint(.purple)
             } else {
                 // Si tipo no está disponible aún, mostrar un cargando
                 ProgressView("Cargando...")
