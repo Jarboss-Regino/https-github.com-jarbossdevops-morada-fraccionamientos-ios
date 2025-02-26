@@ -18,7 +18,7 @@ final class LoginViewModel: ObservableObject{
     @Published var showError :Bool = false
     @Published var isPasswordVisible: Bool = false
     @Published var recoverEmail: String = ""
-    
+    @Published var fullName: String = ""
     
     // RECOVERY EMAIL VARIABLES
     @Published var errorEmailMessage: String = ""
@@ -117,7 +117,7 @@ final class LoginViewModel: ObservableObject{
     
     @MainActor
     func sendEmail() async {
-        if self.recoverEmail.isEmpty {
+        if self.recoverEmail.isEmpty || self.fullName.isEmpty{
             DispatchQueue.main.async {
                 self.errorEmailMessage = "Por favor, llene todos los campos"
                 self.showEmailError = true
@@ -128,20 +128,21 @@ final class LoginViewModel: ObservableObject{
         }
         
         self.isLoadingEmailSend = true
-        let body = EmailRequest(source1: self.recoverEmail)
-
+        let body = EmailRequest(email: self.recoverEmail, fullName: self.fullName)
+        
         do {
             // Llamada asíncrona a la función post
-            let response: EmailResponse = try await apiService.post(urlString: ApiEndpoints.emailUrl, body: body)
+            let response: EmailResponse = try await apiService.postJson(urlString: ApiEndpoints.emailUrl, body: body)
             
             DispatchQueue.main.async {
                 self.isLoadingEmailSend = false
                 
-                if response.enviado?.status == "ok" {
+                if response.message == "Reset email sent successfully" {
                     self.showEmailError = false
                     self.succesMessage = "El correo se envió correctamente"
                     self.showMessage = true
                     self.recoverEmail = ""
+                    self.fullName = ""
                 } else {
                     self.showMessage = false
                     self.errorEmailMessage = "Ocurrió un error al enviar el correo"
@@ -151,14 +152,14 @@ final class LoginViewModel: ObservableObject{
         } catch let error as ApiError {
             DispatchQueue.main.async {
                 self.isLoadingEmailSend = false
-                self.errorEmailMessage = "Error: \(error)"
-                self.showEmailError = true
+                //self.errorEmailMessage = "Error: \(error)"
+                //self.showEmailError = true
             }
         } catch {
             DispatchQueue.main.async {
                 self.isLoadingEmailSend = false
-                self.errorEmailMessage = "Error desconocido"
-                self.showEmailError = true
+//                self.errorEmailMessage = "Error desconocido"
+//                self.showEmailError = true
             }
         }
     }

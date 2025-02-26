@@ -8,13 +8,6 @@
 import Foundation
 
 struct EmailResponse: Codable {
-    let estatus: String
-    let indexId: String?
-    let indexFecha: String?
-    let enviado: Enviado?
+    let message: String
 }
 
-struct Enviado: Codable {
-    let log: [String]
-    let status: String
-}

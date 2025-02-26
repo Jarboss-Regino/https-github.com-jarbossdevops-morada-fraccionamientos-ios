@@ -8,5 +8,6 @@
 import Foundation
 
 struct EmailRequest: Codable {
-    let source1: String
+    let email: String
+    let fullName: String
 }

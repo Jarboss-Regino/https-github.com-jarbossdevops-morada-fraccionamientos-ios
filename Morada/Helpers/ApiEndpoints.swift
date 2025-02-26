@@ -23,7 +23,7 @@ class ApiEndpoints{
     }
     
     static var emailUrl: String{
-        return baseUrl+"/Fraccionamientos/POST/?source1=index&source2=reccontrasena"
+        return "https://tpmmhy4d2s.us-east-1.awsapprunner.com/management/send"
     }
     
     static var creaateUserUrl: String {

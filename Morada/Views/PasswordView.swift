@@ -26,6 +26,14 @@ struct PasswordView: View {
                 
                 
                 VStack {
+                    TextField("Nombre completo", text: $viewModel.fullName)
+                        .cornerRadius(16)
+                    LinearGradient(
+                                gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                            .frame(height: 2)
                     TextField("Escribre tu correo", text: $viewModel.recoverEmail)
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
