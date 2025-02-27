@@ -19,7 +19,7 @@ struct IncidentsResponse: Codable,Identifiable {
     let uuidSuperAdmin: String
     let idAssigned: AssignedID
     let v: Int
-    let assigned: String
+    let assigned: AssignedValue
     let name: String
     let lastName: String
     let date: String
