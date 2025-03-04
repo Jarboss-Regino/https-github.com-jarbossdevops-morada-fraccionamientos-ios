@@ -202,19 +202,41 @@ struct item: View{
     @ObservedObject var mviewModel: CheckOutViewModel
     var body: some View{
         VStack{
-            HStack{
+            VStack(alignment: .leading){
+                Text("Nombre")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.name)
-                Spacer()
+                    .font(.body)
+                    .foregroundColor(.primary)
+                Text("Tipo de visita:")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.typeVisit)
+                    .font(.body)
+                    .foregroundColor(.primary)
             }.padding(5)
-            HStack{
+            VStack(alignment: .leading){
+                Text("Visita a:")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.visit)
+                    .font(.body)
+                    .foregroundColor(.primary)
                 
-                Spacer()
+                Text("dirección")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.address)
+                    .font(.body)
+                    .foregroundColor(.primary)
             }.padding(5)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity,alignment: .leading)
         .listRowBackground(Color.white)
         .background(
             RoundedRectangle(cornerRadius: 10)
@@ -241,20 +263,42 @@ struct itemAgenda: View{
     var data: GetVistasResponse
     @ObservedObject var mviewModel: CheckOutViewModel
     var body: some View{
-        VStack{
-            HStack{
+        VStack(alignment: .leading, spacing: 2){
+            VStack(alignment: .leading){
+                Text("Nombre")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.name)
-                Spacer()
+                    .font(.body)
+                    .foregroundColor(.primary)
+                Text("Tipo de visita:")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.typeVisit)
+                    .font(.body)
+                    .foregroundColor(.primary)
             }.padding(5)
-            HStack{
+            VStack(alignment: .leading){
+                Text("Visita a:")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.visit)
+                    .font(.body)
+                    .foregroundColor(.primary)
                 
-                Spacer()
+                Text("dirección")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(data.address)
+                    .font(.body)
+                    .foregroundColor(.primary)
             }.padding(5)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity,alignment: .leading)
         .listRowBackground(Color.white)
         .background(
             RoundedRectangle(cornerRadius: 10)
