@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import AVFoundation
 
 class Utils {
     /// Formatea una fecha de `String` a `dd-MMM-yyyy`
@@ -48,5 +49,22 @@ class Utils {
     static func isValidEmail(email: String) -> Bool {
         let emailRegex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
         return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
+    }
+    
+    func checkCameraPermission(completion: @escaping (Bool) -> Void) {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .authorized:
+            completion(true) // Ya tiene permisos
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                completion(granted) // Se solicita permiso al usuario
+            }
+        case .denied, .restricted:
+            completion(false) // El usuario denegó el permiso
+        @unknown default:
+            completion(false)
+        }
     }
 }

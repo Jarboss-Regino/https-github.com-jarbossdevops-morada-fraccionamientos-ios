@@ -9,6 +9,9 @@ import SwiftUI
 
 struct AddAvisoView: View {
     @ObservedObject var viewModel: MoreViewModel
+    @State private var showCamera = false
+    @State private var selectedImage: UIImage?
+    
     var body: some View {
         VStack{
             Text("Crear Aviso")
@@ -24,7 +27,7 @@ struct AddAvisoView: View {
 //            }
             
             Button(action: {
-               
+               showCamera = true
             }) {
                 HStack{
                     Image(systemName: "camera.fill") // Ícono
@@ -40,6 +43,16 @@ struct AddAvisoView: View {
                 .background(Color.blue)
                 .cornerRadius(10)
                 .padding(.top, 5)
+                .sheet(isPresented: $showCamera) {
+                    CameraPicker(isPresented: $showCamera, image: $selectedImage)
+                }
+            
+            if let image = selectedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 300)
+            }
             
             Spacer()
             if viewModel.showErrorAviso {
@@ -56,11 +69,15 @@ struct AddAvisoView: View {
             }
             
             Button(action: {
-                
-                Task{
-                    await viewModel.createAviso()
+                if let image = selectedImage {
+                    viewModel.convertToBase64(image: image)
+                    if let base64String = viewModel.base64Image {
+                        Task{
+                            await viewModel.createAviso(image: base64String)
+                        }
+                    }
                 }
-                print("Botón de inicio de sesión presionado")
+                
             }) {
                 Text("Registrar")
                     .frame(maxWidth: .infinity)
@@ -71,7 +88,7 @@ struct AddAvisoView: View {
                     .foregroundColor(.white)
                     .font(.headline)
                     .cornerRadius(10)
-            }.padding(.top, 20)
+            }.padding(.top, 20).disabled(selectedImage == nil)
         }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(.horizontal,16).ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

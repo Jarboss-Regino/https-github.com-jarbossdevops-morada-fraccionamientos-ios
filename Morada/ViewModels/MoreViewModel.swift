@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 class MoreViewModel: ObservableObject{
     
+    @Published var base64Image: String?
+    
     @Published var tipo: Int?
     var mtipo: Int?
     
@@ -675,7 +677,7 @@ class MoreViewModel: ObservableObject{
     }
     
     @MainActor
-    func createAviso() async {
+    func createAviso(image: String) async {
         do{
             self.errorMsgAviso = "Todos los campos deben llernarse"
             self.successMsgAviso = "Aviso creado correctamente"
@@ -715,7 +717,7 @@ class MoreViewModel: ObservableObject{
                 uuidSuperAdmin: self.uuidAdmin!,
                 uuid: self.idUser!,
                 idAssigned: idAssignedValue,
-                adjunto: generateTemporaryImage() ?? ""
+                adjunto: image
             )
             
             let response: NewAvisoResponse = try await apiService.postJson(urlString: ApiEndpoints.setAvisoUrl, body: body)
@@ -821,5 +823,11 @@ class MoreViewModel: ObservableObject{
         dateFormatter.locale = Locale(identifier: "es_MX")
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: date)
+    }
+    
+    func convertToBase64(image: UIImage) {
+        if let imageData = image.jpegData(compressionQuality: 0.8) {
+            base64Image = imageData.base64EncodedString()
+        }
     }
 }

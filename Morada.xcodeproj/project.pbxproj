@@ -69,6 +69,7 @@
 		8D7215832D6398E0009AD026 /* CheckOutBinnacleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */; };
 		8D7215852D65269A009AD026 /* NewIncidenteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215842D65269A009AD026 /* NewIncidenteResponse.swift */; };
 		8D7215872D652721009AD026 /* NewIncidentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215862D652721009AD026 /* NewIncidentRequest.swift */; };
+		8D7215892D91BD5F009AD026 /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7215882D91BD5F009AD026 /* CameraPicker.swift */; };
 		8D76D0842CAB0303009B0866 /* CheckinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */; };
 		8D76D0862CAB4E43009B0866 /* ResidentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */; };
 		8D76D0892CAB50CD009B0866 /* ResidentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */; };
@@ -206,6 +207,7 @@
 		8D7215822D6398E0009AD026 /* CheckOutBinnacleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutBinnacleResponse.swift; sourceTree = "<group>"; };
 		8D7215842D65269A009AD026 /* NewIncidenteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIncidenteResponse.swift; sourceTree = "<group>"; };
 		8D7215862D652721009AD026 /* NewIncidentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIncidentRequest.swift; sourceTree = "<group>"; };
+		8D7215882D91BD5F009AD026 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
 		8D76D0832CAB0303009B0866 /* CheckinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinViewModel.swift; sourceTree = "<group>"; };
 		8D76D0852CAB4E43009B0866 /* ResidentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentResponse.swift; sourceTree = "<group>"; };
 		8D76D0882CAB50CD009B0866 /* ResidentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentRequest.swift; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				8DEC8AF02CF4E6C200DADBDF /* CustomRouter.swift */,
 				8DE345612D526C8B00494AB8 /* Utils.swift */,
 				8D7215722D52A20F009AD026 /* QRCodeScannerView.swift */,
+				8D7215882D91BD5F009AD026 /* CameraPicker.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				8D98DC122CC6AC6300F91733 /* ReservationsView.swift in Sources */,
 				8D76D0892CAB50CD009B0866 /* ResidentRequest.swift in Sources */,
 				8D98DC062CC04F9E00F91733 /* CustomToolbar.swift in Sources */,
+				8D7215892D91BD5F009AD026 /* CameraPicker.swift in Sources */,
 				8D7215852D65269A009AD026 /* NewIncidenteResponse.swift in Sources */,
 				8D5525302CDA7963009EE8F4 /* EmailRequest.swift in Sources */,
 				8D21E8142C9A388D007E17FF /* ApiEndpoints.swift in Sources */,
@@ -947,7 +951,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) Need camera access to scan QR Code image";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Es necesario tener acceso a la camara para tomar fotografia y escanear codigo qr";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -987,7 +991,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) Need camera access to scan QR Code image";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Es necesario tener acceso a la camara para tomar fotografia y escanear codigo qr";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
