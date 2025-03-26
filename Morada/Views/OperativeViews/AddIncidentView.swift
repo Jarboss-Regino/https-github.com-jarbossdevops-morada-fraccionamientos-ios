@@ -10,6 +10,8 @@ import SwiftUI
 struct AddIncidentView: View {
     @ObservedObject var viewModel: MoreViewModel
     @Binding var showSheet: Bool
+    @State private var showCamera = false
+    @State private var selectedImage: UIImage?
     var body: some View {
         VStack{
             
@@ -72,7 +74,7 @@ struct AddIncidentView: View {
                                     
                 Button(action: {
                     
-                    print("Botón de inicio de sesión presionado")
+                    showCamera = true
                 }) {
                     HStack{
                         Image(systemName: "camera.fill") // Ícono
@@ -103,12 +105,24 @@ struct AddIncidentView: View {
                         .padding(.horizontal, 16)
                 }
                 
+                if let image = selectedImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 300)
+                }
+                Spacer()
+                
                 Button(action: {
-                    Task{
-                        //viewModel.doRegister()
-                        await viewModel.creaNewIncident()
+                    if let image = selectedImage {
+                        viewModel.convertToBase64(image: image)
+                        if let base64String = viewModel.base64Image {
+                            Task{
+                                await viewModel.creaNewIncident(image: base64String)
+                            }
+                        }
                     }
-                    print("Botón de inicio de sesión presionado")
+                    
                 }) {
                     Text("Registrar")
                         .frame(maxWidth: .infinity)
@@ -119,7 +133,7 @@ struct AddIncidentView: View {
                         .foregroundColor(.white)
                         .font(.headline)
                         .cornerRadius(10)
-                }.padding(.top, 20)
+                }.padding(.top, 20).disabled(selectedImage == nil)
                 
                 
             }.padding(.top, 40)

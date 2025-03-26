@@ -356,7 +356,7 @@ class MoreViewModel: ObservableObject{
     
     // FALTA POR TERMINAR ESTA FUNCIONALIDAD
     @MainActor
-    func creaNewIncident() async{
+    func creaNewIncident(image: String) async{
         
         do {
             if self.selectedClassication == nil || self.description.isEmpty ||
@@ -375,7 +375,7 @@ class MoreViewModel: ObservableObject{
                 uuidSuperAdmin: self.uuidAdmin ?? "",
                 uuid: self.idUser ?? "",
                 idAssigned: self.idAssignedValue,
-                evidence: Utils.generateTemporaryImage() ?? ""
+                evidence: image
             )
             
             
