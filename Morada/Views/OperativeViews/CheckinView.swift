@@ -10,7 +10,7 @@ import SwiftUI
 struct CheckinView: View {
     
     @ObservedObject var viewModel = CheckinViewModel()
-        
+    @State private var isShowingScanner = false
     var body: some View {
         //NavigationStack{
             ScrollView{
@@ -34,8 +34,8 @@ struct CheckinView: View {
                             Task{
                                 viewModel.resetMessageError()
                             }
+                            isShowingScanner = true
                             
-                            print("Botón de inicio de sesión presionado")
                         }) {
                             HStack{
                                 Image(systemName: "qrcode.viewfinder")
@@ -77,16 +77,16 @@ struct CheckinView: View {
                                     .frame(height: 2)
                         }.frame(height: 60)
                         
-//                        VStack {
-//                            TextField("Correo", text: $viewModel.email)
-//                                .cornerRadius(16)
-//                            LinearGradient(
-//                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
-//                                        startPoint: .leading,
-//                                        endPoint: .trailing
-//                                    )
-//                                    .frame(height: 2)
-//                        }.frame(height: 60)
+                        VStack {
+                            TextField("Correo", text: $viewModel.email)
+                                .cornerRadius(16)
+                            LinearGradient(
+                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                    .frame(height: 2)
+                        }.frame(height: 60)
                         
                         VStack {
                             TextField("Fecha de llegada", text: $viewModel.arrivalDate)
@@ -280,7 +280,6 @@ struct CheckinView: View {
                             .cornerRadius(10)
                             .padding(.top, 5)
                         
-                        
                         if viewModel.showError {
                             Text("\(viewModel.messageError)")
                                 .foregroundColor(.red)
@@ -315,6 +314,14 @@ struct CheckinView: View {
                     
                 }.padding(.horizontal, 16).padding(.horizontal)
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            .sheet(isPresented: $isShowingScanner) {
+                QRCodeScannerView{ value in
+                    isShowingScanner = false
+                    Task{
+                        await viewModel.searchVisitData(idValue: value)
+                    }
+                }
+            }
         //}
            
     }

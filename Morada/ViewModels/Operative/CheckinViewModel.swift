@@ -156,6 +156,41 @@ class CheckinViewModel: ObservableObject {
         
     }
     
+    func searchVisitData(idValue: String) async {
+        do{
+            if idValue.isEmpty {
+                return
+            }
+            
+            let response: [GetVistasResponse] = try await apiService.get(urlString: ApiEndpoints.getVisitasUrl(uuid: self.uuid ?? ""))
+            
+            if !response.isEmpty{
+                let filteredResponse = response.filter{ $0.id == idValue }
+                if let matchingItem = filteredResponse.first {
+                    print("Elemento encontrado: \(matchingItem)")
+                    self.name = matchingItem.name
+                    self.number = matchingItem.phone
+                    self.email = matchingItem.email
+                    self.arrivalDate = matchingItem.dateFormated ?? ""
+                    self.address = matchingItem.address
+                } else {
+                    print("No se encontró ningún elemento con ese ID")
+                }
+            }
+            
+        }catch let error as ApiError {
+            
+            
+            print("Error: \(error)")
+                
+            
+        } catch {
+            
+            print("Error desconocido")
+            
+        }
+    }
+    
     func cleanFields(){
         self.name = ""
         self.issue = ""
