@@ -11,6 +11,9 @@ struct CheckinView: View {
     
     @ObservedObject var viewModel = CheckinViewModel()
     @State private var isShowingScanner = false
+    @State private var showCamera = false
+    @State private var showCamera2 = false
+    
     var body: some View {
         //NavigationStack{
             ScrollView{
@@ -245,7 +248,7 @@ struct CheckinView: View {
                     VStack{
                         Button(action: {
                             
-                            print("Botón de inicio de sesión presionado")
+                            showCamera = true
                         }) {
                             HStack{
                                 Image(systemName: "camera.fill") // Ícono
@@ -263,7 +266,7 @@ struct CheckinView: View {
                             
                         Button(action: {
                             
-                            print("Botón de inicio de sesión presionado")
+                            showCamera2 = true
                         }) {
                             HStack{
                                 Image(systemName: "camera.fill") // Ícono
@@ -279,6 +282,23 @@ struct CheckinView: View {
                             .background(Color.blue)
                             .cornerRadius(10)
                             .padding(.top, 5)
+                        
+                        HStack{
+                            if let image = viewModel.selectedImageINE {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 300)
+                            }
+                            Spacer()
+                            if let image = viewModel.selectedImageLicence {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 300)
+                            }
+                        }
+                        
                         
                         if viewModel.showError {
                             Text("\(viewModel.messageError)")
@@ -321,7 +341,13 @@ struct CheckinView: View {
                         await viewModel.searchVisitData(idValue: value)
                     }
                 }
+            }.sheet(isPresented: $showCamera) {
+                CameraPicker(isPresented: $showCamera, image: $viewModel.selectedImageINE)
             }
+            .sheet(isPresented: $showCamera2) {
+                CameraPicker(isPresented: $showCamera2, image: $viewModel.selectedImageLicence)
+            }
+
         //}
            
     }

@@ -67,4 +67,11 @@ class Utils {
             completion(false)
         }
     }
+    
+    static func convertToBase64(image: UIImage) -> String? {
+        if let imageData = image.jpegData(compressionQuality: 0.8) {
+            return imageData.base64EncodedString()
+        }
+        return nil
+    }
 }

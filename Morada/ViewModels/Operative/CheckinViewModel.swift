@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CheckinViewModel: ObservableObject {
     
@@ -37,6 +38,10 @@ class CheckinViewModel: ObservableObject {
     @Published var msgSuccess = ""
     
     @Published var isOn = false
+    
+    @Published var selectedImageINE: UIImage?
+    @Published var selectedImageLicence: UIImage?
+    @Published var base64Image: String?
     
     private var apiService = ApiService()
     let uuidAdmin = UserSession.shared.userData?.uuidSuperAdmin
@@ -93,8 +98,13 @@ class CheckinViewModel: ObservableObject {
     func doRegister() async{
         do{
             if isOn {
-                if self.name.isEmpty || self.address.isEmpty || self.number.isEmpty || self.arrivalDate.isEmpty{
-                    self.messageError = "La foto de identificación es obligatoria"
+                if self.name.isEmpty || self.address.isEmpty || self.number.isEmpty || self.email.isEmpty || self.arrivalDate.isEmpty{
+                    self.messageError = "Por favor, llene todos los campos"
+                    self.showError = true
+                    return
+                }
+                if self.selectedImageINE == nil || self.selectedImageLicence == nil{
+                    self.messageError = "Las fotografrías son obligatorias"
                     self.showError = true
                     return
                 }
@@ -107,10 +117,16 @@ class CheckinViewModel: ObservableObject {
                 return
                 
             }
+            if self.selectedImageINE == nil || self.selectedImageLicence == nil{
+                self.messageError = "Las fotografrías son obligatorias"
+                self.showError = true
+                return
+            }
             
             self.showError = false
             
-            
+            let img = Utils.convertToBase64(image: self.selectedImageINE!)
+            let img2 = Utils.convertToBase64(image: self.selectedImageLicence!)
             
             let body = SetVisitRequest(
                 name: self.name,
@@ -123,7 +139,7 @@ class CheckinViewModel: ObservableObject {
                 uuidSuperAdmin: self.uuidAdmin!,
                 uuid: self.uuid!,
                 idAssigned: self.idAssignedValue,
-                evidence:Utils.generateTemporaryImage() ?? "no images"
+                evidence: "\(String(describing: img)),\(String(describing: img2))"
             )
             
             let response: SetVisitResponse = try await apiService.postJson(urlString: ApiEndpoints.setVisit, body: body)
@@ -198,6 +214,8 @@ class CheckinViewModel: ObservableObject {
         self.address = ""
         self.number = ""
         self.selectedOption = ""
+        self.selectedImageINE = nil
+        self.selectedImageLicence = nil
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             self.showSuccessMsg = false
             
